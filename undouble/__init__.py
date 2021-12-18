@@ -21,8 +21,9 @@ undouble is for...
 
 Example
 -------
->>> import undouble as undouble
->>> model = undouble.fit_transform(X)
+>>> from undouble import Undouble
+>>> model = Undouble(verbose=20)
+>>> model.fit_transform()
 >>> fig,ax = undouble.plot(model)
 
 References

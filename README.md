@@ -50,7 +50,7 @@ pip install -U .
 
 #### Import undouble package
 ```python
-import undouble as undouble
+from undouble import Undouble
 ```
 
 #### Example:
