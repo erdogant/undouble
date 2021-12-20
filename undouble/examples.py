@@ -1,7 +1,9 @@
+# https://content-blockchain.org/research/testing-different-image-hash-functions/
+
 # %%
-# import undouble
-# print(dir(undouble))
-# print(undouble.__version__)
+import undouble
+print(dir(undouble))
+print(undouble.__version__)
 
 # %%
 from undouble import Undouble
@@ -10,5 +12,11 @@ model.preprocessing()
 
 # %%
 model.fit(method='phash')
-model.find(score=10)
+model.find(score=0)
 model.plot()
+
+# %%
+model.move()
+
+# %%
+model.results

@@ -16,6 +16,7 @@ from tqdm import tqdm
 import zipfile
 from clustimage import Clustimage
 import clustimage.clustimage as cl
+import shutil
 
 logger = logging.getLogger('')
 for handler in logger.handlers[:]: #get rid of existing old handlers
@@ -122,26 +123,64 @@ class Undouble():
         # Extract features using method
         self.clustimage.extract_feat(self.clustimage.results)
 
-    def find(self, score=0):
+    def find(self, score=0, merge=True):
         # Make sets of images that are similar based on the minimum defined score.
-        pathnames=[]
-        out = []
-        scores = []
+        pathnames, indexes, scores, resolution = [], [], [], []
         # Extract similar images with minimum score
         for i in tqdm(np.arange(0, self.clustimage.results['feat'].shape[0]), disable=disable_tqdm()):
             idx = np.where(self.clustimage.results['feat'][i,:]<=score)[0]
             if len(idx)>1:
-                if len(out)==0:
-                    out.append(idx)
-                    pathnames.append(self.clustimage.results['pathnames'][idx])
-                    scores.append(self.clustimage.results['feat'][i,idx])
-                elif ~np.any(list(map(lambda x: np.all(np.isin(x, idx)), out))):
-                    out.append(idx)
+                # if ~np.any(list(map(lambda x: np.all(np.isin(x, idx)), indexes))):
+                if ~np.any(list(map(lambda x: np.any(np.isin(x, idx)), indexes))):
+                    indexes.append(idx)
                     pathnames.append(self.clustimage.results['pathnames'][idx])
                     scores.append(self.clustimage.results['feat'][i,idx])
 
-        self.results = {'pathnames':pathnames, 'scores':scores}
+        # Sort on score
+        for i, _ in enumerate(scores):
+            isort=np.argsort(scores[i])
+            indexes[i] = indexes[i][isort]
+            pathnames[i] = pathnames[i][isort]
+            scores[i] = scores[i][isort]
+        
+        self.results = {'pathnames':pathnames, 'scores':scores, 'resolution':resolution, 'index':indexes}
         logger.info('Number of groups with similar images detected: %d' %(len(self.results['pathnames'])))
+
+    def move(self, filters=['resolution','location'], targetdir=None):
+        # Do some checks and set defaults
+        self._check_status()
+        resOK, locOK = True, True
+        movedir = targetdir
+        if targetdir is not None:
+            if not os.path.isdir(targetdir): raise Exception(logger.error(''))
+
+        # Mark the images that are identifical in [size] and [location]
+        for pathnames in tqdm(self.results['pathnames'], disable=disable_tqdm()):
+            # Get resolution
+            if np.isin('resolution', filters):
+                res = np.array(list(map(lambda x: cl._imread(x).shape[0:2], pathnames)))
+                resOK = np.all(np.isin(res[0], res))
+            # Get location
+            if np.isin('location', filters):
+                loc = list(map(lambda x: os.path.split(x)[0], pathnames))
+                locOK = np.all(np.isin(loc[0], loc))
+
+            # Move to targetdir
+            if np.all([resOK, locOK]):
+                # Set the targetdir
+                if targetdir is None:
+                    movedir = os.path.join(loc[0], 'undouble')
+                if not os.path.isdir(movedir):
+                    os.makedirs(movedir, exist_ok=True)
+
+                # 1. Copy first file to targetdir and add "_COPY"
+                dirname, filename, ext = seperate_path(pathnames[0])
+                shutil.copy(pathnames[0], os.path.join(movedir,filename+'_COPY'+ext) )
+
+                # 2. Move all others
+                for file in pathnames[1:]:
+                    logger.info(file)
+                    shutil.move(file, os.path.join(movedir, os.path.split(file)[1]))
 
     def clean(self):
         """Clean or removing previous results and models to ensure correct working."""
@@ -175,7 +214,7 @@ class Undouble():
         return import_example(data=data, url=url, sep=sep)
 
 
-    def plot(self, ncols=None, cmap=None, figsize=(15,10)):
+    def plot(self, cmap=None, figsize=(15,10)):
         """Plot the results.
 
         Parameters
@@ -200,6 +239,7 @@ class Undouble():
         """
         # Do some checks and set defaults
         self._check_status()
+        ncols=None
         cmap = cl._set_cmap(cmap, self.params['grayscale'])
 
         # Plot the clustered images
@@ -215,7 +255,7 @@ class Undouble():
                 # Make subplots
                 # Setup rows and columns
                 _, ncol = self.clustimage._get_rows_cols(len(imgs), ncols=ncols)
-                labels=list(map(lambda x: 'score: ' + x, list(self.results['scores'][i].astype(str))))
+                labels = list( map(lambda x: 'score: ' + x, list(self.results['scores'][i].astype(str)) ) )
                 self.clustimage._make_subplots(imgs, ncol, cmap, figsize, title=("Number of similar images %s" %(len(pathnames))), labels=labels)
 
                 # Restore verbose status
@@ -223,7 +263,7 @@ class Undouble():
 
     def _check_status(self):
         if not hasattr(self, 'results'):
-            raise Exception(logger.error('Results in missing! Hint: try to first fit_transform() your data!'))
+            raise Exception(logger.error('Results missing! Hint: try to first use the <.find()> functionality'))
 
 
 # %% Import example dataset from github.
@@ -399,6 +439,11 @@ def disable_tqdm():
     """Set the logger for verbosity messages."""
     return (True if (logger.getEffectiveLevel()>=30) else False)
 
+
+def seperate_path(pathname):
+    dirname, filename = os.path.split(pathname)
+    filename, ext = os.path.splitext(filename)
+    return dirname, filename, ext.lower()
 
 # %% Main
 # if __name__ == "__main__":
