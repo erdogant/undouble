@@ -1,8 +1,7 @@
 #conda create -n env_undouble python=3.8
 #conda activate env_undouble
 
-wget
-matplotlib 
-numpy 
-pandas 
+matplotlib
+numpy
 tqdm
+clustimage

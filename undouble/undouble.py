@@ -14,6 +14,8 @@ import logging
 import numpy as np
 from tqdm import tqdm
 import zipfile
+from clustimage import Clustimage
+import clustimage.clustimage as cl
 
 logger = logging.getLogger('')
 for handler in logger.handlers[:]: #get rid of existing old handlers
@@ -27,32 +29,128 @@ logger = logging.getLogger()
 
 
 class Undouble():
-    """undouble."""
+    """Undouble your photo collection.
 
-    def __init__(self, method='xgboost', verbose=20):
+    Description
+    -----------
+    The aim of this library is to undouble your photo collection.
+    The following steps are taken:
+        1. Read recursively all images from directory with the specified extensions.
+        2. 
+
+    Parameters
+    ----------
+    method : str, (default: 'pca')
+        Method to extract features from images.
+            hashmethod : str (default: 'ahash')
+            * 'ahash': Average hash
+            * 'phash': Perceptual hash
+            * 'dhash': Difference hash
+            * 'whash-haar': Haar wavelet hash
+            * 'whash-db4': Daubechies wavelet hash
+            * 'colorhash': HSV color hash
+            * 'crop-resistant': Crop-resistant hash
+    targetdir : str, (default: None)
+        Directory to read the images.
+    ext : list, (default: ['png','tiff','jpg'])
+        Images with the file extentions are used.
+    grayscale : Bool, (default: False)
+        Colorscaling the image to gray. This can be usefull when clustering e.g., faces.
+    dim : tuple, (default: (128,128))
+        Rescale images. This is required because the feature-space need to be the same across samples.
+    verbose : int, (default: 20)
+        Print progress to screen. The default is 20.
+        10:Debug, 20:Info, 30:Warn 40:Error, 60:None, 
+
+    Returns
+    -------
+    Object.
+    dict containing keys:
+        pathnames : list of str.
+            Full path to images that are used in the model.
+        filenames : list of str.
+            Filename of the input images.
+
+    Example
+    -------
+    >>> from undouble import Undouble
+    >>>
+    >>> # Init with default settings
+    >>> model = Undouble(method='ahash')
+    >>>
+    >>> # load example with faces
+    >>> X = cl.import_example(data='mnist')
+    >>>
+    >>> # Cluster digits
+    >>> results = cl.fit_transform(X)
+    >>>
+    >>> # Find images
+    >>> results_find = cl.find(X[0,:], k=None, alpha=0.05)
+    >>> cl.plot_find()
+    >>> cl.scatter()
+    >>>
+    
+    References
+    ----------
+    * https://content-blockchain.org/research/testing-different-image-hash-functions/
+
+    """
+    def __init__(self, method='phash', targetdir='', grayscale=False, dim=(128,128), ext=['png','tiff','jpg'], verbose=20):
         """Initialize undouble with user-defined parameters."""
-        self.method=method
+        # Clean readily fitted models to ensure correct results
+        self.clean()
+        # Check existence targetdir
+        if not os.path.isdir(targetdir): raise Exception(logger.error('Input parameter <targetdir> does not contain a valid directory: [%s]' %(targetdir)) )
+        if verbose<=0: verbose=60
+        # Store user setting in params
+        self.params = {'method':method, 'targetdir':targetdir, 'grayscale':grayscale, 'dim':dim, 'ext':ext, 'verbose':verbose}
+        # Initialize the clustimage library
+        self.clustimage = Clustimage(method=self.params['method'], grayscale=self.params['grayscale'], ext=self.params['ext'], dim=self.params['dim'], verbose=self.params['verbose'])
         # Set the logger
         set_logger(verbose=verbose)
 
-    def fit_transform(self):
-        """Learn the associations in the data."""
-        logger.debug("Hello debug")
-        logger.info("Hello info")
-        logger.critical("Hello critical")
-        logger.warning("Hello warning")
+    def preprocessing(self):
+        """All in one function."""
+        logger.info("Retrieving files from: [%s]" %(self.params['targetdir']))
+        # Preprocessing the images the get them in the right scale and size etc
+        self.clustimage.import_data(self.params['targetdir'])
 
-		# Set logger to warning-error only
-        # verbose = logger.getEffectiveLevel()
-        # set_logger(verbose=30)
+    def fit(self, method='phash'):
+        self.clustimage.params['method'] = method
+        self.params['method'] = method
+        self.clustimage.params_hash = cl.hash_method(method, {})
+        # Extract features using method
+        self.clustimage.extract_feat(self.clustimage.results)
 
-        # Extract faces and eyes from image
-        for i in tqdm(np.arange(0,10), disable=disable_tqdm()):
-            logger.info(i)
+    def find(self, score=0):
+        # Make sets of images that are similar based on the minimum defined score.
+        pathnames=[]
+        out = []
+        scores = []
+        # Extract similar images with minimum score
+        for i in tqdm(np.arange(0, self.clustimage.results['feat'].shape[0]), disable=disable_tqdm()):
+            idx = np.where(self.clustimage.results['feat'][i,:]<=score)[0]
+            if len(idx)>1:
+                if len(out)==0:
+                    out.append(idx)
+                    pathnames.append(self.clustimage.results['pathnames'][idx])
+                    scores.append(self.clustimage.results['feat'][i,idx])
+                elif ~np.any(list(map(lambda x: np.all(np.isin(x, idx)), out))):
+                    out.append(idx)
+                    pathnames.append(self.clustimage.results['pathnames'][idx])
+                    scores.append(self.clustimage.results['feat'][i,idx])
 
-        # Restore verbose status
-        # set_logger(verbose=verbose)
-        return None
+        self.results = {'pathnames':pathnames, 'scores':scores}
+        logger.info('Number of groups with similar images detected: %d' %(len(self.results['pathnames'])))
+
+    def clean(self):
+        """Clean or removing previous results and models to ensure correct working."""
+        if hasattr(self, 'results'):
+            logger.info('Cleaning previous fitted model results')
+            if hasattr(self, 'results'): del self.results
+            if hasattr(self, 'params'): del self.params
+        # Store results
+        # self.results = {'img':None, 'feat':None, 'xycoord':None, 'pathnames':None, 'labels': None}
 
     def import_example(self, data='titanic', url=None, sep=','):
         """Import example dataset from github source.
@@ -75,6 +173,57 @@ class Undouble():
 
         """
         return import_example(data=data, url=url, sep=sep)
+
+
+    def plot(self, ncols=None, cmap=None, figsize=(15,10)):
+        """Plot the results.
+
+        Parameters
+        ----------
+        labels : list, (default: None)
+            Cluster label to plot. In case of None, all cluster labels are plotted.
+        ncols : int, (default: None)
+            Number of columns to use in the subplot. The number of rows are estimated based on the columns.
+        Colorscheme for the images.
+            'gray', 'binary',  None (uses rgb colorscheme)
+        show_hog : bool, (default: False)
+            Plot the hog features next to the input image.
+        min_clust : int, (default: 1)
+            Plots are created for clusters with > min_clust samples
+        figsize : tuple, (default: (15, 10).
+            Size of the figure (height,width).
+
+        Returns
+        -------
+        None.
+
+        """
+        # Do some checks and set defaults
+        self._check_status()
+        cmap = cl._set_cmap(cmap, self.params['grayscale'])
+
+        # Plot the clustered images
+        if (self.results.get('pathnames', None) is not None):
+            # Set logger to error only
+            # verbose = logger.getEffectiveLevel()
+            # set_logger(verbose=50)
+
+            # Run over all labels.
+            for i, pathnames in tqdm(enumerate(self.results['pathnames']), disable=disable_tqdm()):
+                # Get the images that cluster together
+                imgs = list(map(lambda x: self.clustimage.imread(x, colorscale=1, dim=self.params['dim'], flatten=False), pathnames))
+                # Make subplots
+                # Setup rows and columns
+                _, ncol = self.clustimage._get_rows_cols(len(imgs), ncols=ncols)
+                labels=list(map(lambda x: 'score: ' + x, list(self.results['scores'][i].astype(str))))
+                self.clustimage._make_subplots(imgs, ncol, cmap, figsize, title=("Number of similar images %s" %(len(pathnames))), labels=labels)
+
+                # Restore verbose status
+                # set_logger(verbose=verbose)
+
+    def _check_status(self):
+        if not hasattr(self, 'results'):
+            raise Exception(logger.error('Results in missing! Hint: try to first fit_transform() your data!'))
 
 
 # %% Import example dataset from github.
@@ -238,6 +387,7 @@ def unzip(path_to_zip):
     return getpath
 
 
+
 # %%
 def set_logger(verbose=20):
     """Set the logger for verbosity messages."""
@@ -251,8 +401,8 @@ def disable_tqdm():
 
 
 # %% Main
-if __name__ == "__main__":
-    import undouble as undouble
-    df = undouble.import_example()
-    out = undouble.fit(df)
-    fig,ax = undouble.plot(out)
+# if __name__ == "__main__":
+#     import undouble as undouble
+#     df = undouble.import_example()
+#     out = undouble.fit(df)
+#     fig,ax = undouble.plot(out)
