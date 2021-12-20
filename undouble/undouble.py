@@ -149,34 +149,18 @@ class Undouble():
     def move(self, filters=['resolution','location'], targetdir=None):
         # Do some checks and set defaults
         self._check_status()
-        resOK, locOK = True, True
-        movedir = targetdir
         if targetdir is not None:
             if not os.path.isdir(targetdir): raise Exception(logger.error(''))
 
         # Mark the images that are identifical in [size] and [location]
         for pathnames in tqdm(self.results['pathnames'], disable=disable_tqdm()):
-            # Get resolution
-            if np.isin('resolution', filters):
-                res = np.array(list(map(lambda x: cl._imread(x).shape[0:2], pathnames)))
-                resOK = np.all(np.isin(res[0], res))
-            # Get location
-            if np.isin('location', filters):
-                loc = list(map(lambda x: os.path.split(x)[0], pathnames))
-                locOK = np.all(np.isin(loc[0], loc))
-
+            # Check whether move is allowed
+            filterOK = filter_checks(pathnames, filters)
             # Move to targetdir
-            if np.all([resOK, locOK]):
-                # Set the targetdir
-                if targetdir is None:
-                    movedir = os.path.join(loc[0], 'undouble')
-                if not os.path.isdir(movedir):
-                    os.makedirs(movedir, exist_ok=True)
-
+            if filterOK:
+                movedir, dirname, filename, ext = create_targetdir(pathnames[0], targetdir)
                 # 1. Copy first file to targetdir and add "_COPY"
-                dirname, filename, ext = seperate_path(pathnames[0])
                 shutil.copy(pathnames[0], os.path.join(movedir,filename+'_COPY'+ext) )
-
                 # 2. Move all others
                 for file in pathnames[1:]:
                     logger.info(file)
@@ -328,6 +312,37 @@ def import_example(data='titanic', url=None, sep=','):
     df = pd.read_csv(PATH_TO_DATA, sep=sep)
     # Return
     return df
+
+
+# %% Set target directory
+def create_targetdir(pathname, targetdir):
+    dirname, filename, ext = seperate_path(pathname)
+    # Set the targetdir
+    if targetdir is None:
+        movedir = os.path.join(dirname, 'undouble')
+    else:
+        movedir = targetdir
+
+    if not os.path.isdir(movedir):
+        logger.debug('Create dir: <%s>' %(movedir))
+        os.makedirs(movedir, exist_ok=True)
+    # Return
+    return movedir, dirname, filename, ext 
+
+
+# %%
+def filter_checks(pathnames, filters):
+    resOK, locOK = True, True
+    # Get resolution
+    if np.isin('resolution', filters):
+        res = np.array(list(map(lambda x: cl._imread(x).shape[0:2], pathnames)))
+        resOK = np.all(np.isin(res[0], res))
+    # Get location
+    if np.isin('location', filters):
+        loc = list(map(lambda x: os.path.split(x)[0], pathnames))
+        locOK = np.all(np.isin(loc[0], loc))
+    
+    return np.all([resOK, locOK])
 
 
 # %% Download files from github source
