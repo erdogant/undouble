@@ -126,44 +126,84 @@ class Undouble():
     def find(self, score=0, merge=True):
         # Make sets of images that are similar based on the minimum defined score.
         pathnames, indexes, scores, resolution = [], [], [], []
+
+        # Only the files that exists (or are not moved in an previous action)
+        _, idx = get_existing_pathnames(self.clustimage.results['pathnames'])
+        if np.sum(idx==False)>0:
+            logger.warning('Files that are moved in a previous action are kept untouched.')
+        paths = self.clustimage.results['pathnames'][idx]
+        feat = self.clustimage.results['feat'].copy()
+        feat = feat[idx,:]
+        feat = feat[:,idx]
+
         # Extract similar images with minimum score
-        for i in tqdm(np.arange(0, self.clustimage.results['feat'].shape[0]), disable=disable_tqdm()):
-            idx = np.where(self.clustimage.results['feat'][i,:]<=score)[0]
+        for i in tqdm(np.arange(0, feat.shape[0]), disable=disable_tqdm()):
+            idx = np.where(feat[i,:]<=score)[0]
             if len(idx)>1:
                 # if ~np.any(list(map(lambda x: np.all(np.isin(x, idx)), indexes))):
                 if ~np.any(list(map(lambda x: np.any(np.isin(x, idx)), indexes))):
                     indexes.append(idx)
-                    pathnames.append(self.clustimage.results['pathnames'][idx])
-                    scores.append(self.clustimage.results['feat'][i,idx])
+                    pathnames.append(paths[idx])
+                    scores.append(feat[i,idx])
 
         # Sort on score
         for i, _ in enumerate(scores):
+            # indexes[i] = indexes[i][isort]
             isort=np.argsort(scores[i])
-            indexes[i] = indexes[i][isort]
             pathnames[i] = pathnames[i][isort]
             scores[i] = scores[i][isort]
         
-        self.results = {'pathnames':pathnames, 'scores':scores, 'resolution':resolution, 'index':indexes}
+        self.results = {'pathnames':pathnames, 'scores':scores, 'resolution':resolution}
         logger.info('Number of groups with similar images detected: %d' %(len(self.results['pathnames'])))
 
-    def move(self, filters=['resolution','location'], targetdir=None):
+    def move(self, filters=None, targetdir=None):
+        """Move images.
+
+        Description
+        -----------
+        Files are moved that are listed by the find() functionality.
+
+        Parameters
+        ----------
+        filters : list, (Default: ['location'])
+            Filter images that needs to moved. 
+            'location' : Only move images that are seen in the same directory.
+        targetdir : str (default: None)  
+            Moving similar files to this directory.
+            None: A subdir, named "undouble" is created within each directory.
+
+        Returns
+        -------
+        None.
+
+        """
         # Do some checks and set defaults
         self._check_status()
         if targetdir is not None:
             if not os.path.isdir(targetdir): raise Exception(logger.error(''))
+        
+        logger.info('Moving [%d] groups of images.' %(len(self.results['pathnames'])))
 
         # Mark the images that are identifical in [size] and [location]
         for pathnames in tqdm(self.results['pathnames'], disable=disable_tqdm()):
+
+            # Check file exists
+            pathnames = pathnames[list(map(os.path.isfile, pathnames))]
+
             # Check whether move is allowed
             filterOK = filter_checks(pathnames, filters)
+
             # Move to targetdir
             if filterOK:
+                # Sort on resolution (best first)
+                pathnames = sort_on_resolution(pathnames)
+                # Create targetdir
                 movedir, dirname, filename, ext = create_targetdir(pathnames[0], targetdir)
                 # 1. Copy first file to targetdir and add "_COPY"
                 shutil.copy(pathnames[0], os.path.join(movedir,filename+'_COPY'+ext) )
                 # 2. Move all others
                 for file in pathnames[1:]:
-                    logger.info(file)
+                    logger.debug(file)
                     shutil.move(file, os.path.join(movedir, os.path.split(file)[1]))
 
     def clean(self):
@@ -330,19 +370,28 @@ def create_targetdir(pathname, targetdir):
     return movedir, dirname, filename, ext 
 
 
+# %% Sort images on resolution.
+def sort_on_resolution(pathnames):
+    scores = np.array(list(map(lambda x: np.prod(cl._imread(x).shape[0:2]), pathnames)))
+    idx = np.argsort(scores)[::-1]
+    return pathnames[idx]
+
+
 # %%
 def filter_checks(pathnames, filters):
     resOK, locOK = True, True
+    # Check nr. of files
+    fileOK = True if len(pathnames)>1 else False
     # Get resolution
-    if np.isin('resolution', filters):
+    if (filters is not None) and np.isin('resolution', filters):
         res = np.array(list(map(lambda x: cl._imread(x).shape[0:2], pathnames)))
         resOK = np.all(np.isin(res[0], res))
     # Get location
-    if np.isin('location', filters):
+    if (filters is not None) and np.isin('location', filters):
         loc = list(map(lambda x: os.path.split(x)[0], pathnames))
         locOK = np.all(np.isin(loc[0], loc))
     
-    return np.all([resOK, locOK])
+    return np.all([fileOK, resOK, locOK])
 
 
 # %% Download files from github source
@@ -442,19 +491,22 @@ def unzip(path_to_zip):
     return getpath
 
 
+# %%
+def get_existing_pathnames(pathnames):
+    Iloc = np.array(list(map(os.path.isfile, pathnames)))
+    return pathnames[Iloc], Iloc
 
 # %%
 def set_logger(verbose=20):
     """Set the logger for verbosity messages."""
     logger.setLevel(verbose)
 
-
 # %%
 def disable_tqdm():
     """Set the logger for verbosity messages."""
     return (True if (logger.getEffectiveLevel()>=30) else False)
 
-
+# %%
 def seperate_path(pathname):
     dirname, filename = os.path.split(pathname)
     filename, ext = os.path.splitext(filename)

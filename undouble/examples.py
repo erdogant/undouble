@@ -7,12 +7,14 @@ print(undouble.__version__)
 
 # %%
 from undouble import Undouble
-model = Undouble(targetdir='D://magweg1//2020', grayscale=True)
+
+model = Undouble(targetdir='//NAS_SYNOLOGY//Photo//2021//')
+model = Undouble(targetdir='D://magweg1//2003')
 model.preprocessing()
 
 # %%
 model.fit(method='phash')
-model.find(score=0)
+model.find(score=10)
 model.plot()
 
 # %%
