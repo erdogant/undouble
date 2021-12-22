@@ -41,9 +41,9 @@ class Undouble():
 
     Parameters
     ----------
-    method : str, (default: 'pca')
+    method : str, (default: 'phash')
         Method to extract features from images.
-            hashmethod : str (default: 'ahash')
+            hashmethod : str (default: 'phash')
             * 'ahash': Average hash
             * 'phash': Perceptual hash
             * 'dhash': Difference hash
@@ -110,20 +110,63 @@ class Undouble():
         # Set the logger
         set_logger(verbose=verbose)
 
-    def preprocessing(self):
-        """All in one function."""
+    def preprocessing(self, black_list=['undouble']):
+        """Preprocessing.
+
+        Parameters
+        ----------
+        black_list : list, (default: ['undouble'])
+            Exclude directory with all subdirectories from processing.
+
+        Returns
+        -------
+        None.
+
+        """
         logger.info("Retrieving files from: [%s]" %(self.params['targetdir']))
         # Preprocessing the images the get them in the right scale and size etc
-        self.clustimage.import_data(self.params['targetdir'])
+        self.clustimage.import_data(self.params['targetdir'], black_list=black_list)
 
     def fit(self, method='phash'):
+        """Compute the hash for each image.
+
+        Parameters
+        ----------
+        method : str, (default: 'phash')
+            Method to extract features from images.
+                hashmethod : str (default: 'phash')
+                * 'ahash': Average hash
+                * 'phash': Perceptual hash
+                * 'dhash': Difference hash
+                * 'whash-haar': Haar wavelet hash
+                * 'whash-db4': Daubechies wavelet hash
+                * 'colorhash': HSV color hash
+                * 'crop-resistant': Crop-resistant hash
+
+        Returns
+        -------
+        None.
+
+        """
         self.clustimage.params['method'] = method
         self.params['method'] = method
         self.clustimage.params_hash = cl.hash_method(method, {})
         # Extract features using method
         self.clustimage.extract_feat(self.clustimage.results)
 
-    def find(self, score=0, merge=True):
+    def find(self, score=0):
+        """Find similar images using the hash signatures.
+
+        Parameters
+        ----------
+        score : float, (default: 0)
+            Threshold on the hash value to determine similarity.
+
+        Returns
+        -------
+        None.
+
+        """
         # Make sets of images that are similar based on the minimum defined score.
         pathnames, indexes, scores, resolution = [], [], [], []
 
@@ -166,7 +209,6 @@ class Undouble():
         Parameters
         ----------
         filters : list, (Default: ['location'])
-            Filter images that needs to moved. 
             'location' : Only move images that are seen in the same directory.
         targetdir : str (default: None)  
             Moving similar files to this directory.
