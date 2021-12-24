@@ -8,8 +8,8 @@ print(undouble.__version__)
 # %%
 from undouble import Undouble
 
-model = Undouble(targetdir='//NAS_SYNOLOGY//Photo//2021//')
-model = Undouble(targetdir='D://magweg1//2003')
+model = Undouble(targetdir='//NAS_SYNOLOGY//Photo//2019//')
+# model = Undouble(targetdir='D://magweg1//2003')
 model.preprocessing()
 
 # %%
@@ -22,3 +22,6 @@ model.move()
 
 # %%
 model.results
+
+# %%
+

@@ -17,6 +17,8 @@ import zipfile
 from clustimage import Clustimage
 import clustimage.clustimage as cl
 import shutil
+import cv2
+from ismember import ismember
 
 logger = logging.getLogger('')
 for handler in logger.handlers[:]: #get rid of existing old handlers
@@ -226,27 +228,40 @@ class Undouble():
         
         logger.info('Moving [%d] groups of images.' %(len(self.results['pathnames'])))
 
-        # Mark the images that are identifical in [size] and [location]
+        # For each group, check the resolution and location.
         for pathnames in tqdm(self.results['pathnames'], disable=disable_tqdm()):
-
             # Check file exists
             pathnames = pathnames[list(map(os.path.isfile, pathnames))]
-
             # Check whether move is allowed
             filterOK = filter_checks(pathnames, filters)
-
             # Move to targetdir
             if filterOK:
-                # Sort on resolution (best first)
-                pathnames = sort_on_resolution(pathnames)
-                # Create targetdir
-                movedir, dirname, filename, ext = create_targetdir(pathnames[0], targetdir)
-                # 1. Copy first file to targetdir and add "_COPY"
-                shutil.copy(pathnames[0], os.path.join(movedir,filename+'_COPY'+ext) )
-                # 2. Move all others
-                for file in pathnames[1:]:
-                    logger.debug(file)
-                    shutil.move(file, os.path.join(movedir, os.path.split(file)[1]))
+                # Sort images on resolution and least amount of blur (best first)
+                pathnames = sort_images(pathnames)['pathnames']
+                # Move to dir
+                self._move_to_dir(pathnames, targetdir)
+
+    def _move_to_dir(self, pathnames, targetdir):
+        """Move to target directory.
+        
+        Description
+        -----------
+        The first pathname is copied, the other are moved.
+
+        Parameters
+        ----------
+        pathnames : list of str
+        targetdir : target directory to copy and move the files
+
+        """
+        # Create targetdir
+        movedir, dirname, filename, ext = create_targetdir(pathnames[0], targetdir)
+        # 1. Copy first file to targetdir and add "_COPY"
+        shutil.copy(pathnames[0], os.path.join(movedir,filename+'_COPY'+ext) )
+        # 2. Move all others
+        for file in pathnames[1:]:
+            logger.debug(file)
+            shutil.move(file, os.path.join(movedir, os.path.split(file)[1]))
 
     def clean(self):
         """Clean or removing previous results and models to ensure correct working."""
@@ -316,13 +331,20 @@ class Undouble():
 
             # Run over all labels.
             for i, pathnames in tqdm(enumerate(self.results['pathnames']), disable=disable_tqdm()):
-                # Get the images that cluster together
-                imgs = list(map(lambda x: self.clustimage.imread(x, colorscale=1, dim=self.params['dim'], flatten=False), pathnames))
-                # Make subplots
-                # Setup rows and columns
-                _, ncol = self.clustimage._get_rows_cols(len(imgs), ncols=ncols)
-                labels = list( map(lambda x: 'score: ' + x, list(self.results['scores'][i].astype(str)) ) )
-                self.clustimage._make_subplots(imgs, ncol, cmap, figsize, title=("Number of similar images %s" %(len(pathnames))), labels=labels)
+                # Check whether file exists.
+                pathnames = pathnames[list(map(os.path.isfile, pathnames))]
+                # Only groups with > 1 images needs to be moved.
+                if len(pathnames)>1:
+                    # Sort images
+                    imgscores = sort_images(pathnames)
+                    imgscores['hash_score'] = self.results['scores'][i][imgscores['idx']]
+                    # Get the images that cluster together
+                    imgs = list(map(lambda x: self.clustimage.imread(x, colorscale=1, dim=self.params['dim'], flatten=False), imgscores['pathnames']))
+                    # Setup rows and columns
+                    _, ncol = self.clustimage._get_rows_cols(len(imgs), ncols=ncols)
+                    labels = list( map(lambda x,y: 'score: ' + str(int(x)) + ' and blur: ' + str(int(y)) , imgscores['hash_score'], imgscores['blur'] ) )
+                    # Make subplots
+                    self.clustimage._make_subplots(imgs, ncol, None, figsize, title=("Number of similar images %s" %(len(imgscores['pathnames']))), labels=labels)
 
                 # Restore verbose status
                 # set_logger(verbose=verbose)
@@ -412,11 +434,73 @@ def create_targetdir(pathname, targetdir):
     return movedir, dirname, filename, ext 
 
 
-# %% Sort images on resolution.
-def sort_on_resolution(pathnames):
-    scores = np.array(list(map(lambda x: np.prod(cl._imread(x).shape[0:2]), pathnames)))
-    idx = np.argsort(scores)[::-1]
-    return pathnames[idx]
+# %%
+def _compute_rank(scores, higher_is_better=True):
+    rankscore = np.argsort(scores)[::-1]
+    uires = np.unique(scores)
+    uirankscore = np.argsort(uires)
+    if higher_is_better: uirankscore = uirankscore[::-1]
+    rank_res = uirankscore[ismember(scores, uires)[1]]
+    return rank_res, rankscore
+
+
+# %% Sort images.
+def sort_images(pathnames, sort_first_img=False):
+    """Sort images.
+
+    Description
+    -----------
+    Sort images on the following conditions:
+        1. Resolution
+        2. Amount of blur
+
+    Parameters
+    ----------
+    pathnames : list of str.
+        Absolute locations to image path.
+
+    Returns
+    -------
+    list of str
+        images sorted on conditions.
+
+    """
+    if not sort_first_img:
+        # Remove the first image from the list.
+        pathname1 = pathnames[0]
+        pathnames = pathnames[1:]
+
+    # Compute resolution (higher is better)
+    scor_res = np.array(list(map(lambda x: np.prod(cl._imread(x).shape[0:2]), pathnames)))
+    ranks_sim, rank_exact = _compute_rank(scor_res, higher_is_better=True)
+
+    # Compute amount of blurr (higher is better)
+    scor_blr = np.ceil(np.array(list(map(compute_blur, pathnames))))
+
+    # Within the ordering of the resolution, prefer the least blurry images.
+    for r in ranks_sim:
+        idx = np.where(r==ranks_sim)[0]
+        if len(idx)>1:
+            rank_exact[idx] = idx[np.argsort(scor_blr[idx])[::-1]]
+    
+    for i in rank_exact:
+        logger.debug('%g - %g' %(scor_res[i], scor_blr[i]))
+    
+    results = {'pathnames':pathnames[rank_exact], 'resolution':scor_res[rank_exact], 'blur':scor_blr[rank_exact], 'idx':rank_exact}
+
+    # Stack together
+    if not sort_first_img:
+        scor_res1 =  np.prod(cl._imread(pathname1).shape[0:2])
+        scor_blr1 = np.ceil(compute_blur(pathname1))
+        results['pathnames'] = [pathname1]+list(results['pathnames'])
+        results['resolution'] = [scor_res1] + list(results['resolution'])
+        results['blur'] = [scor_blr1] + list(results['blur'])
+        results['idx'] = [0] + list(results['idx']+1)
+
+    # if also_sort_this is not None:
+        # results['scores'] = also_sort_this[rank_exact]
+    # Return
+    return results
 
 
 # %%
@@ -531,6 +615,43 @@ def unzip(path_to_zip):
         logger.warning('Input is not a zip file: [%s]', path_to_zip)
     # Return
     return getpath
+
+
+# %%
+def compute_blur(pathname):
+    """Compute amount of blur in image.
+
+    Description
+    -----------
+    load the image, convert it to grayscale, and compute the focus measure of
+    the image using the Variance of Laplacian method. The returned scores <100 
+    are generally more blurry.
+
+    Parameters
+    ----------
+    pathname : str
+        Absolute path location to image.
+
+    Returns
+    -------
+    fm_score : float
+        Score the depicts the amount of blur. Scores <100 are generally more blurry.
+
+    """
+    # method
+    img = cv2.imread(pathname)
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+	# compute the Laplacian of the image and then return the focus measure, which is simply the variance of the Laplacian
+    fm_score = cv2.Laplacian(gray, cv2.CV_64F).var()
+    
+    # if the focus measure is less than the supplied threshold, then the image should be considered "blurry"
+    if fm_score < 100:
+        logger.debug('Blurry image> %s' %(pathname))
+    # show the image
+    # cv2.putText(img, "{}: {:.2f}".format('amount of blur:', fm), (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), 3)
+    # cv2.imshow("Image", img)
+    # key = cv2.waitKey(0)
+    return fm_score
 
 
 # %%

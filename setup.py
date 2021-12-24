@@ -13,7 +13,7 @@ else:
 with open("README.md", "r") as fh:
     long_description = fh.read()
 setuptools.setup(
-     install_requires=['matplotlib','numpy','tqdm', 'clustimage'],
+     install_requires=['matplotlib','numpy','tqdm', 'clustimage','ismember'],
      python_requires='>=3',
      name='undouble',
      version=new_version,

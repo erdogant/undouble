@@ -3,6 +3,7 @@ from undouble.undouble import Undouble
 from undouble.undouble import (
     import_example,
     load_example,
+    compute_blur,
     )
 
 
