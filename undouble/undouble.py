@@ -170,7 +170,7 @@ class Undouble():
 
         """
         # Make sets of images that are similar based on the minimum defined score.
-        pathnames, indexes, scores, resolution = [], [], [], []
+        pathnames, indexes, scores = [], [], []
 
         # Only the files that exists (or are not moved in an previous action)
         _, idx = get_existing_pathnames(self.clustimage.results['pathnames'])
@@ -197,8 +197,10 @@ class Undouble():
             isort=np.argsort(scores[i])
             pathnames[i] = pathnames[i][isort]
             scores[i] = scores[i][isort]
-        
-        self.results = {'pathnames':pathnames, 'scores':scores, 'resolution':resolution}
+
+        # Sort on directory
+        idx = np.argsort(list(map(lambda x: os.path.split(x[0])[0], pathnames)))
+        self.results = {'pathnames':np.array(pathnames)[idx].tolist(), 'scores':np.array(scores)[idx].tolist()}
         logger.info('Number of groups with similar images detected: %d' %(len(self.results['pathnames'])))
 
     def move(self, filters=None, targetdir=None):
@@ -225,12 +227,26 @@ class Undouble():
         self._check_status()
         if targetdir is not None:
             if not os.path.isdir(targetdir): raise Exception(logger.error(''))
-        
-        logger.info('Moving [%d] groups of images.' %(len(self.results['pathnames'])))
+        # logger.info('Detected images: [%d] across of [%d] groups.' %(totfiles, totgroup))
+
+        totfiles = np.sum(list(map(len, self.results['pathnames'])))
+        totgroup = len(self.results['pathnames'])
+        tdir = 'undouble' if targetdir is None else targetdir
+        answer=input('>Wait! Before you continue, you are at the point of physically moving files!\n>[%d] similar images are detected over [%d] groups.\n>[%d] images will be moved to the [%s] directory.\n>[%d] images will be copied to the [%s] directory.\n>Type <ok> to proceed.\n>' %(totfiles, totgroup, totfiles-totgroup, tdir, totgroup, tdir))
+        if answer != 'ok':
+            return
 
         # For each group, check the resolution and location.
+        pathmem=''
+        answer = ''
         for pathnames in tqdm(self.results['pathnames'], disable=disable_tqdm()):
+            curdir=os.path.split(pathnames[0])[0]
+            if pathmem!=curdir:
+                pathmem=curdir
+                logger.info('Working in dir: [%s]' %(curdir))
+                if answer!='ok': answer = input('>Hit <enter> to proceed until the next directory. Type <ok> to stop asking! Just go!!')
             # Check file exists
+            pathnames = np.array(pathnames)
             pathnames = pathnames[list(map(os.path.isfile, pathnames))]
             # Check whether move is allowed
             filterOK = filter_checks(pathnames, filters)
@@ -239,9 +255,9 @@ class Undouble():
                 # Sort images on resolution and least amount of blur (best first)
                 pathnames = sort_images(pathnames)['pathnames']
                 # Move to dir
-                self._move_to_dir(pathnames, targetdir)
+                self._move_to_dir(pathnames, targetdir, make_moved_filename_consistent=True)
 
-    def _move_to_dir(self, pathnames, targetdir):
+    def _move_to_dir(self, pathnames, targetdir, make_moved_filename_consistent=True):
         """Move to target directory.
         
         Description
@@ -257,11 +273,15 @@ class Undouble():
         # Create targetdir
         movedir, dirname, filename, ext = create_targetdir(pathnames[0], targetdir)
         # 1. Copy first file to targetdir and add "_COPY"
-        shutil.copy(pathnames[0], os.path.join(movedir,filename+'_COPY'+ext) )
+        shutil.copy(pathnames[0], os.path.join(movedir, filename + '_COPY' + ext) )
         # 2. Move all others
-        for file in pathnames[1:]:
+        for i, file in enumerate(pathnames[1:]):
             logger.debug(file)
-            shutil.move(file, os.path.join(movedir, os.path.split(file)[1]))
+            if make_moved_filename_consistent:
+                ext = os.path.split(file)[1][-4:].lower()
+                shutil.move(file, os.path.join(movedir, filename + '_' + str(i) + ext) )
+            else:
+                shutil.move(file, os.path.join(movedir, os.path.split(file)[1] ))
 
     def clean(self):
         """Clean or removing previous results and models to ensure correct working."""
@@ -332,17 +352,16 @@ class Undouble():
             # Run over all labels.
             for i, pathnames in tqdm(enumerate(self.results['pathnames']), disable=disable_tqdm()):
                 # Check whether file exists.
-                pathnames = pathnames[list(map(os.path.isfile, pathnames))]
+                pathnames = np.array(pathnames)[list(map(os.path.isfile, pathnames))]
                 # Only groups with > 1 images needs to be moved.
                 if len(pathnames)>1:
                     # Sort images
-                    imgscores = sort_images(pathnames)
-                    imgscores['hash_score'] = self.results['scores'][i][imgscores['idx']]
+                    imgscores = sort_images(pathnames, hash_scores=self.results['scores'][i])
                     # Get the images that cluster together
                     imgs = list(map(lambda x: self.clustimage.imread(x, colorscale=1, dim=self.params['dim'], flatten=False), imgscores['pathnames']))
                     # Setup rows and columns
                     _, ncol = self.clustimage._get_rows_cols(len(imgs), ncols=ncols)
-                    labels = list( map(lambda x,y: 'score: ' + str(int(x)) + ' and blur: ' + str(int(y)) , imgscores['hash_score'], imgscores['blur'] ) )
+                    labels = list( map(lambda x,y,z: 'score: ' + str(int(x)) + ' and blur: ' + str(int(y)) + '\nresolution: ' + str(int(z)) , imgscores['hash_scores'], imgscores['blur'], imgscores['resolution'] ) )
                     # Make subplots
                     self.clustimage._make_subplots(imgs, ncol, None, figsize, title=("Number of similar images %s" %(len(imgscores['pathnames']))), labels=labels)
 
@@ -445,7 +464,7 @@ def _compute_rank(scores, higher_is_better=True):
 
 
 # %% Sort images.
-def sort_images(pathnames, sort_first_img=False):
+def sort_images(pathnames, hash_scores=None, sort_first_img=False):
     """Sort images.
 
     Description
@@ -487,18 +506,17 @@ def sort_images(pathnames, sort_first_img=False):
         logger.debug('%g - %g' %(scor_res[i], scor_blr[i]))
     
     results = {'pathnames':pathnames[rank_exact], 'resolution':scor_res[rank_exact], 'blur':scor_blr[rank_exact], 'idx':rank_exact}
-
     # Stack together
     if not sort_first_img:
         scor_res1 =  np.prod(cl._imread(pathname1).shape[0:2])
         scor_blr1 = np.ceil(compute_blur(pathname1))
-        results['pathnames'] = [pathname1]+list(results['pathnames'])
-        results['resolution'] = [scor_res1] + list(results['resolution'])
-        results['blur'] = [scor_blr1] + list(results['blur'])
-        results['idx'] = [0] + list(results['idx']+1)
+        results['pathnames'] = np.array([pathname1] + list(results['pathnames']))
+        results['resolution'] = np.array([scor_res1] + list(results['resolution']))
+        results['blur'] = np.array([scor_blr1] + list(results['blur']))
+        results['idx'] = [0] + list(results['idx'] + 1)
 
-    # if also_sort_this is not None:
-        # results['scores'] = also_sort_this[rank_exact]
+    hash_scores = np.array(hash_scores)[results['idx']] if hash_scores is not None else np.array([0]*len(results['idx']))
+    results['hash_scores'] = hash_scores
     # Return
     return results
 
