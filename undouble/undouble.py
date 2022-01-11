@@ -60,8 +60,8 @@ class Undouble():
         Directory to read the images.
     ext : list, (default: ['png','tiff','jpg'])
         Images with the file extentions are used.
-    grayscale : Bool, (default: False)
-        Colorscaling the image to gray. This can be usefull when clustering e.g., faces.
+    grayscale : Bool, (default: True)
+        Colorscaling the image to gray.
     dim : tuple, (default: (128,128))
         Rescale images. This is required because the feature-space need to be the same across samples.
     verbose : int, (default: 20)
