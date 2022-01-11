@@ -4,7 +4,7 @@ from undouble.undouble import (
     import_example,
     load_example,
     compute_blur,
-    )
+)
 
 
 __author__ = 'Erdogan Tasksen'
@@ -18,14 +18,30 @@ undouble
 
 Description
 -----------
-undouble is for...
+undouble is for the detection of duplicate photos and mark or move the photos to undouble the collection.
+The following steps are taken:
+    1. Read recursively all images from directory with the specified extensions.
+    2. Compute image hash per photo.
+    3. Mark similar images.
 
 Example
 -------
 >>> from undouble import Undouble
->>> model = Undouble(verbose=20)
->>> model.fit_transform()
->>> fig,ax = undouble.plot(model)
+>>>
+>>> # Init with default settings
+>>> model = Undouble()
+>>>
+>>> # load example with faces
+>>> X = cl.import_example(data='mnist')
+>>>
+>>> # Cluster digits
+>>> results = cl.fit_transform(X)
+>>>
+>>> # Find images
+>>> results_find = cl.find(X[0,:], k=None, alpha=0.05)
+>>> cl.plot_find()
+>>> cl.scatter()
+>>>
 
 References
 ----------
