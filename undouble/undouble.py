@@ -152,11 +152,13 @@ class Undouble():
         None.
 
         """
-        self.clustimage.params['method'] = method
-        self.params['method'] = method
-        self.clustimage.params_hash = cl.hash_method(method, {})
-        # Extract features using method
-        self.clustimage.extract_feat(self.clustimage.results)
+        # Set parameters
+        if method is not None:
+            self.params['method'] = method
+            self.clustimage.params['method'] = method
+            self.clustimage.params_hash = cl.get_params_hash(method, {})
+        # Extract hash features
+        self.clustimage.extract_feat(self.results)
 
     def find(self, score=0):
         """Find similar images using the hash signatures.
