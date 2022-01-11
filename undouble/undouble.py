@@ -171,27 +171,31 @@ class Undouble():
         None.
 
         """
+        if self.results['feat'] is None:
+            logger.warning('Can not find similar images because no feature were extracted.')
+            return None
+
         # Make sets of images that are similar based on the minimum defined score.
         pathnames, indexes, scores = [], [], []
 
         # Only the files that exists (or are not moved in an previous action)
-        _, idx = get_existing_pathnames(self.clustimage.results['pathnames'])
+        _, idx = get_existing_pathnames(self.results['pathnames'])
         if np.sum(idx==False)>0:
             logger.warning('Files that are moved in a previous action are kept untouched.')
-        paths = self.clustimage.results['pathnames'][idx]
-        feat = self.clustimage.results['feat'].copy()
-        feat = feat[idx,:]
-        feat = feat[:,idx]
+        paths = self.results['pathnames'][idx]
+        feat = copy.deepcopy(self.results['feat'])
+        feat = feat[idx, :]
+        feat = feat[:, idx]
 
         # Extract similar images with minimum score
         for i in tqdm(np.arange(0, feat.shape[0]), disable=disable_tqdm()):
-            idx = np.where(feat[i,:]<=score)[0]
+            idx = np.where(feat[i, :]<=score)[0]
             if len(idx)>1:
                 # if ~np.any(list(map(lambda x: np.all(np.isin(x, idx)), indexes))):
                 if ~np.any(list(map(lambda x: np.any(np.isin(x, idx)), indexes))):
                     indexes.append(idx)
                     pathnames.append(paths[idx])
-                    scores.append(feat[i,idx])
+                    scores.append(feat[i, idx])
 
         # Sort on score
         for i, _ in enumerate(scores):
