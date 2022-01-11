@@ -102,16 +102,16 @@ class Undouble():
 
     """
 
-    def __init__(self, method='phash', targetdir='', grayscale=False, dim=(128, 128), ext=['png', 'tiff', 'jpg'], verbose=20):
+    def __init__(self, method='phash', targetdir='', grayscale=True, dim=(128, 128), hash_size=8, ext=['png', 'tiff', 'jpg'], verbose=20):
         """Initialize undouble with user-defined parameters."""
         if isinstance(ext, str): ext = [ext]
         # Clean readily fitted models to ensure correct results
         self.clean()
         if verbose<=0: verbose=60
         # Store user setting in params
-        self.params = {'method': method, 'grayscale': grayscale, 'dim': dim, 'ext': ext, 'verbose': verbose}
+        self.params = {'method': method, 'grayscale': grayscale, 'dim': dim, 'ext': ext, 'hash_size': hash_size, 'verbose': verbose}
         # Initialize the clustimage library
-        self.clustimage = Clustimage(method=self.params['method'], grayscale=self.params['grayscale'], ext=self.params['ext'], dim=self.params['dim'], verbose=self.params['verbose'])
+        self.clustimage = Clustimage(method=self.params['method'], grayscale=self.params['grayscale'], ext=self.params['ext'], dim=self.params['dim'], params_hash={'hash_size': hash_size}, verbose=self.params['verbose'])
         # Set the logger
         set_logger(verbose=verbose)
 
@@ -182,7 +182,7 @@ class Undouble():
 
         """
         if self.results['feat'] is None:
-            logger.warning('Can not find similar images because no feature were extracted.')
+            logger.warning('Can not find similar images because no features are present. Tip: Use the .fit() function first.')
             return None
 
         # Make sets of images that are similar based on the minimum defined score.
@@ -357,6 +357,7 @@ class Undouble():
         self._check_status()
         ncols=None
         cmap = cl._set_cmap(cmap, self.params['grayscale'])
+        colorscale = 0 if self.params['grayscale'] else 1
 
         # Plot the clustered images
         if (self.results.get('pathnames', None) is not None):
@@ -373,12 +374,12 @@ class Undouble():
                     # Sort images
                     imgscores = sort_images(pathnames, hash_scores=self.results['scores'][i])
                     # Get the images that cluster together
-                    imgs = list(map(lambda x: self.clustimage.imread(x, colorscale=1, dim=self.params['dim'], flatten=False), imgscores['pathnames']))
+                    imgs = list(map(lambda x: self.clustimage.imread(x, colorscale=colorscale, dim=self.params['dim'], flatten=False), imgscores['pathnames']))
                     # Setup rows and columns
                     _, ncol = self.clustimage._get_rows_cols(len(imgs), ncols=ncols)
                     labels = list(map(lambda x, y, z: 'score: ' + str(int(x)) + ' and blur: ' + str(int(y)) + '\nresolution: ' + str(int(z)), imgscores['hash_scores'], imgscores['blur'], imgscores['resolution']))
                     # Make subplots
-                    self.clustimage._make_subplots(imgs, ncol, None, figsize, title=("Number of similar images %s" %(len(imgscores['pathnames']))), labels=labels)
+                    self.clustimage._make_subplots(imgs, ncol, cmap, figsize, title=("Number of similar images %s" %(len(imgscores['pathnames']))), labels=labels)
 
                 # Restore verbose status
                 # set_logger(verbose=verbose)
@@ -387,10 +388,22 @@ class Undouble():
         if not hasattr(self, 'results'):
             raise Exception(logger.error('Results missing! Hint: try to first use the <.find()> functionality'))
 
+    def compute_hash(self, img, hash_size=None):
+        """Compute hash.
 
-def compute_hash(img):
-    cl = Clustimage()
-    cl.compute_hash()
+        Parameters
+        ----------
+        img : numpy-array
+            Image.
+
+        Returns
+        -------
+        imghash : numpy-array
+            Hash.
+
+        """
+        if hash_size is None: hash_size=self.params['hash_size']
+        return self.clustimage.compute_hash(img, hash_size=hash_size).hash
 
 
 # %% Import example dataset from github.
