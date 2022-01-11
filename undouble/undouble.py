@@ -1,3 +1,4 @@
+"""Undouble library."""
 # --------------------------------------------------
 # Name        : undouble.py
 # Author      : E.Taskesen
@@ -32,14 +33,15 @@ logger = logging.getLogger()
 
 
 class Undouble():
-    """Undouble your photo collection.
+    """Detect duplicate photos.
 
     Description
     -----------
-    The aim of this library is to undouble your photo collection.
+    The aim of this library is to detect duplicate photos and mark or move the photos to undouble the collection.
     The following steps are taken:
         1. Read recursively all images from directory with the specified extensions.
-        2. 
+        2. Compute image hash per photo.
+        3. Mark similar images.
 
     Parameters
     ----------
@@ -63,7 +65,7 @@ class Undouble():
         Rescale images. This is required because the feature-space need to be the same across samples.
     verbose : int, (default: 20)
         Print progress to screen. The default is 20.
-        10:Debug, 20:Info, 30:Warn 40:Error, 60:None, 
+        10:Debug, 20:Info, 30:Warn 40:Error, 60:None
 
     Returns
     -------
@@ -79,7 +81,7 @@ class Undouble():
     >>> from undouble import Undouble
     >>>
     >>> # Init with default settings
-    >>> model = Undouble(method='ahash')
+    >>> model = Undouble()
     >>>
     >>> # load example with faces
     >>> X = cl.import_example(data='mnist')
@@ -92,27 +94,27 @@ class Undouble():
     >>> cl.plot_find()
     >>> cl.scatter()
     >>>
-    
+
     References
     ----------
     * https://content-blockchain.org/research/testing-different-image-hash-functions/
 
     """
-    def __init__(self, method='phash', targetdir='', grayscale=False, dim=(128,128), ext=['png','tiff','jpg'], verbose=20):
+
+    def __init__(self, method='phash', targetdir='', grayscale=False, dim=(128, 128), ext=['png', 'tiff', 'jpg'], verbose=20):
         """Initialize undouble with user-defined parameters."""
+        if isinstance(ext, str): ext = [ext]
         # Clean readily fitted models to ensure correct results
         self.clean()
-        # Check existence targetdir
-        if not os.path.isdir(targetdir): raise Exception(logger.error('Input parameter <targetdir> does not contain a valid directory: [%s]' %(targetdir)) )
         if verbose<=0: verbose=60
         # Store user setting in params
-        self.params = {'method':method, 'targetdir':targetdir, 'grayscale':grayscale, 'dim':dim, 'ext':ext, 'verbose':verbose}
+        self.params = {'method': method, 'grayscale': grayscale, 'dim': dim, 'ext': ext, 'verbose': verbose}
         # Initialize the clustimage library
         self.clustimage = Clustimage(method=self.params['method'], grayscale=self.params['grayscale'], ext=self.params['ext'], dim=self.params['dim'], verbose=self.params['verbose'])
         # Set the logger
         set_logger(verbose=verbose)
 
-    def preprocessing(self, black_list=['undouble']):
+    def preprocessing(self, targetdir, black_list=['undouble'], return_results=False):
         """Preprocessing.
 
         Parameters
@@ -200,7 +202,7 @@ class Undouble():
 
         # Sort on directory
         idx = np.argsort(list(map(lambda x: os.path.split(x[0])[0], pathnames)))
-        self.results = {'pathnames':np.array(pathnames)[idx].tolist(), 'scores':np.array(scores)[idx].tolist()}
+        self.results = {'pathnames': np.array(pathnames)[idx].tolist(), 'scores': np.array(scores)[idx].tolist()}
         logger.info('Number of groups with similar images detected: %d' %(len(self.results['pathnames'])))
 
     def move(self, filters=None, targetdir=None):
@@ -214,7 +216,7 @@ class Undouble():
         ----------
         filters : list, (Default: ['location'])
             'location' : Only move images that are seen in the same directory.
-        targetdir : str (default: None)  
+        targetdir : str (default: None)
             Moving similar files to this directory.
             None: A subdir, named "undouble" is created within each directory.
 
@@ -232,7 +234,7 @@ class Undouble():
         totfiles = np.sum(list(map(len, self.results['pathnames'])))
         totgroup = len(self.results['pathnames'])
         tdir = 'undouble' if targetdir is None else targetdir
-        answer=input('>Wait! Before you continue, you are at the point of physically moving files!\n>[%d] similar images are detected over [%d] groups.\n>[%d] images will be moved to the [%s] directory.\n>[%d] images will be copied to the [%s] directory.\n>Type <ok> to proceed.\n>' %(totfiles, totgroup, totfiles-totgroup, tdir, totgroup, tdir))
+        answer=input('>Wait! Before you continue, you are at the point of physically moving files!\n>[%d] similar images are detected over [%d] groups.\n>[%d] images will be moved to the [%s] directory.\n>[%d] images will be copied to the [%s] directory.\n>Type <ok> to proceed.\n>' %(totfiles, totgroup, totfiles -totgroup, tdir, totgroup, tdir))
         if answer != 'ok':
             return
 
@@ -259,7 +261,7 @@ class Undouble():
 
     def _move_to_dir(self, pathnames, targetdir, make_moved_filename_consistent=True):
         """Move to target directory.
-        
+
         Description
         -----------
         The first pathname is copied, the other are moved.
@@ -273,15 +275,15 @@ class Undouble():
         # Create targetdir
         movedir, dirname, filename, ext = create_targetdir(pathnames[0], targetdir)
         # 1. Copy first file to targetdir and add "_COPY"
-        shutil.copy(pathnames[0], os.path.join(movedir, filename + '_COPY' + ext) )
+        shutil.copy(pathnames[0], os.path.join(movedir, filename + '_COPY' + ext))
         # 2. Move all others
         for i, file in enumerate(pathnames[1:]):
             logger.debug(file)
             if make_moved_filename_consistent:
                 ext = os.path.split(file)[1][-4:].lower()
-                shutil.move(file, os.path.join(movedir, filename + '_' + str(i) + ext) )
+                shutil.move(file, os.path.join(movedir, filename + '_' + str(i) + ext))
             else:
-                shutil.move(file, os.path.join(movedir, os.path.split(file)[1] ))
+                shutil.move(file, os.path.join(movedir, os.path.split(file)[1]))
 
     def clean(self):
         """Clean or removing previous results and models to ensure correct working."""
@@ -314,8 +316,7 @@ class Undouble():
         """
         return import_example(data=data, url=url, sep=sep)
 
-
-    def plot(self, cmap=None, figsize=(15,10)):
+    def plot(self, cmap=None, figsize=(15, 10)):
         """Plot the results.
 
         Parameters
@@ -361,7 +362,7 @@ class Undouble():
                     imgs = list(map(lambda x: self.clustimage.imread(x, colorscale=1, dim=self.params['dim'], flatten=False), imgscores['pathnames']))
                     # Setup rows and columns
                     _, ncol = self.clustimage._get_rows_cols(len(imgs), ncols=ncols)
-                    labels = list( map(lambda x,y,z: 'score: ' + str(int(x)) + ' and blur: ' + str(int(y)) + '\nresolution: ' + str(int(z)) , imgscores['hash_scores'], imgscores['blur'], imgscores['resolution'] ) )
+                    labels = list(map(lambda x, y, z: 'score: ' + str(int(x)) + ' and blur: ' + str(int(y)) + '\nresolution: ' + str(int(z)), imgscores['hash_scores'], imgscores['blur'], imgscores['resolution']))
                     # Make subplots
                     self.clustimage._make_subplots(imgs, ncol, None, figsize, title=("Number of similar images %s" %(len(imgscores['pathnames']))), labels=labels)
 
@@ -387,9 +388,9 @@ def import_example(data='titanic', url=None, sep=','):
         Name of datasets: 'sprinkler', 'titanic', 'student', 'fifa', 'cancer', 'waterpump', 'retail'
     url : str
         url link to to dataset.
-	verbose : int, (default: 20)
-		Print progress to screen. The default is 3.
-		60: None, 40: Error, 30: Warn, 20: Info, 10: Debug
+        verbose : int, (default: 20)
+                Print progress to screen. The default is 3.
+                60: None, 40: Error, 30: Warn, 20: Info, 10: Debug
 
     Returns
     -------
@@ -439,6 +440,27 @@ def import_example(data='titanic', url=None, sep=','):
 
 # %% Set target directory
 def create_targetdir(pathname, targetdir):
+    """Create directory.
+
+    Parameters
+    ----------
+    pathname : str
+        Absolute path location of the image of interest.
+    targetdir : str
+        Target directory.
+
+    Returns
+    -------
+    movedir : str
+        Absolute path to directory.
+    dirname : str
+        Absolute path to directory.
+    filename : str
+        Name of the file.
+    ext : str
+        Extension.
+
+    """
     dirname, filename, ext = seperate_path(pathname)
     # Set the targetdir
     if targetdir is None:
@@ -450,7 +472,7 @@ def create_targetdir(pathname, targetdir):
         logger.debug('Create dir: <%s>' %(movedir))
         os.makedirs(movedir, exist_ok=True)
     # Return
-    return movedir, dirname, filename, ext 
+    return movedir, dirname, filename, ext
 
 
 # %%
@@ -501,21 +523,21 @@ def sort_images(pathnames, hash_scores=None, sort_first_img=False):
         idx = np.where(r==ranks_sim)[0]
         if len(idx)>1:
             rank_exact[idx] = idx[np.argsort(scor_blr[idx])[::-1]]
-    
+
     for i in rank_exact:
         logger.debug('%g - %g' %(scor_res[i], scor_blr[i]))
-    
-    results = {'pathnames':pathnames[rank_exact], 'resolution':scor_res[rank_exact], 'blur':scor_blr[rank_exact], 'idx':rank_exact}
+
+    results = {'pathnames': pathnames[rank_exact], 'resolution': scor_res[rank_exact], 'blur': scor_blr[rank_exact], 'idx': rank_exact}
     # Stack together
     if not sort_first_img:
-        scor_res1 =  np.prod(cl._imread(pathname1).shape[0:2])
+        scor_res1 = np.prod(cl._imread(pathname1).shape[0:2])
         scor_blr1 = np.ceil(compute_blur(pathname1))
         results['pathnames'] = np.array([pathname1] + list(results['pathnames']))
         results['resolution'] = np.array([scor_res1] + list(results['resolution']))
         results['blur'] = np.array([scor_blr1] + list(results['blur']))
         results['idx'] = [0] + list(results['idx'] + 1)
 
-    hash_scores = np.array(hash_scores)[results['idx']] if hash_scores is not None else np.array([0]*len(results['idx']))
+    hash_scores = np.array(hash_scores)[results['idx']] if hash_scores is not None else np.array([0] *len(results['idx']))
     results['hash_scores'] = hash_scores
     # Return
     return results
@@ -534,13 +556,13 @@ def filter_checks(pathnames, filters):
     if (filters is not None) and np.isin('location', filters):
         loc = list(map(lambda x: os.path.split(x)[0], pathnames))
         locOK = np.all(np.isin(loc[0], loc))
-    
+
     return np.all([fileOK, resOK, locOK])
 
 
 # %% Download files from github source
 def wget(url, writepath):
-    """ Retrieve file from url.
+    """Retrieve file from url.
 
     Parameters
     ----------
@@ -580,7 +602,6 @@ def load_example(data='breast'):
     tuple containing dataset and response variable (X,y).
 
     """
-
     try:
         from sklearn import datasets
     except:
@@ -595,6 +616,7 @@ def load_example(data='breast'):
         X, y = datasets.fetch_openml("titanic", version=1, as_frame=True, return_X_y=True)
 
     return X, y
+
 
 # %% unzip
 def unzip(path_to_zip):
@@ -642,7 +664,7 @@ def compute_blur(pathname):
     Description
     -----------
     load the image, convert it to grayscale, and compute the focus measure of
-    the image using the Variance of Laplacian method. The returned scores <100 
+    the image using the Variance of Laplacian method. The returned scores <100
     are generally more blurry.
 
     Parameters
@@ -659,9 +681,9 @@ def compute_blur(pathname):
     # method
     img = cv2.imread(pathname)
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-	# compute the Laplacian of the image and then return the focus measure, which is simply the variance of the Laplacian
+    # compute the Laplacian of the image and then return the focus measure, which is simply the variance of the Laplacian
     fm_score = cv2.Laplacian(gray, cv2.CV_64F).var()
-    
+
     # if the focus measure is less than the supplied threshold, then the image should be considered "blurry"
     if fm_score < 100:
         logger.debug('Blurry image> %s' %(pathname))
@@ -678,20 +700,28 @@ def get_existing_pathnames(pathnames):
     return pathnames[Iloc], Iloc
 
 # %%
+
+
 def set_logger(verbose=20):
     """Set the logger for verbosity messages."""
     logger.setLevel(verbose)
 
 # %%
+
+
 def disable_tqdm():
     """Set the logger for verbosity messages."""
     return (True if (logger.getEffectiveLevel()>=30) else False)
 
 # %%
+
+
 def seperate_path(pathname):
     dirname, filename = os.path.split(pathname)
     filename, ext = os.path.splitext(filename)
     return dirname, filename, ext.lower()
+
+# %%
 
 # %% Main
 # if __name__ == "__main__":
