@@ -19,10 +19,11 @@ from clustimage import Clustimage
 import clustimage.clustimage as cl
 import shutil
 import cv2
+import copy
 from ismember import ismember
 
 logger = logging.getLogger('')
-for handler in logger.handlers[:]: #get rid of existing old handlers
+for handler in logger.handlers[:]:  # get rid of existing old handlers
     logger.removeHandler(handler)
 console = logging.StreamHandler()
 # formatter = logging.Formatter('[%(asctime)s] [undouble]> %(levelname)s> %(message)s', datefmt='%H:%M:%S')
@@ -127,11 +128,18 @@ class Undouble():
         None.
 
         """
+        if isinstance(black_list, str): black_list = [black_list]
+        # Check existence targetdir
+        if not os.path.isdir(targetdir): raise Exception(logger.error('Input parameter <targetdir> does not contain a valid directory: [%s]' %(targetdir)))
+        self.params['targetdir'] = targetdir
         logger.info("Retrieving files from: [%s]" %(self.params['targetdir']))
         # Preprocessing the images the get them in the right scale and size etc
-        self.clustimage.import_data(self.params['targetdir'], black_list=black_list)
+        self.results = self.clustimage.import_data(self.params['targetdir'], black_list=black_list)
+        # Return
+        if return_results:
+            return self.results
 
-    def fit(self, method='phash'):
+    def fit(self, method=None):
         """Compute the hash for each image.
 
         Parameters
@@ -378,6 +386,11 @@ class Undouble():
     def _check_status(self):
         if not hasattr(self, 'results'):
             raise Exception(logger.error('Results missing! Hint: try to first use the <.find()> functionality'))
+
+
+def compute_hash(img):
+    cl = Clustimage()
+    cl.compute_hash()
 
 
 # %% Import example dataset from github.
