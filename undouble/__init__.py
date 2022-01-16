@@ -27,8 +27,6 @@ The grouped can be visualized with the plot() functionality and easily moved wit
 moving images, the image in the group with the largest resolution will be copied, and all other images are moved to
 the "undouble" subdirectory.
 
-
-The aim of this library is to detect (near-)duplicate images and move the images.
 The following steps are taken:
     1. Read recursively all images from directory with the specified extensions.
     2. Compute image hash.
