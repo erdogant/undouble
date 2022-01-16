@@ -18,7 +18,7 @@ undouble
 
 Description
 -----------
-Python package undouble is to (near-)identical images.
+Python package undouble is to detect (near-)identical images.
 
 The aim of ``undouble`` is to detect (near-)identical images. It works using a multi-step proces of pre-processing the
 images (grayscaling, normalizing, and scaling), computing the image-hash, and finding images that have image-hash

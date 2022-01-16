@@ -1,4 +1,4 @@
-"""Python package undouble is for the detection of (near-)identical images."""
+"""Python package undouble is to detect (near-)identical images."""
 # --------------------------------------------------
 # Name        : undouble.py
 # Author      : E.Taskesen
@@ -34,15 +34,17 @@ logger = logging.getLogger()
 
 
 class Undouble():
-    """Detect duplicate photos.
+    """Detect duplicate images.
 
     Description
     -----------
-    The aim of this library is to detect (near-)duplicate images and move the images.
+    Python package undouble is to detect (near-)identical images.
+
     The following steps are taken:
         1. Read recursively all images from directory with the specified extensions.
-        2. Compute image hash per photo.
-        3. Mark similar images.
+        2. Compute image hash.
+        3. Group similar images.
+        4. Move if desired.
 
     Parameters
     ----------
