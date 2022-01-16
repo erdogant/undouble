@@ -112,9 +112,9 @@ model.move()
 
 ```
 <p align="center">
-  <img src="https://github.com/erdogant/undouble/blob/master/docs/figs/flowers1.png" width="600" />
-  <img src="https://github.com/erdogant/undouble/blob/master/docs/figs/flowers2.png" width="600" />
-  <img src="https://github.com/erdogant/undouble/blob/master/docs/figs/flowers3.png" width="600" />
+  <img src="https://github.com/erdogant/undouble/blob/main/docs/figs/flowers1.png" width="400" />
+  <img src="https://github.com/erdogant/undouble/blob/main/docs/figs/flowers2.png" width="400" />
+  <img src="https://github.com/erdogant/undouble/blob/main/docs/figs/flowers3.png" width="400" />
 </p>
 
 
