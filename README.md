@@ -12,7 +12,21 @@
 [![BuyMeCoffee](https://img.shields.io/badge/buymea-coffee-yellow.svg)](https://www.buymeacoffee.com/erdogant)
 <!---[![Coffee](https://img.shields.io/badge/coffee-black-grey.svg)](https://erdogant.github.io/donate/?currency=USD&amount=5)-->
 
-* undouble is Python package
+Python package undouble is to (near-)identical images.
+
+The aim of ``undouble`` is to detect (near-)identical images. It works using a multi-step proces of pre-processing the
+images (grayscaling, normalizing, and scaling), computing the image-hash, and finding images that have image-hash
+with a maximum difference <= threshold. A threshold of 0 will group images with an identical image-hash.
+The grouped can be visualized with the plot() functionality and easily moved with the move() functionality. When
+moving images, the image in the group with the largest resolution will be copied, and all other images are moved to
+the "undouble" subdirectory.
+
+The following steps are taken:
+    1. Read recursively all images from directory with the specified extensions.
+    2. Compute image hash.
+    3. Group similar images.
+    4. Move if desired.
+
 
 ### Contents
 - [Installation](#-installation)
@@ -26,13 +40,13 @@
 * A new environment can be created as following:
 
 ```bash
-conda create -n env_undouble python=3.7
+conda create -n env_undouble python=3.8
 conda activate env_undouble
 ```
 
 ```bash
-pip install undouble            # normal install
-pip install --upgrade undouble # or update if needed
+pip install undouble            # new install
+pip install -U undouble         # update to latest version
 ```
 
 * Alternatively, you can install from the GitHub source:
@@ -55,13 +69,52 @@ from undouble import Undouble
 
 #### Example:
 ```python
-df = pd.read_csv('https://github.com/erdogant/hnet/blob/master/undouble/data/example_data.csv')
-model = undouble.fit(df)
-G = undouble.plot(model)
+
+# Import library
+from undouble import Undouble
+
+# Init with default settings
+model = Undouble(method='phash', hash_size=8)
+
+# Import example data
+targetdir = model.import_example(data='flowers')
+
+# Importing the files files from disk, cleaning and pre-processing
+model.preprocessing(targetdir)
+
+# Compute image-hash
+model.fit_transform()
+
+# Find images with image-hash <= threshold
+model.find(threshold=0)
+
+# [undouble] >INFO> Store examples at [./undouble/data]..
+# [undouble] >INFO> Downloading [flowers] dataset from github source..
+# [undouble] >INFO> Extracting files..
+# [undouble] >INFO> [214] files are collected recursively from path: [./undouble/data/flower_images]
+# [undouble] >INFO> Reading and checking images.
+# [undouble] >INFO> Reading and checking images.
+# 100%|██████████| 214/214 [00:02<00:00, 96.56it/s]
+# [undouble] >INFO> Extracting features using method: [phash]
+# 100%|██████████| 214/214 [00:00<00:00, 3579.14it/s]
+# [undouble] >INFO> Build adjacency matrix with phash differences.
+# [undouble] >INFO> Extracted features using [phash]: (214, 214)
+# 100%|██████████| 214/214 [00:00<00:00, 129241.33it/s]
+# 
+# [undouble] >INFO> Number of groups with similar images detected: 3
+# [undouble] >INFO> [3] groups are detected for [7] images.
+
+# Plot the images
+model.plot()
+
+# Move the images
+model.move()
+
 ```
 <p align="center">
-  <img src="https://github.com/erdogant/undouble/blob/master/docs/figs/fig1.png" width="600" />
-  
+  <img src="https://github.com/erdogant/undouble/blob/master/docs/figs/flowers1.png" width="600" />
+  <img src="https://github.com/erdogant/undouble/blob/master/docs/figs/flowers2.png" width="600" />
+  <img src="https://github.com/erdogant/undouble/blob/master/docs/figs/flowers3.png" width="600" />
 </p>
 
 

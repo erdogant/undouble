@@ -18,11 +18,22 @@ undouble
 
 Description
 -----------
+Python package undouble is to (near-)identical images.
+
+The aim of ``undouble`` is to detect (near-)identical images. It works using a multi-step proces of pre-processing the
+images (grayscaling, normalizing, and scaling), computing the image-hash, and finding images that have image-hash
+with a maximum difference <= threshold. A threshold of 0 will group images with an identical image-hash.
+The grouped can be visualized with the plot() functionality and easily moved with the move() functionality. When
+moving images, the image in the group with the largest resolution will be copied, and all other images are moved to
+the "undouble" subdirectory.
+
+
 The aim of this library is to detect (near-)duplicate images and move the images.
 The following steps are taken:
     1. Read recursively all images from directory with the specified extensions.
-    2. Compute image hash per photo.
-    3. Mark similar images.
+    2. Compute image hash.
+    3. Group similar images.
+    4. Move if desired.
 
 Example
 -------
