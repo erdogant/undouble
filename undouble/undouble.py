@@ -1,4 +1,4 @@
-"""Undouble library."""
+"""Python package undouble is for the detection of (near-)identical images."""
 # --------------------------------------------------
 # Name        : undouble.py
 # Author      : E.Taskesen
@@ -38,7 +38,7 @@ class Undouble():
 
     Description
     -----------
-    The aim of this library is to detect duplicate photos and mark or move the photos to undouble the collection.
+    The aim of this library is to detect (near-)duplicate images and move the images.
     The following steps are taken:
         1. Read recursively all images from directory with the specified extensions.
         2. Compute image hash per photo.
@@ -53,11 +53,10 @@ class Undouble():
             * 'phash': Perceptual hash
             * 'dhash': Difference hash
             * 'whash-haar': Haar wavelet hash
-            * 'whash-db4': Daubechies wavelet hash
-            * 'colorhash': HSV color hash
-            * 'crop-resistant': Crop-resistant hash
     targetdir : str, (default: None)
         Directory to read the images.
+    hash_size : integer (default: 8)
+        The hash_size will be used to scale down the image and create a hash-image of length: hash_size*hash_size.
     ext : list, (default: ['png','tiff','jpg'])
         Images with the file extentions are used.
     grayscale : Bool, (default: True)
@@ -79,22 +78,29 @@ class Undouble():
 
     Example
     -------
+    >>> # Import library
     >>> from undouble import Undouble
     >>>
     >>> # Init with default settings
-    >>> model = Undouble()
+    >>> model = Undouble(method='phash', hash_size=8)
     >>>
-    >>> # load example with faces
-    >>> X = cl.import_example(data='mnist')
+    >>> # Import example data
+    >>> targetdir = model.import_example(data='flowers')
     >>>
-    >>> # Cluster digits
-    >>> results = cl.fit_transform(X)
+    >>> # Importing the files files from disk, cleaning and pre-processing
+    >>> model.preprocessing(targetdir)
     >>>
-    >>> # Find images
-    >>> results_find = cl.find(X[0,:], k=None, alpha=0.05)
-    >>> cl.plot_find()
-    >>> cl.scatter()
+    >>> # Compute image-hash
+    >>> model.fit_transform()
     >>>
+    >>> # Find images with image-hash <= threshold
+    >>> model.find(threshold=0)
+    >>>
+    >>> # Plot the images
+    >>> model.plot()
+    >>>
+    >>> # Move the images
+    >>> model.move()
 
     References
     ----------
@@ -102,7 +108,7 @@ class Undouble():
 
     """
 
-    def __init__(self, method='phash', targetdir='', grayscale=True, dim=(128, 128), hash_size=8, ext=['png', 'tiff', 'jpg'], verbose=20):
+    def __init__(self, method='phash', targetdir='', grayscale=False, dim=(128, 128), hash_size=8, ext=['png', 'tiff', 'jpg', 'jfif'], verbose=20):
         """Initialize undouble with user-defined parameters."""
         if isinstance(ext, str): ext = [ext]
         # Clean readily fitted models to ensure correct results
@@ -129,17 +135,16 @@ class Undouble():
 
         """
         if isinstance(black_list, str): black_list = [black_list]
-        # Check existence targetdir
-        if not os.path.isdir(targetdir): raise Exception(logger.error('Input parameter <targetdir> does not contain a valid directory: [%s]' %(targetdir)))
+        # Set targetdir
         self.params['targetdir'] = targetdir
-        logger.info("Retrieving files from: [%s]" %(self.params['targetdir']))
+        # logger.info("Retrieving files from: [%s]" %(self.params['targetdir']))
         # Preprocessing the images the get them in the right scale and size etc
         self.results = self.clustimage.import_data(self.params['targetdir'], black_list=black_list)
         # Return
         if return_results:
             return self.results
 
-    def fit(self, method=None):
+    def fit_transform(self, method=None):
         """Compute the hash for each image.
 
         Parameters
@@ -167,13 +172,15 @@ class Undouble():
             self.clustimage.params_hash = cl.get_params_hash(method, {})
         # Extract hash features
         self.clustimage.extract_feat(self.results)
+        if 'labels' in self.results: self.results.pop('labels')
+        if 'xycoord' in self.results: self.results.pop('xycoord')
 
-    def find(self, score=0):
+    def find(self, threshold=0, return_dict=False):
         """Find similar images using the hash signatures.
 
         Parameters
         ----------
-        score : float, (default: 0)
+        threshold : float, (default: 0)
             Threshold on the hash value to determine similarity.
 
         Returns
@@ -182,11 +189,11 @@ class Undouble():
 
         """
         if self.results['feat'] is None:
-            logger.warning('Can not find similar images because no features are present. Tip: Use the .fit() function first.')
+            logger.warning('Can not find similar images because no features are present. Tip: Use the .fit_transform() function first.')
             return None
 
-        # Make sets of images that are similar based on the minimum defined score.
-        pathnames, indexes, scores = [], [], []
+        # Make sets of images that are similar based on the minimum defined threshold.
+        pathnames, indexes, thresholds = [], [], []
 
         # Only the files that exists (or are not moved in an previous action)
         _, idx = get_existing_pathnames(self.results['pathnames'])
@@ -197,27 +204,36 @@ class Undouble():
         feat = feat[idx, :]
         feat = feat[:, idx]
 
-        # Extract similar images with minimum score
+        # Extract similar images with minimum threshold
         for i in tqdm(np.arange(0, feat.shape[0]), disable=disable_tqdm()):
-            idx = np.where(feat[i, :]<=score)[0]
+            idx = np.where(feat[i, :]<=threshold)[0]
             if len(idx)>1:
                 # if ~np.any(list(map(lambda x: np.all(np.isin(x, idx)), indexes))):
                 if ~np.any(list(map(lambda x: np.any(np.isin(x, idx)), indexes))):
                     indexes.append(idx)
                     pathnames.append(paths[idx])
-                    scores.append(feat[i, idx])
+                    thresholds.append(feat[i, idx])
 
-        # Sort on score
-        for i, _ in enumerate(scores):
+        # Sort on threshold
+        for i, _ in enumerate(thresholds):
             # indexes[i] = indexes[i][isort]
-            isort=np.argsort(scores[i])
+            isort=np.argsort(thresholds[i])
             pathnames[i] = pathnames[i][isort]
-            scores[i] = scores[i][isort]
+            thresholds[i] = thresholds[i][isort]
 
         # Sort on directory
         idx = np.argsort(list(map(lambda x: os.path.split(x[0])[0], pathnames)))
-        self.results = {'pathnames': np.array(pathnames)[idx].tolist(), 'scores': np.array(scores)[idx].tolist()}
-        logger.info('Number of groups with similar images detected: %d' %(len(self.results['pathnames'])))
+        self.results['select_pathnames'] = np.array(pathnames)[idx].tolist()
+        self.results['select_scores'] = np.array(thresholds)[idx].tolist()
+        logger.info('Number of groups with similar images detected: %d' %(len(self.results['select_pathnames'])))
+
+        totfiles = np.sum(list(map(len, self.results['select_pathnames'])))
+        totgroup = len(self.results['select_pathnames'])
+        logger.info('[%d] groups are detected for [%d] images.' %(totgroup, totfiles))
+        self.results['stats'] = {'groups': totgroup, 'files': totfiles}
+
+        if return_dict:
+            return self.results
 
     def move(self, filters=None, targetdir=None):
         """Move images.
@@ -245,17 +261,17 @@ class Undouble():
             if not os.path.isdir(targetdir): raise Exception(logger.error(''))
         # logger.info('Detected images: [%d] across of [%d] groups.' %(totfiles, totgroup))
 
-        totfiles = np.sum(list(map(len, self.results['pathnames'])))
-        totgroup = len(self.results['pathnames'])
+        totfiles = np.sum(list(map(len, self.results['select_pathnames'])))
+        totgroup = len(self.results['select_pathnames'])
         tdir = 'undouble' if targetdir is None else targetdir
-        answer=input('>Wait! Before you continue, you are at the point of physically moving files!\n>[%d] similar images are detected over [%d] groups.\n>[%d] images will be moved to the [%s] directory.\n>[%d] images will be copied to the [%s] directory.\n>Type <ok> to proceed.\n>' %(totfiles, totgroup, totfiles -totgroup, tdir, totgroup, tdir))
+        answer=input('>Wait! Before you continue, you are at the point of physically moving files!\n>[%d] similar images are detected over [%d] groups.\n>[%d] images will be moved to the [%s] directory.\n>[%d] images will be copied to the [%s] directory.\n>Type <ok> to proceed.\n>' %(totfiles, totgroup, totfiles - totgroup, tdir, totgroup, tdir))
         if answer != 'ok':
             return
 
         # For each group, check the resolution and location.
         pathmem=''
         answer = ''
-        for pathnames in tqdm(self.results['pathnames'], disable=disable_tqdm()):
+        for pathnames in tqdm(self.results['select_pathnames'], disable=disable_tqdm()):
             curdir=os.path.split(pathnames[0])[0]
             if pathmem!=curdir:
                 pathmem=curdir
@@ -299,16 +315,16 @@ class Undouble():
             else:
                 shutil.move(file, os.path.join(movedir, os.path.split(file)[1]))
 
-    def clean(self):
+    def clean(self, params=True, results=True):
         """Clean or removing previous results and models to ensure correct working."""
         if hasattr(self, 'results'):
             logger.info('Cleaning previous fitted model results')
-            if hasattr(self, 'results'): del self.results
-            if hasattr(self, 'params'): del self.params
+            if results and hasattr(self, 'results'): del self.results
+            if params and hasattr(self, 'params'): del self.params
         # Store results
         # self.results = {'img':None, 'feat':None, 'xycoord':None, 'pathnames':None, 'labels': None}
 
-    def import_example(self, data='titanic', url=None, sep=','):
+    def import_example(self, data='flowers', url=None):
         """Import example dataset from github source.
 
         Description
@@ -318,7 +334,7 @@ class Undouble():
         Parameters
         ----------
         data : str
-            Name of datasets: 'sprinkler', 'titanic', 'student', 'fifa', 'cancer', 'waterpump', 'retail'
+            Name of datasets: 'flowers', 'faces', 'mnist', 'cat_and_dog'
         url : str
             url link to to dataset.
 
@@ -328,7 +344,7 @@ class Undouble():
             Dataset containing mixed features.
 
         """
-        return import_example(data=data, url=url, sep=sep)
+        return import_example(data=data, url=url)
 
     def plot(self, cmap=None, figsize=(15, 10)):
         """Plot the results.
@@ -360,19 +376,20 @@ class Undouble():
         colorscale = 0 if self.params['grayscale'] else 1
 
         # Plot the clustered images
-        if (self.results.get('pathnames', None) is not None):
+        if (self.results.get('select_pathnames', None) is not None):
             # Set logger to error only
             # verbose = logger.getEffectiveLevel()
             # set_logger(verbose=50)
 
             # Run over all labels.
-            for i, pathnames in tqdm(enumerate(self.results['pathnames']), disable=disable_tqdm()):
+            for i, pathnames in tqdm(enumerate(self.results['select_pathnames']), disable=disable_tqdm()):
+                # pathnames = self.results['pathnames'][idx]
                 # Check whether file exists.
                 pathnames = np.array(pathnames)[list(map(os.path.isfile, pathnames))]
                 # Only groups with > 1 images needs to be moved.
                 if len(pathnames)>1:
                     # Sort images
-                    imgscores = sort_images(pathnames, hash_scores=self.results['scores'][i])
+                    imgscores = sort_images(pathnames, hash_scores=self.results['select_scores'][i])
                     # Get the images that cluster together
                     imgs = list(map(lambda x: self.clustimage.imread(x, colorscale=colorscale, dim=self.params['dim'], flatten=False), imgscores['pathnames']))
                     # Setup rows and columns
@@ -386,15 +403,20 @@ class Undouble():
 
     def _check_status(self):
         if not hasattr(self, 'results'):
-            raise Exception(logger.error('Results missing! Hint: try to first use the <.find()> functionality'))
+            raise Exception(logger.error('Results missing! Hint: try to first use the model.find() functionality'))
 
-    def compute_hash(self, img, hash_size=None):
+    def compute_hash(self, img, hash_size=None, to_array=False):
         """Compute hash.
 
         Parameters
         ----------
-        img : numpy-array
+        img : Object or RGB-image.
             Image.
+        hash_size : integer (default: None)
+            The hash_size will be used to scale down the image and create a hash-image of length: hash_size*hash_size.
+        as_array : Bool (default: False)
+            True: Return the hash-array in the same size as the scaled image.
+            False: Return the hash-image vector.
 
         Returns
         -------
@@ -403,11 +425,22 @@ class Undouble():
 
         """
         if hash_size is None: hash_size=self.params['hash_size']
-        return self.clustimage.compute_hash(img, hash_size=hash_size).hash
+        if hasattr(img, 'results'):
+            hashes = list(map(lambda x: self.clustimage.compute_hash(x, hash_size=hash_size).hash, self.results['img']))
+        else:
+            hashes = self.clustimage.compute_hash(img, hash_size=hash_size).hash
+            hashes = [hashes]
+
+        # Convert to image-hash
+        if not to_array:
+            hashes = np.array(list(map(lambda x: x.ravel().astype(int), hashes)))
+            hashes = np.c_[hashes]
+
+        return hashes
 
 
 # %% Import example dataset from github.
-def import_example(data='titanic', url=None, sep=','):
+def import_example(data='flowers', url=None):
     """Import example dataset from github source.
 
     Description
@@ -417,12 +450,12 @@ def import_example(data='titanic', url=None, sep=','):
     Parameters
     ----------
     data : str
-        Name of datasets: 'sprinkler', 'titanic', 'student', 'fifa', 'cancer', 'waterpump', 'retail'
+        Name of datasets: 'flowers', 'faces', 'mnist', 'cat_and_dog'
     url : str
         url link to to dataset.
-        verbose : int, (default: 20)
-                Print progress to screen. The default is 3.
-                60: None, 40: Error, 30: Warn, 20: Info, 10: Debug
+    verbose : int, (default: 20)
+        Print progress to screen. The default is 3.
+        60: None, 40: Error, 30: Warn, 20: Info, 10: Debug
 
     Returns
     -------
@@ -430,47 +463,17 @@ def import_example(data='titanic', url=None, sep=','):
         Dataset containing mixed features.
 
     """
-    if url is None:
-        if data=='sprinkler':
-            url='https://erdogant.github.io/datasets/sprinkler.zip'
-        elif data=='titanic':
-            url='https://erdogant.github.io/datasets/titanic_train.zip'
-        elif data=='student':
-            url='https://erdogant.github.io/datasets/student_train.zip'
-        elif data=='cancer':
-            url='https://erdogant.github.io/datasets/cancer_dataset.zip'
-        elif data=='fifa':
-            url='https://erdogant.github.io/datasets/FIFA_2018.zip'
-        elif data=='waterpump':
-            url='https://erdogant.github.io/datasets/waterpump/waterpump_test.zip'
-        elif data=='retail':
-            url='https://erdogant.github.io/datasets/marketing_data_online_retail_small.zip'
-    else:
-        data = wget.filename_from_url(url)
-
-    if url is None:
-        logger.info('Nothing to download.')
-        return None
-
     curpath = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data')
-    filename = os.path.basename(urlparse(url).path)
-    PATH_TO_DATA = os.path.join(curpath, filename)
-    if not os.path.isdir(curpath):
-        os.makedirs(curpath, exist_ok=True)
-
-    # Check file exists.
-    if not os.path.isfile(PATH_TO_DATA):
-        logger.info('Downloading [%s] dataset from github source..' %(data))
-        wget(url, PATH_TO_DATA)
-
-    # Import local dataset
-    logger.info('Import dataset [%s]' %(data))
-    df = pd.read_csv(PATH_TO_DATA, sep=sep)
+    if data=='cat_and_dog':
+        df = cl.import_example(data=None, url='https://erdogant.github.io/datasets/cat_and_dog.zip', curpath=curpath)
+    else:
+        df = cl.import_example(data=data, curpath=curpath)
     # Return
     return df
 
+    # %% Set target directory
 
-# %% Set target directory
+
 def create_targetdir(pathname, targetdir):
     """Create directory.
 
@@ -729,7 +732,7 @@ def compute_blur(pathname):
 # %%
 def get_existing_pathnames(pathnames):
     Iloc = np.array(list(map(os.path.isfile, pathnames)))
-    return pathnames[Iloc], Iloc
+    return pathnames[Iloc], np.array(Iloc)
 
 # %%
 
@@ -759,5 +762,5 @@ def seperate_path(pathname):
 # if __name__ == "__main__":
 #     import undouble as undouble
 #     df = undouble.import_example()
-#     out = undouble.fit(df)
+#     out = undouble.fit_transform(df)
 #     fig,ax = undouble.plot(out)

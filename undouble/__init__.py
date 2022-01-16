@@ -18,7 +18,7 @@ undouble
 
 Description
 -----------
-undouble is for the detection of duplicate photos and mark or move the photos to undouble the collection.
+The aim of this library is to detect (near-)duplicate images and move the images.
 The following steps are taken:
     1. Read recursively all images from directory with the specified extensions.
     2. Compute image hash per photo.
@@ -26,22 +26,30 @@ The following steps are taken:
 
 Example
 -------
+>>> # Import library
 >>> from undouble import Undouble
 >>>
 >>> # Init with default settings
->>> model = Undouble()
+>>> model = Undouble(method='phash', hash_size=8)
 >>>
->>> # load example with faces
->>> X = cl.import_example(data='mnist')
+>>> # Import example data
+>>> targetdir = model.import_example(data='flowers')
 >>>
->>> # Cluster digits
->>> results = cl.fit_transform(X)
+>>> # Importing the files files from disk, cleaning and pre-processing
+>>> model.preprocessing(targetdir)
 >>>
->>> # Find images
->>> results_find = cl.find(X[0,:], k=None, alpha=0.05)
->>> cl.plot_find()
->>> cl.scatter()
+>>> # Compute image-hash
+>>> model.fit_transform()
 >>>
+>>> # Find images with image-hash <= threshold
+>>> model.find(threshold=0)
+>>>
+>>> # Plot the images
+>>> model.plot()
+>>>
+>>> # Move the images
+>>> model.move()
+
 
 References
 ----------
