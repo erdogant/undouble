@@ -22,10 +22,10 @@ moving images, the image in the group with the largest resolution will be copied
 the "undouble" subdirectory.
 
 The following steps are taken:
-    1. Read recursively all images from directory with the specified extensions.
-    2. Compute image hash.
-    3. Group similar images.
-    4. Move if desired.
+ * 1. Read recursively all images from directory with the specified extensions.
+ * 2. Compute image hash.
+ * 3. Group similar images.
+ * 4. Move if desired.
 
 
 ### Contents
