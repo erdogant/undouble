@@ -22,7 +22,7 @@ image in the group with the largest resolution will be copied, and all other ima
 subdirectory. In case you want to cluster your images, I would recommend reading the [blog](https://towardsdatascience.com/a-step-by-step-guide-for-clustering-images-4b45f9906128) and use the
 [clustimage library](https://github.com/erdogant/clustimage).
 
-The following steps are taken:
+The following steps are taken in the ``undouble`` library:
  * 1. Read recursively all images from directory with the specified extensions.
  * 2. Compute image hash.
  * 3. Group similar images.
