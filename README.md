@@ -28,13 +28,6 @@ The following steps are taken:
     4. Move if desired.
 
 
-### Contents
-- [Installation](#-installation)
-- [Contribute](#-contribute)
-- [Citation](#-citation)
-- [Maintainers](#-maintainers)
-- [License](#-copyright)
-
 ### Installation
 * Install undouble from PyPI (recommended). undouble is compatible with Python 3.6+ and runs on Linux, MacOS X and Windows. 
 * A new environment can be created as following:
