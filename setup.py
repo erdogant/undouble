@@ -29,7 +29,7 @@ setuptools.setup(
      license_files=["LICENSE"],
      classifiers=[
          "Programming Language :: Python :: 3",
-         "License :: OSI Approved :: BSD 3-Clause License",
+         "License :: OSI Approved :: 3-clause BSD License",
          "Operating System :: OS Independent",
      ],
  )
