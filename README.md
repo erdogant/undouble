@@ -7,7 +7,7 @@
 [![GitHub Open Issues](https://img.shields.io/github/issues/erdogant/undouble.svg)](https://github.com/erdogant/undouble/issues)
 [![Project Status](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 [![Sphinx](https://img.shields.io/badge/Sphinx-Docs-blue)](https://erdogant.github.io/undouble/)
-[![Downloads](https://pepy.tech/badge/undouble/month)](https://pepy.tech/project/undouble/month)
+[![Downloads][![Downloads](https://pepy.tech/badge/undouble/month)](https://pepy.tech/project/undouble)
 [![Downloads](https://pepy.tech/badge/undouble)](https://pepy.tech/project/undouble)
 [![BuyMeCoffee](https://img.shields.io/badge/buymea-coffee-yellow.svg)](https://www.buymeacoffee.com/erdogant)
 <!---[![Coffee](https://img.shields.io/badge/coffee-black-grey.svg)](https://erdogant.github.io/donate/?currency=USD&amount=5)-->
