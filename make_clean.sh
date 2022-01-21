@@ -11,6 +11,7 @@ rm -rf undouble/utils/__pycache__
 rm -rf .pylint.d
 rm -rf undouble/data/*.zip
 rm -rf undouble/data/*.csv
+rm -rf undouble/data/*
 rm -rf *.js
 rm -rf *.html
 rm -rf *.css
