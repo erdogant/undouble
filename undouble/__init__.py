@@ -4,12 +4,14 @@ from undouble.undouble import (
     import_example,
     load_example,
     compute_blur,
+    wget,
+    unzip,
 )
 
 
 __author__ = 'Erdogan Tasksen'
 __email__ = 'erdogant@gmail.com'
-__version__ = '1.0.1'
+__version__ = '1.1.0'
 
 # module level doc-string
 __doc__ = """
@@ -21,8 +23,8 @@ Description
 Python package undouble is to detect (near-)identical images.
 
 The aim of ``undouble`` is to detect (near-)identical images. It works using a multi-step proces of pre-processing the
-images (grayscaling, normalizing, and scaling), computing the image-hash, and finding images that have image-hash
-with a maximum difference <= threshold. A threshold of 0 will group images with an identical image-hash.
+images (grayscaling, normalizing, and scaling), computing the image-hash, and grouping of images based on threshold value.
+A threshold of 0 will group images with an identical image-hash.
 The grouped can be visualized with the plot() functionality and easily moved with the move() functionality. When
 moving images, the image in the group with the largest resolution will be copied, and all other images are moved to
 the "undouble" subdirectory.
@@ -45,13 +47,13 @@ Example
 >>> targetdir = model.import_example(data='flowers')
 >>>
 >>> # Importing the files files from disk, cleaning and pre-processing
->>> model.preprocessing(targetdir)
+>>> model.import_data(targetdir)
 >>>
 >>> # Compute image-hash
 >>> model.fit_transform()
 >>>
->>> # Find images with image-hash <= threshold
->>> model.find(threshold=0)
+>>> # Group images with image-hash <= threshold
+>>> model.group(threshold=0)
 >>>
 >>> # Plot the images
 >>> model.plot()

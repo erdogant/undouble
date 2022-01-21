@@ -2,27 +2,6 @@
 
 -------------------------------------
 
-Quickstart
-''''''''''
-
-A quick example how to learn a model on a given dataset.
-
-
-.. code:: python
-
-    # Import library
-    import undouble
-
-    # Retrieve URLs of malicous and normal urls:
-    X, y = undouble.load_example()
-
-    # Learn model on the data
-    model = undouble.fit_transform(X, y, pos_label='bad')
-
-    # Plot the model performance
-    results = undouble.plot(model)
-
-
 Installation
 ''''''''''''
 
@@ -34,7 +13,7 @@ If desired, install ``undouble`` from an isolated Python environment using conda
 
 .. code-block:: python
 
-    conda create -n env_undouble python=3.6
+    conda create -n env_undouble python=3.8
     conda activate env_undouble
 
 
@@ -64,3 +43,36 @@ If you want to remove your ``undouble`` installation with your environment, it c
 
    # List all the active environments. undouble should be absent.
    conda env list
+
+
+Quickstart
+''''''''''
+
+A quick example how to learn a model on a given dataset.
+
+
+.. code:: python
+
+    # Import library
+    from undouble import Undouble
+
+    # Init with default settings
+    model = Undouble()
+
+    # Import example data
+    targetdir = model.import_example(data='flowers')
+
+    # Importing the files files from disk, cleaning and pre-processing
+    model.import_data(targetdir)
+
+    # Compute image-hash
+    model.fit_transform()
+
+    # Group images with image-hash <= threshold
+    model.group(threshold=0)
+
+    # Plot the images
+    model.plot()
+
+    # Move the images
+    model.move()

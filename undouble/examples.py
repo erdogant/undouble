@@ -15,13 +15,13 @@ model = Undouble(method='phash', hash_size=8)
 targetdir = model.import_example(data='flowers')
 
 # Importing the files files from disk, cleaning and pre-processing
-model.preprocessing(targetdir)
+model.import_data(targetdir)
 
 # Compute image-hash
 model.fit_transform()
 
 # Find images with image-hash <= threshold
-model.find(threshold=0)
+model.group(threshold=0)
 
 # Plot the images
 model.plot()
@@ -45,7 +45,7 @@ for method in methods:
     # Import example data
     targetdir = model.import_example(data='cat_and_dog')
     # Grayscaling and scaling
-    model.preprocessing(targetdir)
+    model.import_data(targetdir)
     # Compute image for only the first image.
     hashs = model.compute_hash(model.results['img'][0], to_array=True)
     # Compute the image-hash
@@ -102,7 +102,7 @@ model = Undouble()
 targetdir = 'D://magweg/101_ObjectCategories'
 # targetdir = model.import_example(data='flowers')
 # Importing the files files from disk, cleaning and pre-processing
-model.preprocessing(targetdir)
+model.import_data(targetdir)
 
 for method in methods:
     # Compute image-hash
@@ -112,7 +112,7 @@ for method in methods:
     files = []
     thresholds = [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
     for threshold in thresholds:
-        model.find(threshold=threshold)
+        model.group(threshold=threshold)
         groups.append(model.results['stats']['groups'])
         files.append(model.results['stats']['files'])
 

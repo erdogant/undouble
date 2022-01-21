@@ -11,11 +11,11 @@ model = Undouble(method='phash', hash_size=8)
 targetdir = 'D://magweg/101_ObjectCategories'
 # targetdir = model.import_example(data='flowers')
 # Importing the files files from disk, cleaning and pre-processing
-model.preprocessing(targetdir)
+model.import_data(targetdir)
 # Compute image-hash
 model.fit_transform()
 
-model.find(threshold=0)
+model.group(threshold=0)
 
 
 # %%
@@ -23,7 +23,7 @@ model.find(threshold=0)
 # Photo by Louis-Philippe Poitras on Unsplash
 targetdir='//NAS_SYNOLOGY//Mijn Documenten//Erdogan//Medium_blogs//undouble//figs'
 model = Undouble(method='ahash', hash_size=8)
-model.preprocessing(targetdir)
+model.import_data(targetdir)
 # model.fit_transform()
 
 

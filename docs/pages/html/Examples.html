@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Examples &mdash; undouble undouble documentation</title>
+  <title>Flowers &mdash; undouble undouble documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -19,7 +19,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Documentation" href="Documentation.html" />
-    <link rel="prev" title="Save and Load" href="Save%20and%20Load.html" /> 
+    <link rel="prev" title="Average hash" href="hash_functions.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -44,23 +44,31 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Installation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="Installation.html">Quickstart</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Installation.html#installation">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Installation.html#uninstalling">Uninstalling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html#quickstart">Quickstart</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Methods</span></p>
+<p class="caption" role="heading"><span class="caption-text">Core functionalities</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="Algorithm.html">Algorithm</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Cross%20validation%20and%20hyperparameter%20tuning.html">Cross validation and hyperparameter tuning</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Performance.html">Performance</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Performance.html#results">Results</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Save%20and%20Load.html">Save and Load</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_functions.html">Core functionalities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_functions.html#preprocessing">Preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_functions.html#generic-functionalities">Generic functionalities</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">hash_functions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="hash_functions.html">Average hash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hash_functions.html#perceptual-hash">Perceptual hash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hash_functions.html#difference-hash">Difference hash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hash_functions.html#haar-wavelet-hash">Haar wavelet hash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hash_functions.html#create-the-images">Create the images</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Examples</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#learn-new-model-with-gridsearch-and-train-test-set">Learn new model with gridsearch and train-test set</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#learn-new-model-on-the-entire-data-set">Learn new model on the entire data set</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Flowers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#get-identical-images">Get identical images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#move-files">Move files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#objects-dataset">101 objects dataset</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
 </ul>
 </li>
 </ul>
@@ -85,7 +93,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Examples</li>
+      <li>Flowers</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/Examples.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -96,41 +104,85 @@
            <div itemprop="articleBody">
              
   <hr class="docutils" id="code-directive" />
-<section id="examples">
-<h1>Examples<a class="headerlink" href="#examples" title="Permalink to this headline"></a></h1>
-<section id="learn-new-model-with-gridsearch-and-train-test-set">
-<h2>Learn new model with gridsearch and train-test set<a class="headerlink" href="#learn-new-model-with-gridsearch-and-train-test-set" title="Permalink to this headline"></a></h2>
-<p>AAA</p>
+<section id="flowers">
+<h1>Flowers<a class="headerlink" href="#flowers" title="Permalink to this headline"></a></h1>
+<p>Analyze for similar flowers in the example dataset.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import library</span>
-<span class="kn">import</span> <span class="nn">undouble</span>
+<span class="kn">from</span> <span class="nn">undouble</span> <span class="kn">import</span> <span class="n">Undouble</span>
 
-<span class="c1"># Load example data set</span>
-<span class="n">X</span><span class="p">,</span><span class="n">y_true</span> <span class="o">=</span> <span class="n">undouble</span><span class="o">.</span><span class="n">load_example</span><span class="p">()</span>
+<span class="c1"># Init with default settings</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Undouble</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;phash&#39;</span><span class="p">,</span> <span class="n">hash_size</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
 
-<span class="c1"># Retrieve URLs of malicous and normal urls:</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">undouble</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="s1">&#39;bad&#39;</span><span class="p">,</span> <span class="n">train_test</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">gridsearch</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1"># Import example data</span>
+<span class="n">targetdir</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">import_example</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="s1">&#39;flowers&#39;</span><span class="p">)</span>
 
-<span class="c1"># The test error will be shown</span>
-<span class="n">results</span> <span class="o">=</span> <span class="n">undouble</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<span class="c1"># Importing the files files from disk, cleaning and pre-processing</span>
+<span class="n">model</span><span class="o">.</span><span class="n">import_data</span><span class="p">(</span><span class="n">targetdir</span><span class="p">)</span>
+
+<span class="c1"># Compute image-hash</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">()</span>
+
+<span class="c1"># Group images with image-hash &lt;= threshold</span>
+<span class="n">model</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Plot the images</span>
+<span class="n">model</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+<table class="docutils align-center" id="id1">
+<caption><span class="caption-text">Groupings</span><a class="headerlink" href="#id1" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><img alt="flower_group1" src="_images/flowers1.png" /></p></td>
+</tr>
+<tr class="row-even"><td><p><img alt="flower_group2" src="_images/flowers2.png" /></p></td>
+</tr>
+<tr class="row-odd"><td><p><img alt="flower_group3" src="_images/flowers3.png" /></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="get-identical-images">
+<h1>Get identical images<a class="headerlink" href="#get-identical-images" title="Permalink to this headline"></a></h1>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import library</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;select_pathnames&#39;</span><span class="p">]):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;----------------------------GROUP </span><span class="si">%s</span><span class="s1">----------------------------&#39;</span> <span class="o">%</span><span class="n">i</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
-<section id="learn-new-model-on-the-entire-data-set">
-<h2>Learn new model on the entire data set<a class="headerlink" href="#learn-new-model-on-the-entire-data-set" title="Permalink to this headline"></a></h2>
-<p>BBBB</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import library</span>
-<span class="kn">import</span> <span class="nn">undouble</span>
+<section id="move-files">
+<h1>Move files<a class="headerlink" href="#move-files" title="Permalink to this headline"></a></h1>
+<p>The move function <a class="reference internal" href="undouble.undouble.html#undouble.undouble.Undouble.move" title="undouble.undouble.Undouble.move"><code class="xref py py-func docutils literal notranslate"><span class="pre">undouble.undouble.Undouble.move()</span></code></a> will systematically move the images.
+A threshold of 0 will group images with an identical image hash. However, the threshold of 10 showed the best results when undoubling my personal photo deck because photos, such as from bursts, were also grouped.
+Before moving any of the images, the resolution and blurness of all images that are part of a group are checked.
+The image in the group with the highest resolution will be copied, and all other images are moved to the <strong>undouble</strong> subdirectory.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">move</span><span class="p">()</span>
 
-<span class="c1"># Load example data set</span>
-<span class="n">X</span><span class="p">,</span><span class="n">y_true</span> <span class="o">=</span> <span class="n">undouble</span><span class="o">.</span><span class="n">load_example</span><span class="p">()</span>
-
-<span class="c1"># Retrieve URLs of malicous and normal urls:</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">undouble</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="s1">&#39;bad&#39;</span><span class="p">,</span> <span class="n">train_test</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">gridsearch</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-<span class="c1"># The train error will be shown. Such results are heavily biased as the model also learned on this set of data</span>
-<span class="n">results</span> <span class="o">=</span> <span class="n">undouble</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<span class="c1"># &gt;Wait! Before you continue, you are at the point of physically moving files!</span>
+<span class="c1"># &gt;[7] similar images are detected over [3] groups.</span>
+<span class="c1"># &gt;[4] images will be moved to the [undouble] directory.</span>
+<span class="c1"># &gt;[3] images will be copied to the [undouble] directory.</span>
+<span class="c1"># &gt;Type &lt;ok&gt; to proceed.</span>
 </pre></div>
 </div>
+</section>
+<section id="objects-dataset">
+<h1>101 objects dataset<a class="headerlink" href="#objects-dataset" title="Permalink to this headline"></a></h1>
+<p>I utilized the Caltech 101 [1] dataset and saved it to my local disk. I will analyze the results with aHash, pHash, dHash, and Wavelet hash.
+The Caltech dataset contains 9144 real-world images belonging to 101 categories. About 40 to 800 images per category.
+The size of each image is roughly 300 x 200 pixels. For the input to undouble, we can simply provide the path location
+where all images are stored, and all subdirectories will be recursively analyzed too.
+Note that this dataset does not contain ground truth labels with identical images labels.</p>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline"></a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><p>[1] L. Fei-Fei, R. Fergus, and P. Perona. Learning generative visual models from few training examples: an incremental Bayesian approach tested on 101 object categories. IEEE. CVPR 2004, Workshop on Generative-Model Based Vision. 2004</p></li>
+</ul>
+</div></blockquote>
 </section>
 </section>
 
@@ -138,7 +190,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="Save%20and%20Load.html" class="btn btn-neutral float-left" title="Save and Load" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="hash_functions.html" class="btn btn-neutral float-left" title="Average hash" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="Documentation.html" class="btn btn-neutral float-right" title="Documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

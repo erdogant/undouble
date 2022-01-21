@@ -18,7 +18,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Quickstart" href="Installation.html" />
+    <link rel="next" title="Installation" href="Installation.html" />
     <link rel="prev" title="undouble’s documentation!" href="index.html" /> 
 </head>
 
@@ -44,21 +44,30 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Installation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="Installation.html">Quickstart</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Installation.html#installation">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Installation.html#uninstalling">Uninstalling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html#quickstart">Quickstart</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Methods</span></p>
+<p class="caption" role="heading"><span class="caption-text">Core functionalities</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="Algorithm.html">Algorithm</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Cross%20validation%20and%20hyperparameter%20tuning.html">Cross validation and hyperparameter tuning</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Performance.html">Performance</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Performance.html#results">Results</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Save%20and%20Load.html">Save and Load</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_functions.html">Core functionalities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_functions.html#preprocessing">Preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_functions.html#generic-functionalities">Generic functionalities</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">hash_functions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="hash_functions.html">Average hash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hash_functions.html#perceptual-hash">Perceptual hash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hash_functions.html#difference-hash">Difference hash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hash_functions.html#haar-wavelet-hash">Haar wavelet hash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hash_functions.html#create-the-images">Create the images</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="Examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Examples.html">Flowers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Examples.html#get-identical-images">Get identical images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Examples.html#move-files">Move files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Examples.html#objects-dataset">101 objects dataset</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Code Documentation</span></p>
 <ul>
@@ -95,13 +104,18 @@
 <section id="abstract">
 <h1>Abstract<a class="headerlink" href="#abstract" title="Permalink to this headline"></a></h1>
 <dl class="simple">
-<dt>Background</dt><dd><p>undouble</p>
+<dt>Background</dt><dd><p>Searching for (near-)identical photos at your system can be a tedious effort because you need to click across your entire system,
+containing likely thousands of photos, and then decide for each photo whether it is a “similar” one.
+The most straightforward approach to detect identical photos would be on file size or filename.
+However, photos are usually derived from different sources such as mobile devices, social media apps, which leads to
+differences in file size, name, but also in resolution, scaling, compression, and brightness.</p>
 </dd>
-<dt>Aim</dt><dd><p>undouble</p>
+<dt>Aim</dt><dd><p>Hash functions are ideal to detect  photos because of the robustness against minor changes.
+The aim of <code class="docutils literal notranslate"><span class="pre">undouble</span></code> is to detect (near-)identical images. It works using a multi-step proces of carefully pre-processing the images,
+computing the image-hash, evaluating the hash-differences across all images, and group images with similar/identical image-hash.</p>
 </dd>
-<dt>Results</dt><dd><p>undouble</p>
-</dd>
-<dt>Business cases</dt><dd><p>undouble</p>
+<dt>Results</dt><dd><p><code class="docutils literal notranslate"><span class="pre">undouble</span></code> is Python package for to detect images with similar/identical image-hash.
+There are many applications, such as in digital forensics, copyright enforcement, and more generically for disk space reduction and thus undoubling.</p>
 </dd>
 </dl>
 </section>
@@ -109,7 +123,7 @@
 <h1>Schematic overview<a class="headerlink" href="#schematic-overview" title="Permalink to this headline"></a></h1>
 <p>The schematic overview of our approach is as following:</p>
 <figure class="align-default" id="id1">
-<img alt="../figs/schematic_overview.png" src="../figs/schematic_overview.png" />
+<img alt="_images/schematic_overview.png" src="_images/schematic_overview.png" />
 </figure>
 </section>
 
@@ -118,7 +132,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="index.html" class="btn btn-neutral float-left" title="undouble’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="Installation.html" class="btn btn-neutral float-right" title="Quickstart" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="Installation.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

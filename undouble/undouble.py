@@ -90,13 +90,13 @@ class Undouble():
     >>> targetdir = model.import_example(data='flowers')
     >>>
     >>> # Importing the files files from disk, cleaning and pre-processing
-    >>> model.preprocessing(targetdir)
+    >>> model.import_data(targetdir)
     >>>
     >>> # Compute image-hash
     >>> model.fit_transform()
     >>>
     >>> # Find images with image-hash <= threshold
-    >>> model.find(threshold=0)
+    >>> model.group(threshold=0)
     >>>
     >>> # Plot the images
     >>> model.plot()
@@ -123,7 +123,7 @@ class Undouble():
         # Set the logger
         set_logger(verbose=verbose)
 
-    def preprocessing(self, targetdir, black_list=['undouble'], return_results=False):
+    def import_data(self, targetdir, black_list=['undouble'], return_results=False):
         """Preprocessing.
 
         Parameters
@@ -142,6 +142,9 @@ class Undouble():
         # logger.info("Retrieving files from: [%s]" %(self.params['targetdir']))
         # Preprocessing the images the get them in the right scale and size etc
         self.results = self.clustimage.import_data(self.params['targetdir'], black_list=black_list)
+        # Remove keys that are not used.
+        if 'labels' in self.results: self.results.pop('labels')
+        if 'xycoord' in self.results: self.results.pop('xycoord')
         # Return
         if return_results:
             return self.results
@@ -174,10 +177,11 @@ class Undouble():
             self.clustimage.params_hash = cl.get_params_hash(method, {})
         # Extract hash features
         self.clustimage.extract_feat(self.results)
+        # Remove keys that are not used.
         if 'labels' in self.results: self.results.pop('labels')
         if 'xycoord' in self.results: self.results.pop('xycoord')
 
-    def find(self, threshold=0, return_dict=False):
+    def group(self, threshold=0, return_dict=False):
         """Find similar images using the hash signatures.
 
         Parameters
@@ -191,7 +195,7 @@ class Undouble():
 
         """
         if self.results['feat'] is None:
-            logger.warning('Can not find similar images because no features are present. Tip: Use the .fit_transform() function first.')
+            logger.warning('Can not group similar images because no features are present. Tip: Use the .fit_transform() function first.')
             return None
 
         # Make sets of images that are similar based on the minimum defined threshold.
@@ -242,7 +246,7 @@ class Undouble():
 
         Description
         -----------
-        Files are moved that are listed by the find() functionality.
+        Files are moved that are listed by the group() functionality.
 
         Parameters
         ----------
@@ -323,6 +327,7 @@ class Undouble():
             logger.info('Cleaning previous fitted model results')
             if results and hasattr(self, 'results'): del self.results
             if params and hasattr(self, 'params'): del self.params
+            if params and hasattr(self, 'clustimage'): del self.clustimage
         # Store results
         # self.results = {'img':None, 'feat':None, 'xycoord':None, 'pathnames':None, 'labels': None}
 
@@ -405,7 +410,7 @@ class Undouble():
 
     def _check_status(self):
         if not hasattr(self, 'results'):
-            raise Exception(logger.error('Results missing! Hint: try to first use the model.find() functionality'))
+            raise Exception(logger.error('Results missing! Hint: try to first use the model.group() functionality'))
 
     def compute_hash(self, img, hash_size=None, to_array=False):
         """Compute hash.
@@ -736,23 +741,20 @@ def get_existing_pathnames(pathnames):
     Iloc = np.array(list(map(os.path.isfile, pathnames)))
     return pathnames[Iloc], np.array(Iloc)
 
+
 # %%
-
-
 def set_logger(verbose=20):
     """Set the logger for verbosity messages."""
     logger.setLevel(verbose)
 
+
 # %%
-
-
 def disable_tqdm():
     """Set the logger for verbosity messages."""
     return (True if (logger.getEffectiveLevel()>=30) else False)
 
+
 # %%
-
-
 def seperate_path(pathname):
     dirname, filename = os.path.split(pathname)
     filename, ext = os.path.splitext(filename)

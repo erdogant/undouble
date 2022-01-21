@@ -15,5 +15,6 @@ keywords:
 license: "BSD-3-Clause"
 message: "If you use this software, please cite it using these metadata."
 repository-code: "https://github.com/erdogant/undouble"
+version: 1.0.1
 title: "undouble"
 ...
