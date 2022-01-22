@@ -27,7 +27,7 @@ model.group(threshold=0)
 model.plot()
 
 # Move the images
-# model.move()
+model.move()
 
 # %% Make plots in medium blog
 import cv2

@@ -270,19 +270,22 @@ class Undouble():
         totfiles = np.sum(list(map(len, self.results['select_pathnames'])))
         totgroup = len(self.results['select_pathnames'])
         tdir = 'undouble' if targetdir is None else targetdir
-        answer=input('>Wait! Before you continue, you are at the point of physically moving files!\n>[%d] similar images are detected over [%d] groups.\n>[%d] images will be moved to the [%s] directory.\n>[%d] images will be copied to the [%s] directory.\n>Type <ok> to proceed.\n>' %(totfiles, totgroup, totfiles - totgroup, tdir, totgroup, tdir))
-        if answer != 'ok':
+        answer = input('\n-------------------------------------------------\n>You are at the point of physically moving files.\n-------------------------------------------------\n>[%d] similar images are detected over [%d] groups.\n>[%d] images will be moved to the [%s] directory.\n>[%d] images will be copied to the [%s] directory.\n\n[C]ontinue moving all files.\n[W]ait in each directory.\n[Q]uit\nAnswer: ' %(totfiles, totgroup, totfiles - totgroup, tdir, totgroup, tdir))
+        answer = str.lower(answer)
+        if answer == 'q':
             return
 
         # For each group, check the resolution and location.
         pathmem=''
-        answer = ''
         for pathnames in tqdm(self.results['select_pathnames'], disable=disable_tqdm()):
             curdir=os.path.split(pathnames[0])[0]
             if pathmem!=curdir:
                 pathmem=curdir
                 logger.info('Working in dir: [%s]' %(curdir))
-                if answer!='ok': answer = input('>Hit <enter> to proceed until the next directory. Type <ok> to stop asking! Just go!!')
+                if answer!='c':
+                    answer = input('><enter> to proceed to the next directory.\n>[C]ontinue to move all files.\n[Q]uit.')
+                    answer = str.lower(answer)
+                    if answer == 'q': return
             # Check file exists
             pathnames = np.array(pathnames)
             pathnames = pathnames[list(map(os.path.isfile, pathnames))]
