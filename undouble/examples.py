@@ -4,12 +4,14 @@ from undouble import Undouble
 # print(dir(undouble))
 # print(undouble.__version__)
 
+targetdir = 'D://magweg/101_ObjectCategories'
+
 # %%
 # Import library
 from undouble import Undouble
 
 # Init with default settings
-model = Undouble(method='phash', hash_size=8)
+model = Undouble(method='phash', hash_size=16)
 
 # Import example data
 targetdir = model.import_example(data='flowers')
@@ -18,7 +20,7 @@ targetdir = model.import_example(data='flowers')
 model.import_data(targetdir)
 
 # Compute image-hash
-model.fit_transform()
+model.fit_transform(method='phash')
 
 # Find images with image-hash <= threshold
 model.group(threshold=0)
@@ -27,7 +29,7 @@ model.group(threshold=0)
 model.plot()
 
 # Move the images
-model.move()
+# model.move()
 
 # %% Make plots in medium blog
 import cv2
