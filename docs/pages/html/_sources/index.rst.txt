@@ -57,7 +57,6 @@ Content
   :maxdepth: 1
   :caption: Code Documentation
   
-  Documentation
   Coding quality
   undouble.undouble
 
