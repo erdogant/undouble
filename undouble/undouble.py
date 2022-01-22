@@ -231,7 +231,7 @@ class Undouble():
         idx = np.argsort(list(map(lambda x: os.path.split(x[0])[0], pathnames)))
         self.results['select_pathnames'] = np.array(pathnames)[idx].tolist()
         self.results['select_scores'] = np.array(thresholds)[idx].tolist()
-        logger.info('Number of groups with similar images detected: %d' %(len(self.results['select_pathnames'])))
+        logger.info('[%d] groups with similar image-hash.' %(len(self.results['select_pathnames'])))
 
         totfiles = np.sum(list(map(len, self.results['select_pathnames'])))
         totgroup = len(self.results['select_pathnames'])
@@ -277,7 +277,8 @@ class Undouble():
 
         # For each group, check the resolution and location.
         pathmem=''
-        for pathnames in tqdm(self.results['select_pathnames'], disable=disable_tqdm()):
+        # for pathnames in tqdm(self.results['select_pathnames'], disable=disable_tqdm()):
+        for pathnames in self.results['select_pathnames']:
             curdir=os.path.split(pathnames[0])[0]
             if pathmem!=curdir:
                 pathmem=curdir
@@ -406,7 +407,7 @@ class Undouble():
                     _, ncol = self.clustimage._get_rows_cols(len(imgs), ncols=ncols)
                     labels = list(map(lambda x, y, z: 'score: ' + str(int(x)) + ' and blur: ' + str(int(y)) + '\nresolution: ' + str(int(z)), imgscores['hash_scores'], imgscores['blur'], imgscores['resolution']))
                     # Make subplots
-                    self.clustimage._make_subplots(imgs, ncol, cmap, figsize, title=("Number of similar images %s" %(len(imgscores['pathnames']))), labels=labels)
+                    self.clustimage._make_subplots(imgs, ncol, cmap, figsize, title=("[%s] groups with similar image-hash" %(len(imgscores['pathnames']))), labels=labels)
 
                 # Restore verbose status
                 # set_logger(verbose=verbose)
