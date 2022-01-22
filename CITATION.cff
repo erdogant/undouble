@@ -6,15 +6,15 @@ authors:
     given-names: Erdogan
     orcid: "https://orcid.org/0000-0002-3430-9618"
 cff-version: "1.1.0"
-date-released: 2021-17-01
+date-released: 2022-01-01
 keywords: 
   - "python"
-  - "undouble"
-  - "image"
-  - "hash" 
-license: "BSD-3-Clause"
+  - "hash"
+  - "images"
+  - "image-hash"
+license: "BSD License"
 message: "If you use this software, please cite it using these metadata."
-repository-code: "https://github.com/erdogant/undouble"
-version: 1.0.1
-title: "undouble"
+repository-code: "https://github.com/erdogant/clustimage"
+title: "Python package undouble is to detect (near-)identical images."
+version: "1.1.0"
 ...
