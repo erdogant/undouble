@@ -32,14 +32,14 @@ After the first step of decolorizing, a Discrete Cosine Transform (DCT) is appli
    +----------+
 
 
-Difference hash
+Differential hash
 --------------------------
 
 After the first step of decolorizing and scaling, the pixels are serially (from left to right per row) compared to their neighbor to the right. If the byte at position x is less than the byte at position (x+1), it gets value 1 and otherwise a 0. The final image hash is followed by flattening the array into a vector.
 
 .. |dhash| image:: ../figs/dhash.png
 
-.. table:: Difference hash
+.. table:: Differential hash
    :align: center
 
    +----------+
