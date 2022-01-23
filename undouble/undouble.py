@@ -8,9 +8,7 @@
 # --------------------------------------------------
 
 import os
-import pandas as pd
 import requests
-from urllib.parse import urlparse
 import logging
 import numpy as np
 from tqdm import tqdm
@@ -164,6 +162,8 @@ class Undouble():
                 * 'whash-db4': Daubechies wavelet hash
                 * 'colorhash': HSV color hash
                 * 'crop-resistant': Crop-resistant hash
+        hash_size : integer (default: 8)
+            The hash_size will be used to scale down the image and create a hash-image of length: hash_size*hash_size.
 
         Returns
         -------
@@ -594,6 +594,21 @@ def sort_images(pathnames, hash_scores=None, sort_first_img=False):
 
 # %%
 def filter_checks(pathnames, filters):
+    """Filter checks.
+
+    Parameters
+    ----------
+    pathnames : list of str
+        pathnames to the images.
+    filters : list, (Default: ['location'])
+        'location' : Only move images that are seen in the same directory.
+
+    Returns
+    -------
+    bool
+        When all filters are true.
+
+    """
     resOK, locOK = True, True
     # Check nr. of files
     fileOK = True if len(pathnames)>1 else False
@@ -745,6 +760,14 @@ def compute_blur(pathname):
 
 # %%
 def get_existing_pathnames(pathnames):
+    """Get existing pathnames.
+
+    Parameters
+    ----------
+    pathnames : list of str
+        pathnames to the images.
+
+    """
     Iloc = np.array(list(map(os.path.isfile, pathnames)))
     return pathnames[Iloc], np.array(Iloc)
 
@@ -763,6 +786,23 @@ def disable_tqdm():
 
 # %%
 def seperate_path(pathname):
+    """Seperate path.
+
+    Parameters
+    ----------
+    pathnames : list of str
+        pathnames to the images.
+
+    Returns
+    -------
+    dirname : str
+        directory path.
+    filename : str
+        filename.
+    ext
+        Extension.
+
+    """
     dirname, filename = os.path.split(pathname)
     filename, ext = os.path.splitext(filename)
     return dirname, filename, ext.lower()
