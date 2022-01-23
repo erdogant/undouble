@@ -149,7 +149,7 @@ class Undouble():
         if return_results:
             return self.results
 
-    def fit_transform(self, method=None):
+    def fit_transform(self, method=None, hash_size=None):
         """Compute the hash for each image.
 
         Parameters
@@ -174,7 +174,11 @@ class Undouble():
         if method is not None:
             self.params['method'] = method
             self.clustimage.params['method'] = method
-            self.clustimage.params_hash = cl.get_params_hash(method, {})
+        if hash_size is not None:
+            self.params['hash_size'] = hash_size
+            self.clustimage.params_hash['hash_size'] = hash_size
+
+        self.clustimage.params_hash = cl.get_params_hash(self.params['method'], self.clustimage.params_hash)
         # Extract hash features
         self.clustimage.extract_feat(self.results)
         # Remove keys that are not used.
@@ -277,7 +281,6 @@ class Undouble():
 
         # For each group, check the resolution and location.
         pathmem=''
-        # for pathnames in tqdm(self.results['select_pathnames'], disable=disable_tqdm()):
         for pathnames in self.results['select_pathnames']:
             curdir=os.path.split(pathnames[0])[0]
             if pathmem!=curdir:
