@@ -11,7 +11,7 @@ targetdir = 'D://magweg/101_ObjectCategories'
 from undouble import Undouble
 
 # Init with default settings
-model = Undouble(method='phash', hash_size=8)
+model = Undouble()
 
 # Import example data
 targetdir = model.import_example(data='flowers')
@@ -23,7 +23,7 @@ model.import_data(targetdir)
 model.fit_transform(method='phash', hash_size=16)
 
 # Find images with image-hash <= threshold
-model.group(threshold=0)
+model.group(threshold=5)
 
 # Plot the images
 model.plot()
