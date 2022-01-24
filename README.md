@@ -157,7 +157,34 @@ model.plot()
 # Move the images
 # model.move()
 
+```
 
+#### Finding identical mnist digits.
+
+```python
+
+# Import library
+from undouble import Undouble
+
+# Init with default settings
+model = Undouble()
+
+# Import example data
+targetdir = model.import_example(data='mnist')
+
+# Importing the files files from disk, cleaning and pre-processing
+model.import_data(targetdir)
+
+# Compute image-hash
+model.fit_transform(method='phash', hash_size=32)
+
+# Find images with image-hash <= threshold
+model.group(threshold=0)
+
+# Plot the images
+model.plot()
+
+```
 
 #### References
 * https://github.com/erdogant/undouble
