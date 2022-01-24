@@ -179,16 +179,18 @@ class Undouble():
             self.clustimage.params_hash['hash_size'] = hash_size
 
         self.clustimage.params_hash = cl.get_params_hash(self.params['method'], self.clustimage.params_hash)
-        # Extract hash features
-        self.results['feat'] = self.clustimage.extract_feat(self.results)
-        # Build adjacency matrix for the image-hash based on nr. of differences
-        logger.info('Compute adjacency matrix [%gx%g] with absolute differences based on the image-hash of [%s].' %(self.results['feat'].shape[0], self.results['feat'].shape[0], self.params['method']))
-        self.results['adjmat'] = (self.results['feat'][:, None, :] != self.results['feat']).sum(2)
-        # hex(int(''.join(hashs[0].hash.ravel().astype(int).astype(str)), 2))
+        # Compute image-hash features
+        # self.results['img_hash_bin'] = self.clustimage.extract_feat(self.results)
+        self.results['img_hash_bin'] = np.array(list(map(self.clustimage.compute_hash, tqdm(self.results['img'], disable=disable_tqdm()))))
+        self.results['img_hash_hex'] = self.bin2hex()
 
+        # Build adjacency matrix for the image-hash based on nr. of differences
+        logger.info('Compute adjacency matrix [%gx%g] with absolute differences based on the image-hash of [%s].' %(self.results['img_hash_bin'].shape[0], self.results['img_hash_bin'].shape[0], self.params['method']))
+        self.results['adjmat'] = (self.results['img_hash_bin'][:, None, :] != self.results['img_hash_bin']).sum(2)
         # Remove keys that are not used.
         if 'labels' in self.results: self.results.pop('labels')
         if 'xycoord' in self.results: self.results.pop('xycoord')
+        if 'feat' in self.results: self.results.pop('feat')
 
     def group(self, threshold=0, return_dict=False):
         """Find similar images using the hash signatures.
@@ -203,7 +205,7 @@ class Undouble():
         None.
 
         """
-        if self.results['feat'] is None:
+        if self.results['img_hash_bin'] is None:
             logger.warning('Can not group similar images because no features are present. Tip: Use the .fit_transform() function first.')
             return None
 
@@ -456,6 +458,12 @@ class Undouble():
             hashes = np.c_[hashes]
 
         return hashes
+
+    def bin2hex(self):
+        if hasattr(self, 'results'):
+            return np.array(list(map(lambda x: hex(int(''.join(x.astype(int).astype(str)), 2)), self.results['img_hash_bin'])))
+        else:
+            logger.warning('Results missing! Hint: try to first use model.fit_transform()')
 
 
 # %% Import example dataset from github.

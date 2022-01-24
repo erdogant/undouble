@@ -25,11 +25,18 @@ model.fit_transform(method='ahash', hash_size=8)
 # Find images with image-hash <= threshold
 model.group(threshold=0)
 
+# imghex = model.imghash2hex()
+
 # Plot the images
 model.plot()
 
 # Move the images
 # model.move()
+
+# %%
+# pd.DataFrame(index=[model.results['filenames']], data=model.results['feat'])
+
+model.imghash2hex()
 
 # %% Make plots in medium blog
 import cv2
