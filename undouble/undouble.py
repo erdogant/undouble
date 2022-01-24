@@ -180,7 +180,12 @@ class Undouble():
 
         self.clustimage.params_hash = cl.get_params_hash(self.params['method'], self.clustimage.params_hash)
         # Extract hash features
-        self.clustimage.extract_feat(self.results)
+        self.results['feat'] = self.clustimage.extract_feat(self.results)
+        # Build adjacency matrix for the image-hash based on nr. of differences
+        logger.info('Compute adjacency matrix [%gx%g] with absolute differences based on the image-hash of [%s].' %(self.results['feat'].shape[0], self.results['feat'].shape[0], self.params['method']))
+        self.results['adjmat'] = (self.results['feat'][:, None, :] != self.results['feat']).sum(2)
+        # hex(int(''.join(hashs[0].hash.ravel().astype(int).astype(str)), 2))
+
         # Remove keys that are not used.
         if 'labels' in self.results: self.results.pop('labels')
         if 'xycoord' in self.results: self.results.pop('xycoord')
@@ -210,7 +215,7 @@ class Undouble():
         if np.sum(idx==False)>0:
             logger.warning('Files that are moved in a previous action are kept untouched.')
         paths = self.results['pathnames'][idx]
-        feat = copy.deepcopy(self.results['feat'])
+        feat = copy.deepcopy(self.results['adjmat'])
         feat = feat[idx, :]
         feat = feat[:, idx]
 

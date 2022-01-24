@@ -20,13 +20,13 @@ targetdir = model.import_example(data='flowers')
 model.import_data(targetdir)
 
 # Compute image-hash
-model.fit_transform(method='dhash', hash_size=16)
+model.fit_transform(method='ahash', hash_size=8)
 
 # Find images with image-hash <= threshold
 model.group(threshold=0)
 
 # Plot the images
-# model.plot()
+model.plot()
 
 # Move the images
 # model.move()
