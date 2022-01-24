@@ -2,8 +2,8 @@
 
 -------------------------------------
 
-Flowers
-''''''''''
+Flowers dataset
+''''''''''''''''''''
 
 Analyze for similar flowers in the example dataset.
 
@@ -78,6 +78,52 @@ The image in the group with the highest resolution will be copied, and all other
     # >Type <ok> to proceed.
 
 
+Input for model
+''''''''''''''''''''''''
+
+The input for the :func:`undouble.undouble.Undouble.import_data` can be three different types: 
+
+    * Path to directory
+    * List of file locations
+    * Numpy array containing images
+
+.. code:: python
+
+    # Import library
+    from undouble import Undouble
+    
+    # Init with default settings
+    model = Undouble(method='phash', hash_size=16)
+    
+    # Import data; Pathnames to the images.
+    input_list_of_files = model.import_example(data='flowers')
+    
+    # Import data; Read recursively the directory
+    input_directory, _ = os.path.split(input_list_of_files[0])
+    print(input_directory)
+    # '.\\undouble\\undouble\\data\\flower_images'
+    
+    # Import data; numpy array containing images.
+    input_img_array = model.import_example(data='mnist')
+    
+    # Importing the files files from disk, cleaning and pre-processing
+    model.import_data(input_list_of_files)
+    model.import_data(input_directory)
+    model.import_data(input_img_array)
+    
+    # Compute image-hash
+    model.fit_transform()
+    
+    # Find images with image-hash <= threshold
+    model.group(threshold=0)
+    
+    # Plot the images
+    model.plot()
+    
+    # Move the images
+    # model.move()
+
+
 101 objects dataset
 ''''''''''''''''''''
 
@@ -130,8 +176,8 @@ Note that this dataset does not contain ground truth labels with identical image
 Average hash
 --------------
 
-The average hash function detected 135 groups that could be linked to 335 images with an identical hash (threshold=0). Despite identical images being detected, most of the groups showed collisions such as the top and bottom left, and/or near-identical images, such as the motorbikes.
-
+The average hash function detected 135 groups that could be linked to 335 images with an identical hash (threshold=0) based on the input hash size of 8 (64-bit). Despite identical images being detected, most of the groups showed collisions such as the top and bottom left, and/or near-identical images, such as the motorbikes.
+By increasing the hash size to 16 (256-bit), 28 groups for 64 images were detected. No collisions were present but only some near-identical images, such as the motorbikes.
 
 .. |ahash_101objects| image:: ../figs/ahash_101objects.png
 
@@ -146,8 +192,10 @@ The average hash function detected 135 groups that could be linked to 335 images
 Differential hash
 ------------------
 
-The differential hash function detected 28 images that could be linked to 31 images with an identical hash (threshold=0). A visual inspection showed no collisions but near-identical images (two motorbikes) were detected.
-
+The differential hash function detected 28 images that could be linked to 31 images with an identical hash (threshold=0).
+A visual inspection showed no collisions but near-identical images (two motorbikes) were detected.
+By increasing the hash size to 16 (256-bit), 8 groups for 16 images were detected. No collisions were present but only some near-identical images, such as the motorbikes. By increasing the hash size to 16 (256-bit), 8 groups for 16 images were detected.
+No collisions and no near-identical images were present only images that are visually similar.
 
 .. |dhash_101objects| image:: ../figs/dhash_101objects.png
 
@@ -162,8 +210,9 @@ The differential hash function detected 28 images that could be linked to 31 ima
 Perceptual hash
 ------------------
 
-The perceptual hash function detected 38 groups that could be linked to 41 images with an identical hash (threshold=0). A visual inspection showed no collisions but near-identical images were detected, such as the motorbikes.
-
+The perceptual hash function detected 38 groups that could be linked to 41 images with an identical hash (threshold=0).
+A visual inspection showed no collisions but near-identical images were detected, such as the motorbikes, as illustrated in the figure below.
+By increasing the hash size to 16 (256-bit), 10 groups for 20 images were detected. No collisions and no near-identical images were present only images that are visually similar.
 
 .. |phash_101objects| image:: ../figs/phash_101objects.png
 
@@ -178,8 +227,10 @@ The perceptual hash function detected 38 groups that could be linked to 41 image
 Haar wavelet hash
 ------------------
 
-The wavelet hash function detected 141 groups that could be linked to 513 images with an identical hash (threshold=0). A visual inspection showed that almost all groups contained either collisions or near-identical images (Figure 12). Who had known that a strawberry could have a similar image-hash as the motorbike?
-
+The wavelet hash function detected 141 groups that could be linked to 513 images with an identical hash (threshold=0) based on the input hash size of 8 (64-bit).
+A visual inspection showed that almost all groups contained either collisions or near-identical images.
+Who had known that a strawberry could have a similar image-hash as the motorbike? By increasing the hash size to 16 (256-bit), 25 groups for 51 images were detected.
+No collisions were present but only some near-identical images, such as the motorbikes.
 
 .. |wave_101objects| image:: ../figs/wave_101objects.png
 

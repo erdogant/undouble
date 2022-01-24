@@ -15,8 +15,13 @@ The following core functionalities allows to group images on image-hash, and sys
 
 import_data
 ^^^^^^^^^^^^^^
-The input for the :func:`undouble.undouble.Undouble.import_data` should be the path to directory or a list of file locations.
-Other user chooses, such as extention type, excluding of certain directories should be set during initialization.
+The input for the :func:`undouble.undouble.Undouble.import_data` can be three different types: 
+
+    * Path to directory
+    * List of file locations
+    * Numpy array containing images
+    
+The scanned files and directories can also be filtered on extention type, or directories can be black listed. Note that these settings need to be set during initialization.
 The **black_list** directory is set to *undouble* by default to make sure that readily moved files are not incorporated in the analysis.
 
 The following parameters can be changed:

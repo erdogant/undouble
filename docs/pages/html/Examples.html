@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Flowers &mdash; undouble undouble documentation</title>
+  <title>Flowers dataset &mdash; undouble undouble documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -64,9 +64,10 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Flowers</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Flowers dataset</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#get-identical-images">Get identical images</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#move-files">Move files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#input-for-model">Input for model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#objects-dataset">101 objects dataset</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#average-hash">Average hash</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#differential-hash">Differential hash</a></li>
@@ -96,7 +97,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Flowers</li>
+      <li>Flowers dataset</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/Examples.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -107,8 +108,8 @@
            <div itemprop="articleBody">
              
   <hr class="docutils" id="code-directive" />
-<section id="flowers">
-<h1>Flowers<a class="headerlink" href="#flowers" title="Permalink to this headline"></a></h1>
+<section id="flowers-dataset">
+<h1>Flowers dataset<a class="headerlink" href="#flowers-dataset" title="Permalink to this headline"></a></h1>
 <p>Analyze for similar flowers in the example dataset.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import library</span>
 <span class="kn">from</span> <span class="nn">undouble</span> <span class="kn">import</span> <span class="n">Undouble</span>
@@ -172,6 +173,52 @@ The image in the group with the highest resolution will be copied, and all other
 </pre></div>
 </div>
 </section>
+<section id="input-for-model">
+<h1>Input for model<a class="headerlink" href="#input-for-model" title="Permalink to this headline"></a></h1>
+<p>The input for the <a class="reference internal" href="undouble.undouble.html#undouble.undouble.Undouble.import_data" title="undouble.undouble.Undouble.import_data"><code class="xref py py-func docutils literal notranslate"><span class="pre">undouble.undouble.Undouble.import_data()</span></code></a> can be three different types:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Path to directory</p></li>
+<li><p>List of file locations</p></li>
+<li><p>Numpy array containing images</p></li>
+</ul>
+</div></blockquote>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import library</span>
+<span class="kn">from</span> <span class="nn">undouble</span> <span class="kn">import</span> <span class="n">Undouble</span>
+
+<span class="c1"># Init with default settings</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Undouble</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;phash&#39;</span><span class="p">,</span> <span class="n">hash_size</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+
+<span class="c1"># Import data; Pathnames to the images.</span>
+<span class="n">input_list_of_files</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">import_example</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="s1">&#39;flowers&#39;</span><span class="p">)</span>
+
+<span class="c1"># Import data; Read recursively the directory</span>
+<span class="n">input_directory</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">input_list_of_files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">input_directory</span><span class="p">)</span>
+<span class="c1"># &#39;.\\undouble\\undouble\\data\\flower_images&#39;</span>
+
+<span class="c1"># Import data; numpy array containing images.</span>
+<span class="n">input_img_array</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">import_example</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="s1">&#39;mnist&#39;</span><span class="p">)</span>
+
+<span class="c1"># Importing the files files from disk, cleaning and pre-processing</span>
+<span class="n">model</span><span class="o">.</span><span class="n">import_data</span><span class="p">(</span><span class="n">input_list_of_files</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">import_data</span><span class="p">(</span><span class="n">input_directory</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">import_data</span><span class="p">(</span><span class="n">input_img_array</span><span class="p">)</span>
+
+<span class="c1"># Compute image-hash</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">()</span>
+
+<span class="c1"># Find images with image-hash &lt;= threshold</span>
+<span class="n">model</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Plot the images</span>
+<span class="n">model</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+
+<span class="c1"># Move the images</span>
+<span class="c1"># model.move()</span>
+</pre></div>
+</div>
+</section>
 <section id="objects-dataset">
 <h1>101 objects dataset<a class="headerlink" href="#objects-dataset" title="Permalink to this headline"></a></h1>
 <p>I utilized the Caltech 101 [1] dataset and saved it to my local disk. I will analyze the results with aHash, pHash, dHash, and Wavelet hash.
@@ -219,7 +266,8 @@ Note that this dataset does not contain ground truth labels with identical image
 </div>
 <section id="average-hash">
 <h2>Average hash<a class="headerlink" href="#average-hash" title="Permalink to this headline"></a></h2>
-<p>The average hash function detected 135 groups that could be linked to 335 images with an identical hash (threshold=0). Despite identical images being detected, most of the groups showed collisions such as the top and bottom left, and/or near-identical images, such as the motorbikes.</p>
+<p>The average hash function detected 135 groups that could be linked to 335 images with an identical hash (threshold=0) based on the input hash size of 8 (64-bit). Despite identical images being detected, most of the groups showed collisions such as the top and bottom left, and/or near-identical images, such as the motorbikes.
+By increasing the hash size to 16 (256-bit), 28 groups for 64 images were detected. No collisions were present but only some near-identical images, such as the motorbikes.</p>
 <table class="docutils align-center" id="id2">
 <caption><span class="caption-text">Average hash</span><a class="headerlink" href="#id2" title="Permalink to this table"></a></caption>
 <colgroup>
@@ -233,7 +281,10 @@ Note that this dataset does not contain ground truth labels with identical image
 </section>
 <section id="differential-hash">
 <h2>Differential hash<a class="headerlink" href="#differential-hash" title="Permalink to this headline"></a></h2>
-<p>The differential hash function detected 28 images that could be linked to 31 images with an identical hash (threshold=0). A visual inspection showed no collisions but near-identical images (two motorbikes) were detected.</p>
+<p>The differential hash function detected 28 images that could be linked to 31 images with an identical hash (threshold=0).
+A visual inspection showed no collisions but near-identical images (two motorbikes) were detected.
+By increasing the hash size to 16 (256-bit), 8 groups for 16 images were detected. No collisions were present but only some near-identical images, such as the motorbikes. By increasing the hash size to 16 (256-bit), 8 groups for 16 images were detected.
+No collisions and no near-identical images were present only images that are visually similar.</p>
 <table class="docutils align-center" id="id3">
 <caption><span class="caption-text">Differential hash</span><a class="headerlink" href="#id3" title="Permalink to this table"></a></caption>
 <colgroup>
@@ -247,7 +298,9 @@ Note that this dataset does not contain ground truth labels with identical image
 </section>
 <section id="perceptual-hash">
 <h2>Perceptual hash<a class="headerlink" href="#perceptual-hash" title="Permalink to this headline"></a></h2>
-<p>The perceptual hash function detected 38 groups that could be linked to 41 images with an identical hash (threshold=0). A visual inspection showed no collisions but near-identical images were detected, such as the motorbikes.</p>
+<p>The perceptual hash function detected 38 groups that could be linked to 41 images with an identical hash (threshold=0).
+A visual inspection showed no collisions but near-identical images were detected, such as the motorbikes, as illustrated in the figure below.
+By increasing the hash size to 16 (256-bit), 10 groups for 20 images were detected. No collisions and no near-identical images were present only images that are visually similar.</p>
 <table class="docutils align-center" id="id4">
 <caption><span class="caption-text">Perceptual hash</span><a class="headerlink" href="#id4" title="Permalink to this table"></a></caption>
 <colgroup>
@@ -261,7 +314,10 @@ Note that this dataset does not contain ground truth labels with identical image
 </section>
 <section id="haar-wavelet-hash">
 <h2>Haar wavelet hash<a class="headerlink" href="#haar-wavelet-hash" title="Permalink to this headline"></a></h2>
-<p>The wavelet hash function detected 141 groups that could be linked to 513 images with an identical hash (threshold=0). A visual inspection showed that almost all groups contained either collisions or near-identical images (Figure 12). Who had known that a strawberry could have a similar image-hash as the motorbike?</p>
+<p>The wavelet hash function detected 141 groups that could be linked to 513 images with an identical hash (threshold=0) based on the input hash size of 8 (64-bit).
+A visual inspection showed that almost all groups contained either collisions or near-identical images.
+Who had known that a strawberry could have a similar image-hash as the motorbike? By increasing the hash size to 16 (256-bit), 25 groups for 51 images were detected.
+No collisions were present but only some near-identical images, such as the motorbikes.</p>
 <table class="docutils align-center" id="id5">
 <caption><span class="caption-text">Haar wavelet hash</span><a class="headerlink" href="#id5" title="Permalink to this table"></a></caption>
 <colgroup>

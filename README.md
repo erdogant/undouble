@@ -112,6 +112,53 @@ model.move()
 </p>
 
 
+#### Three types of input to read the images
+
+The input for the function `import_data` can be three different types: 
+
+    * Path to directory
+    * List of file locations
+    * Numpy array containing images
+
+
+```python
+
+# Import library
+from undouble import Undouble
+
+# Init with default settings
+model = Undouble(method='phash', hash_size=16)
+
+# Import data; Pathnames to the images.
+input_list_of_files = model.import_example(data='flowers')
+
+# Import data; Directory to read.
+input_directory, _ = os.path.split(input_list_of_files[0])
+print(input_directory)
+# '.\\undouble\\undouble\\data\\flower_images'
+
+# Import data; numpy array containing images.
+input_img_array = model.import_example(data='mnist')
+
+# Importing the files files from disk, cleaning and pre-processing
+model.import_data(input_list_of_files)
+model.import_data(input_directory)
+model.import_data(input_img_array)
+
+# Compute image-hash
+model.fit_transform()
+
+# Find images with image-hash <= threshold
+model.group(threshold=0)
+
+# Plot the images
+model.plot()
+
+# Move the images
+# model.move()
+
+
+
 #### References
 * https://github.com/erdogant/undouble
 

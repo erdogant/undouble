@@ -81,9 +81,10 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="Examples.html">Flowers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Examples.html">Flowers dataset</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Examples.html#get-identical-images">Get identical images</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Examples.html#move-files">Move files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Examples.html#input-for-model">Input for model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Examples.html#objects-dataset">101 objects dataset</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Examples.html#references">References</a></li>
 </ul>
@@ -132,8 +133,15 @@
 </div></blockquote>
 <section id="import-data">
 <h2>import_data<a class="headerlink" href="#import-data" title="Permalink to this headline"></a></h2>
-<p>The input for the <a class="reference internal" href="undouble.undouble.html#undouble.undouble.Undouble.import_data" title="undouble.undouble.Undouble.import_data"><code class="xref py py-func docutils literal notranslate"><span class="pre">undouble.undouble.Undouble.import_data()</span></code></a> should be the path to directory or a list of file locations.
-Other user chooses, such as extention type, excluding of certain directories should be set during initialization.
+<p>The input for the <a class="reference internal" href="undouble.undouble.html#undouble.undouble.Undouble.import_data" title="undouble.undouble.Undouble.import_data"><code class="xref py py-func docutils literal notranslate"><span class="pre">undouble.undouble.Undouble.import_data()</span></code></a> can be three different types:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Path to directory</p></li>
+<li><p>List of file locations</p></li>
+<li><p>Numpy array containing images</p></li>
+</ul>
+</div></blockquote>
+<p>The scanned files and directories can also be filtered on extention type, or directories can be black listed. Note that these settings need to be set during initialization.
 The <strong>black_list</strong> directory is set to <em>undouble</em> by default to make sure that readily moved files are not incorporated in the analysis.</p>
 <p>The following parameters can be changed:</p>
 <blockquote>

@@ -11,7 +11,7 @@ targetdir = 'D://magweg/101_ObjectCategories'
 from undouble import Undouble
 
 # Init with default settings
-model = Undouble(method='ahash', hash_size=8)
+model = Undouble(method='phash', hash_size=8)
 
 # Import example data
 targetdir = model.import_example(data='flowers')
@@ -20,12 +20,10 @@ targetdir = model.import_example(data='flowers')
 model.import_data(targetdir)
 
 # Compute image-hash
-model.fit_transform(method='ahash', hash_size=8)
+model.fit_transform(method='phash', hash_size=16)
 
 # Find images with image-hash <= threshold
 model.group(threshold=0)
-
-# imghex = model.imghash2hex()
 
 # Plot the images
 model.plot()
@@ -33,10 +31,33 @@ model.plot()
 # Move the images
 # model.move()
 
-# %%
-# pd.DataFrame(index=[model.results['filenames']], data=model.results['feat'])
 
-model.imghash2hex()
+# %%
+from clustimage import Clustimage
+
+# Cluster on image-hash
+cl = Clustimage(method='phash', params_hash={'threshold':0, 'hash_size':32})
+
+# Example data
+X = cl.import_example(data='mnist')
+
+# Preprocessing, feature extraction and cluster evaluation
+results = cl.fit_transform(X, min_clust=4, max_clust=15, metric='euclidean', linkage='ward')
+
+# Scatter
+cl.scatter(zoom=3, img_mean=False, text=False)
+cl.scatter(zoom=None, img_mean=False, dotsize=20, text=False)
+cl.scatter(zoom=3, img_mean=False, text=True, plt_all=True, figsize=(35, 25))
+
+# cl.clusteval.plot()
+# cl.plot_unique(img_mean=False)
+# cl.plot(min_clust=5)
+
+
+# %%
+import pandas as pd
+df = pd.DataFrame(index=[model.results['filenames']], data=model.results['img_hash_hex'], columns=['image_hash_hex'])
+
 
 # %% Make plots in medium blog
 import cv2
