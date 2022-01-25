@@ -7,8 +7,6 @@ class TestUNDOUBLE(unittest.TestCase):
 
     def test_import_data(self):
         cl = Undouble()
-        # Check initialization results
-        assert cl.results=={'img': None, 'feat': None, 'xycoord': None, 'pathnames': None, 'labels': None}
         # Import flowers example
         X = cl.import_example(data='flowers')
 
