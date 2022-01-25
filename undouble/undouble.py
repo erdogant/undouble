@@ -282,7 +282,7 @@ class Undouble():
         totfiles = np.sum(list(map(len, self.results['select_pathnames'])))
         totgroup = len(self.results['select_pathnames'])
         tdir = 'undouble' if targetdir is None else targetdir
-        answer = input('\n-------------------------------------------------\n>You are at the point of physically moving files.\n-------------------------------------------------\n>[%d] similar images are detected over [%d] groups.\n>[%d] images will be moved to the [%s] directory.\n>[%d] images will be copied to the [%s] directory.\n\n[C]ontinue moving all files.\n[W]ait in each directory.\n[Q]uit\nAnswer: ' %(totfiles, totgroup, totfiles - totgroup, tdir, totgroup, tdir))
+        answer = input('\n-------------------------------------------------\n>You are at the point of physically moving files.\n-------------------------------------------------\n>[%d] similar images are detected over [%d] groups.\n>[%d] images will be moved to the [%s] subdirectory.\n>[%d] images will be copied to the [%s] subdirectory.\n\n>[C]ontinue moving all files.\n>[W]ait in each directory.\n>[Q]uit\n>Answer: ' %(totfiles, totgroup, totfiles - totgroup, tdir, totgroup, tdir))
         answer = str.lower(answer)
         if answer == 'q':
             return
@@ -295,7 +295,7 @@ class Undouble():
                 pathmem=curdir
                 logger.info('Working in dir: [%s]' %(curdir))
                 if answer!='c':
-                    answer = input('><enter> to proceed to the next directory.\n>[C]ontinue to move all files.\n[Q]uit.')
+                    answer = input('><enter> to proceed to the next directory.\n>[C]ontinue to move all files.\n>[Q]uit\nAnswer: ')
                     answer = str.lower(answer)
                     if answer == 'q': return
             # Check file exists
@@ -448,9 +448,9 @@ class Undouble():
         """
         if hash_size is None: hash_size=self.params['hash_size']
         if hasattr(img, 'results'):
-            hashes = list(map(lambda x: self.clustimage.compute_hash(x, hash_size=hash_size).hash, self.results['img']))
+            hashes = list(map(lambda x: self.clustimage.compute_hash(x, hash_size=hash_size), self.results['img']))
         else:
-            hashes = self.clustimage.compute_hash(img, hash_size=hash_size).hash
+            hashes = self.clustimage.compute_hash(img, hash_size=hash_size)
             hashes = [hashes]
 
         # Convert to image-hash
@@ -461,6 +461,14 @@ class Undouble():
         return hashes
 
     def bin2hex(self):
+        """Binary to hex.
+
+        Returns
+        -------
+        str
+            Hex of image hash.
+
+        """
         if hasattr(self, 'results'):
             return np.array(list(map(lambda x: hex(int(''.join(x.astype(int).astype(str)), 2)), self.results['img_hash_bin'])))
         else:
