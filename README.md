@@ -79,9 +79,6 @@ model.import_data(targetdir)
 # Compute image-hash
 model.fit_transform()
 
-# Find images with image-hash <= threshold
-model.group(threshold=0)
-
 # [undouble] >INFO> Store examples at [./undouble/data]..
 # [undouble] >INFO> Downloading [flowers] dataset from github source..
 # [undouble] >INFO> Extracting files..
@@ -94,7 +91,11 @@ model.group(threshold=0)
 # [undouble] >INFO> Build adjacency matrix with phash differences.
 # [undouble] >INFO> Extracted features using [phash]: (214, 214)
 # 100%|██████████| 214/214 [00:00<00:00, 129241.33it/s]
-# 
+
+
+# Find images with image-hash <= threshold
+model.group(threshold=0)
+
 # [undouble] >INFO> Number of groups with similar images detected: 3
 # [undouble] >INFO> [3] groups are detected for [7] images.
 
@@ -103,6 +104,18 @@ model.plot()
 
 # Move the images
 model.move()
+
+# -------------------------------------------------
+# >You are at the point of physically moving files.
+# -------------------------------------------------
+# >[7] similar images are detected over [3] groups.
+# >[4] images will be moved to the [undouble] subdirectory.
+# >[3] images will be copied to the [undouble] subdirectory.
+
+# >[C]ontinue moving all files.
+# >[W]ait in each directory.
+# >[Q]uit
+# >Answer: w
 
 ```
 <p align="center">
