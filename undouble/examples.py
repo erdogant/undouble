@@ -98,24 +98,12 @@ for method in methods:
     ax[1][0].imshow(img_r, cmap='gray')
     ax[1][0].axis('off')
     ax[1][0].set_title('grayscale image, size %.0dx%.0d' %(8, 8))
-    ax[1][1].imshow(hashs[0], cmap='gray')
+    ax[1][1].imshow(hashs[0].reshape(8, 8), cmap='gray')
     ax[1][1].axis('off')
     ax[1][1].set_title(method + ' function')
 
     # Compute hash for the 10 images.
     hashs = model.compute_hash(model, to_array=False)
-
-    # Compute average nr. of difference
-    adjmat = np.zeros((hashs.shape[0], hashs.shape[0]))
-    for i, h1 in enumerate(hashs):
-        for j, h2 in enumerate(hashs):
-            adjmat[i, j] = np.sum(h1!=h2)
-
-    diff=np.mean(adjmat[np.triu_indices(adjmat.shape[0], k=1)])
-    print('[%s] Average difference: %.2f' %(method, diff))
-
-    # Make a heatmap to demonstrate the differences between the image-hashes
-    imagesc.plot(hashs, cmap='gray', col_labels='', row_labels=model.results['filenames'], cbar=False, title=method + '\nAverage difference: %.3f' %(diff), annot=True)
 
 
 # %% Make plots in medium
