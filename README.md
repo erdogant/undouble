@@ -126,6 +126,7 @@ model.move()
 
 
 #### plot image hash
+
 ```python
 
 # Import library
@@ -157,9 +158,13 @@ plt.title('image hash hex: %s' %(results['img_hash_hex'][0]))
 </p>
 
 
+#### Example of three different image imports
+
+
 ```python
 
 # Import library
+import os
 from undouble import Undouble
 
 # Init with default settings
