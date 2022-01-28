@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API References &mdash; undouble undouble documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Coding quality" href="Coding%20quality.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> undouble
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Background</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Abstract.html">Abstract</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Abstract.html#schematic-overview">Schematic overview</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Installation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html#uninstalling">Uninstalling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html#quickstart">Quickstart</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Core functionalities</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="core_functions.html">Core functionalities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_functions.html#preprocessing">Preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_functions.html#generic-functionalities">Generic functionalities</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">hash_functions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="hash_functions.html">Average hash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hash_functions.html#perceptual-hash">Perceptual hash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hash_functions.html#differential-hash">Differential hash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hash_functions.html#haar-wavelet-hash">Haar wavelet hash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hash_functions.html#create-the-images">Create the images</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Examples.html">Flowers dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Examples.html#get-identical-images">Get identical images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Examples.html#move-files">Move files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Examples.html#input-for-model">Input for model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Examples.html#objects-dataset">101 objects dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Examples.html#references">References</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Code Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Coding%20quality.html">Coding quality</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">undouble</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>API References</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/undouble.undouble.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-undouble.undouble">
+<span id="api-references"></span><h1>API References<a class="headerlink" href="#module-undouble.undouble" title="Permalink to this headline"></a></h1>
+<p>Python package undouble is to detect (near-)identical images.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="undouble.undouble.Undouble">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">undouble.undouble.</span></span><span class="sig-name descname"><span class="pre">Undouble</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'phash'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">targetdir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grayscale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(128,</span> <span class="pre">128)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hash_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ext</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['png',</span> <span class="pre">'tiff',</span> <span class="pre">'jpg',</span> <span class="pre">'jfif']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.Undouble" title="Permalink to this definition"></a></dt>
+<dd><p>Detect duplicate images.</p>
+<p>Python package undouble is to detect (near-)identical images.</p>
+<dl class="simple">
+<dt>The following steps are taken:</dt><dd><ol class="arabic simple">
+<li><p>Read recursively all images from directory with the specified extensions.</p></li>
+<li><p>Compute image hash.</p></li>
+<li><p>Group similar images.</p></li>
+<li><p>Move if desired.</p></li>
+</ol>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>method</strong> (<em>str</em><em>, </em><em>(</em><em>default: 'phash'</em><em>)</em>) – <dl class="simple">
+<dt>Method to extract features from images.</dt><dd><p>hashmethod : str (default: ‘phash’)
+* ‘ahash’: Average hash
+* ‘phash’: Perceptual hash
+* ‘dhash’: Difference hash
+* ‘whash-haar’: Haar wavelet hash</p>
+</dd>
+</dl>
+</p></li>
+<li><p><strong>targetdir</strong> (<em>str</em><em>, </em><em>(</em><em>default: None</em><em>)</em>) – Directory to read the images.</p></li>
+<li><p><strong>hash_size</strong> (<em>integer</em><em> (</em><em>default: 8</em><em>)</em>) – The hash_size will be used to scale down the image and create a hash-image of length: hash_size*hash_size.</p></li>
+<li><p><strong>ext</strong> (<em>list</em><em>, </em><em>(</em><em>default:</em><em> [</em><em>'png'</em><em>,</em><em>'tiff'</em><em>,</em><em>'jpg'</em><em>]</em><em>)</em>) – Images with the file extentions are used.</p></li>
+<li><p><strong>grayscale</strong> (<em>Bool</em><em>, </em><em>(</em><em>default: True</em><em>)</em>) – Colorscaling the image to gray.</p></li>
+<li><p><strong>dim</strong> (<em>tuple</em><em>, </em><em>(</em><em>default:</em><em> (</em><em>128</em><em>,</em><em>128</em><em>)</em><em>)</em>) – Rescale images. This is required because the feature-space need to be the same across samples.</p></li>
+<li><p><strong>verbose</strong> (<em>int</em><em>, </em><em>(</em><em>default: 20</em><em>)</em>) – Print progress to screen. The default is 20.
+10:Debug, 20:Info, 30:Warn 40:Error, 60:None</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul>
+<li><p><em>Object.</em></p></li>
+<li><p><em>dict containing keys</em> –</p>
+<dl class="simple">
+<dt>pathnames<span class="classifier">list of str.</span></dt><dd><p>Full path to images that are used in the model.</p>
+</dd>
+<dt>filenames<span class="classifier">list of str.</span></dt><dd><p>Filename of the input images.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Import library</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">undouble</span> <span class="kn">import</span> <span class="n">Undouble</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Init with default settings</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">Undouble</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;phash&#39;</span><span class="p">,</span> <span class="n">hash_size</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Import example data</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">targetdir</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">import_example</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="s1">&#39;flowers&#39;</span><span class="p">)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Importing the files files from disk, cleaning and pre-processing</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">import_data</span><span class="p">(</span><span class="n">targetdir</span><span class="p">)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Compute image-hash</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">compute_hash</span><span class="p">()</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Find images with image-hash &lt;= threshold</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Plot the images</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Move the images</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">move</span><span class="p">()</span>
+</pre></div>
+</div>
+<p class="rubric">References</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://content-blockchain.org/research/testing-different-image-hash-functions/">https://content-blockchain.org/research/testing-different-image-hash-functions/</a></p></li>
+</ul>
+<dl class="py method">
+<dt class="sig sig-object py" id="undouble.undouble.Undouble.bin2hex">
+<span class="sig-name descname"><span class="pre">bin2hex</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.Undouble.bin2hex" title="Permalink to this definition"></a></dt>
+<dd><p>Binary to hex.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Hex of image hash.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="undouble.undouble.Undouble.clean">
+<span class="sig-name descname"><span class="pre">clean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">results</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.Undouble.clean" title="Permalink to this definition"></a></dt>
+<dd><p>Clean or removing previous results and models to ensure correct working.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="undouble.undouble.Undouble.compute_hash">
+<span class="sig-name descname"><span class="pre">compute_hash</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hash_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.Undouble.compute_hash" title="Permalink to this definition"></a></dt>
+<dd><p>Compute the hash for each image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>method</strong> (<em>str</em><em>, </em><em>(</em><em>default: 'phash'</em><em>)</em>) – <dl class="simple">
+<dt>Method to extract features from images.</dt><dd><p>hashmethod : str (default: ‘phash’)
+* ‘ahash’: Average hash
+* ‘phash’: Perceptual hash
+* ‘dhash’: Difference hash
+* ‘whash-haar’: Haar wavelet hash
+* ‘whash-db4’: Daubechies wavelet hash
+* ‘colorhash’: HSV color hash
+* ‘crop-resistant’: Crop-resistant hash</p>
+</dd>
+</dl>
+</p></li>
+<li><p><strong>hash_size</strong> (<em>integer</em><em> (</em><em>default: 8</em><em>)</em>) – The hash_size will be used to scale down the image and create a hash-image of length: hash_size*hash_size.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="undouble.undouble.Undouble.compute_imghash">
+<span class="sig-name descname"><span class="pre">compute_imghash</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hash_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_array</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.Undouble.compute_imghash" title="Permalink to this definition"></a></dt>
+<dd><p>Compute hash.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>img</strong> (<em>Object</em><em> or </em><em>RGB-image.</em>) – Image.</p></li>
+<li><p><strong>hash_size</strong> (<em>integer</em><em> (</em><em>default: None</em><em>)</em>) – The hash_size will be used to scale down the image and create a hash-image of length: hash_size*hash_size.</p></li>
+<li><p><strong>as_array</strong> (<em>Bool</em><em> (</em><em>default: False</em><em>)</em>) – True: Return the hash-array in the same size as the scaled image.
+False: Return the hash-image vector.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>imghash</strong> – Hash.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy-array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="undouble.undouble.Undouble.group">
+<span class="sig-name descname"><span class="pre">group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.Undouble.group" title="Permalink to this definition"></a></dt>
+<dd><p>Find similar images using the hash signatures.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>threshold</strong> (<em>float</em><em>, </em><em>(</em><em>default: 0</em><em>)</em>) – Threshold on the hash value to determine similarity.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="undouble.undouble.Undouble.import_data">
+<span class="sig-name descname"><span class="pre">import_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">targetdir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">black_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['undouble']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_results</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.Undouble.import_data" title="Permalink to this definition"></a></dt>
+<dd><p>Preprocessing.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>black_list</strong> (<em>list</em><em>, </em><em>(</em><em>default:</em><em> [</em><em>'undouble'</em><em>]</em><em>)</em>) – Exclude directory with all subdirectories from processing.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="undouble.undouble.Undouble.import_example">
+<span class="sig-name descname"><span class="pre">import_example</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'flowers'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.Undouble.import_example" title="Permalink to this definition"></a></dt>
+<dd><p>Import example dataset from github source.</p>
+<p>Import one of the few datasets from github source or specify your own download url link.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>str</em>) – Name of datasets: ‘flowers’, ‘mnist’, ‘cat_and_dog’</p></li>
+<li><p><strong>url</strong> (<em>str</em>) – url link to to dataset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dataset containing mixed features.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pd.DataFrame()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="undouble.undouble.Undouble.move">
+<span class="sig-name descname"><span class="pre">move</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">targetdir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.Undouble.move" title="Permalink to this definition"></a></dt>
+<dd><p>Move images.</p>
+<p>Files are moved that are listed by the group() functionality.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filters</strong> (<em>list</em><em>, </em><em>(</em><em>Default:</em><em> [</em><em>'location'</em><em>]</em><em>)</em>) – ‘location’ : Only move images that are seen in the same directory.</p></li>
+<li><p><strong>targetdir</strong> (<em>str</em><em> (</em><em>default: None</em><em>)</em>) – Moving similar files to this directory.
+None: A subdir, named “undouble” is created within each directory.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="undouble.undouble.Undouble.plot">
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(15,</span> <span class="pre">10)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.Undouble.plot" title="Permalink to this definition"></a></dt>
+<dd><p>Plot the results.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>labels</strong> (<em>list</em><em>, </em><em>(</em><em>default: None</em><em>)</em>) – Cluster label to plot. In case of None, all cluster labels are plotted.</p></li>
+<li><p><strong>ncols</strong> (<em>int</em><em>, </em><em>(</em><em>default: None</em><em>)</em>) – Number of columns to use in the subplot. The number of rows are estimated based on the columns.</p></li>
+<li><p><strong>images.</strong> (<em>Colorscheme for the</em>) – ‘gray’, ‘binary’,  None (uses rgb colorscheme)</p></li>
+<li><p><strong>show_hog</strong> (<em>bool</em><em>, </em><em>(</em><em>default: False</em><em>)</em>) – Plot the hog features next to the input image.</p></li>
+<li><p><strong>min_clust</strong> (<em>int</em><em>, </em><em>(</em><em>default: 1</em><em>)</em>) – Plots are created for clusters with &gt; min_clust samples</p></li>
+<li><p><strong>figsize</strong> (<em>tuple</em><em>, </em><em>(</em><em>default:</em><em> (</em><em>15</em><em>, </em><em>10</em><em>)</em><em></em>) – Size of the figure (height,width).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="undouble.undouble.compute_blur">
+<span class="sig-prename descclassname"><span class="pre">undouble.undouble.</span></span><span class="sig-name descname"><span class="pre">compute_blur</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pathname</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.compute_blur" title="Permalink to this definition"></a></dt>
+<dd><p>Compute amount of blur in image.</p>
+<p>load the image, convert it to grayscale, and compute the focus measure of
+the image using the Variance of Laplacian method. The returned scores &lt;100
+are generally more blurry.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>pathname</strong> (<em>str</em>) – Absolute path location to image.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>fm_score</strong> – Score the depicts the amount of blur. Scores &lt;100 are generally more blurry.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="undouble.undouble.create_targetdir">
+<span class="sig-prename descclassname"><span class="pre">undouble.undouble.</span></span><span class="sig-name descname"><span class="pre">create_targetdir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pathname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">targetdir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.create_targetdir" title="Permalink to this definition"></a></dt>
+<dd><p>Create directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pathname</strong> (<em>str</em>) – Absolute path location of the image of interest.</p></li>
+<li><p><strong>targetdir</strong> (<em>str</em>) – Target directory.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>movedir</strong> (<em>str</em>) – Absolute path to directory.</p></li>
+<li><p><strong>dirname</strong> (<em>str</em>) – Absolute path to directory.</p></li>
+<li><p><strong>filename</strong> (<em>str</em>) – Name of the file.</p></li>
+<li><p><strong>ext</strong> (<em>str</em>) – Extension.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="undouble.undouble.disable_tqdm">
+<span class="sig-prename descclassname"><span class="pre">undouble.undouble.</span></span><span class="sig-name descname"><span class="pre">disable_tqdm</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.disable_tqdm" title="Permalink to this definition"></a></dt>
+<dd><p>Set the logger for verbosity messages.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="undouble.undouble.filter_checks">
+<span class="sig-prename descclassname"><span class="pre">undouble.undouble.</span></span><span class="sig-name descname"><span class="pre">filter_checks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pathnames</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filters</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.filter_checks" title="Permalink to this definition"></a></dt>
+<dd><p>Filter checks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pathnames</strong> (<em>list of str</em>) – pathnames to the images.</p></li>
+<li><p><strong>filters</strong> (<em>list</em><em>, </em><em>(</em><em>Default:</em><em> [</em><em>'location'</em><em>]</em><em>)</em>) – ‘location’ : Only move images that are seen in the same directory.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>When all filters are true.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="undouble.undouble.get_existing_pathnames">
+<span class="sig-prename descclassname"><span class="pre">undouble.undouble.</span></span><span class="sig-name descname"><span class="pre">get_existing_pathnames</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pathnames</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.get_existing_pathnames" title="Permalink to this definition"></a></dt>
+<dd><p>Get existing pathnames.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>pathnames</strong> (<em>list of str</em>) – pathnames to the images.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="undouble.undouble.import_example">
+<span class="sig-prename descclassname"><span class="pre">undouble.undouble.</span></span><span class="sig-name descname"><span class="pre">import_example</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'flowers'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.import_example" title="Permalink to this definition"></a></dt>
+<dd><p>Import example dataset from github source.</p>
+<p>Import one of the few datasets from github source or specify your own download url link.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>str</em>) – Name of datasets: ‘flowers’, ‘faces’, ‘mnist’, ‘cat_and_dog’</p></li>
+<li><p><strong>url</strong> (<em>str</em>) – url link to to dataset.</p></li>
+<li><p><strong>verbose</strong> (<em>int</em><em>, </em><em>(</em><em>default: 20</em><em>)</em>) – Print progress to screen. The default is 3.
+60: None, 40: Error, 30: Warn, 20: Info, 10: Debug</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dataset containing mixed features.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pd.DataFrame()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="undouble.undouble.load_example">
+<span class="sig-prename descclassname"><span class="pre">undouble.undouble.</span></span><span class="sig-name descname"><span class="pre">load_example</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'breast'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.load_example" title="Permalink to this definition"></a></dt>
+<dd><p>Import example dataset from sklearn.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>'breast'</strong> (<em>str</em><em>, </em><em>two-class</em>) – </p></li>
+<li><p><strong>'titanic'</strong> (<em>str</em><em>, </em><em>two-class</em>) – </p></li>
+<li><p><strong>'iris'</strong> (<em>str</em><em>, </em><em>multi-class</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple containing dataset and response variable (X,y)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="undouble.undouble.seperate_path">
+<span class="sig-prename descclassname"><span class="pre">undouble.undouble.</span></span><span class="sig-name descname"><span class="pre">seperate_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pathname</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.seperate_path" title="Permalink to this definition"></a></dt>
+<dd><p>Seperate path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>pathnames</strong> (<em>list of str</em>) – pathnames to the images.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>dirname</strong> (<em>str</em>) – directory path.</p></li>
+<li><p><strong>filename</strong> (<em>str</em>) – filename.</p></li>
+<li><p><em>ext</em> – Extension.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="undouble.undouble.set_logger">
+<span class="sig-prename descclassname"><span class="pre">undouble.undouble.</span></span><span class="sig-name descname"><span class="pre">set_logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.set_logger" title="Permalink to this definition"></a></dt>
+<dd><p>Set the logger for verbosity messages.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="undouble.undouble.sort_images">
+<span class="sig-prename descclassname"><span class="pre">undouble.undouble.</span></span><span class="sig-name descname"><span class="pre">sort_images</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pathnames</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hash_scores</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_first_img</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.sort_images" title="Permalink to this definition"></a></dt>
+<dd><p>Sort images.</p>
+<dl class="simple">
+<dt>Sort images on the following conditions:</dt><dd><ol class="arabic simple">
+<li><p>Resolution</p></li>
+<li><p>Amount of blur</p></li>
+</ol>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>pathnames</strong> (<em>list of str.</em>) – Absolute locations to image path.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>images sorted on conditions.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list of str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="undouble.undouble.unzip">
+<span class="sig-prename descclassname"><span class="pre">undouble.undouble.</span></span><span class="sig-name descname"><span class="pre">unzip</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path_to_zip</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.unzip" title="Permalink to this definition"></a></dt>
+<dd><p>Unzip files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path_to_zip</strong> (<em>str</em>) – Path of the zip file.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>getpath</strong> – Path containing the unzipped files.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">clustimage</span> <span class="k">as</span> <span class="nn">cl</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dirpath</span> <span class="o">=</span> <span class="n">cl</span><span class="o">.</span><span class="n">unzip</span><span class="p">(</span><span class="s1">&#39;c://temp//flower_images.zip&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="undouble.undouble.wget">
+<span class="sig-prename descclassname"><span class="pre">undouble.undouble.</span></span><span class="sig-name descname"><span class="pre">wget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">writepath</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.wget" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieve file from url.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>url</strong> (<em>str.</em>) – Internet source.</p></li>
+<li><p><strong>writepath</strong> (<em>str.</em>) – Directory to write the file.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>None.</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">clustimage</span> <span class="k">as</span> <span class="nn">cl</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">images</span> <span class="o">=</span> <span class="n">cl</span><span class="o">.</span><span class="n">wget</span><span class="p">(</span><span class="s1">&#39;https://erdogant.github.io/datasets/flower_images.zip&#39;</span><span class="p">,</span> <span class="s1">&#39;c://temp//flower_images.zip&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Coding%20quality.html" class="btn btn-neutral float-left" title="Coding quality" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, Erdogan Taskesen.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
