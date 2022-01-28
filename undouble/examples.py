@@ -77,7 +77,7 @@ for method in methods:
     # Grayscaling and scaling
     model.import_data(targetdir)
     # Compute image for only the first image.
-    hashs = model.compute_hash(model.results['img'][0], to_array=True)
+    hashs = model.compute_imghash(model.results['img'][0], to_array=True)
     # Compute the image-hash
     print(method + ' Hash:')
     image_hash = ''.join(hashs[0].astype(int).astype(str).ravel())
@@ -103,7 +103,7 @@ for method in methods:
     ax[1][1].set_title(method + ' function')
 
     # Compute hash for the 10 images.
-    hashs = model.compute_hash(model, to_array=False)
+    hashs = model.compute_imghash(model, to_array=False)
 
 
 # %% Make plots in medium

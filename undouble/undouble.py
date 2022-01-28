@@ -427,7 +427,7 @@ class Undouble():
         if not hasattr(self, 'results'):
             raise Exception(logger.error('Results missing! Hint: try to first use the model.group() functionality'))
 
-    def compute_hash(self, img, hash_size=None, to_array=False):
+    def compute_imghash(self, img, hash_size=None, to_array=False):
         """Compute hash.
 
         Parameters
