@@ -125,14 +125,32 @@ model.move()
 </p>
 
 
-#### Three types of input to read the images
+#### plot image hash
+```python
 
-The input for the function `import_data` can be three different types: 
+# Import library
+from undouble import Undouble
 
-    * Path to directory
-    * List of file locations
-    * Numpy array containing images
+# Init with default settings
+hash_size=8
+model = Undouble(method='phash', hash_size=hash_size)
 
+# Import example data
+targetdir = model.import_example(data='flowers')
+
+# Importing the files files from disk, cleaning and pre-processing
+model.import_data(targetdir)
+
+# Compute image-hash
+results = model.compute_hash(return_dict=True)
+
+
+fig, ax=plt.subplots(1,2)
+ax[0].imshow(results['img'][0])
+ax[1].imshow(results['img_hash_bin'][0].reshape(hash_size, hash_size), cmap='gray')
+plt.title('image hash hex: %s' %(results['img_hash_hex'][0]))
+
+```
 
 ```python
 
