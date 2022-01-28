@@ -42,7 +42,7 @@ cl = Clustimage(method='phash', params_hash={'threshold':0, 'hash_size':32})
 X = cl.import_example(data='mnist')
 
 # Preprocessing, feature extraction and cluster evaluation
-results = cl.compute_hash(X, min_clust=4, max_clust=15, metric='euclidean', linkage='ward')
+results = cl.fit_transform(X, min_clust=4, max_clust=15, metric='euclidean', linkage='ward')
 
 # Scatter
 cl.scatter(zoom=3, img_mean=False, text=False)
