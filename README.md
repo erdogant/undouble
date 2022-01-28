@@ -152,6 +152,11 @@ plt.title('image hash hex: %s' %(results['img_hash_hex'][0]))
 
 ```
 
+<p align="center">
+  <img src="https://github.com/erdogant/undouble/blob/main/docs/figs/imghash_example.png" width="400" />
+</p>
+
+
 ```python
 
 # Import library
