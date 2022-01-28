@@ -47,12 +47,11 @@ class Undouble():
     Parameters
     ----------
     method : str, (default: 'phash')
-        Method to extract features from images.
-            hashmethod : str (default: 'phash')
-            * 'ahash': Average hash
-            * 'phash': Perceptual hash
-            * 'dhash': Difference hash
-            * 'whash-haar': Haar wavelet hash
+        Image hash method.
+        * 'ahash': Average hash
+        * 'phash': Perceptual hash
+        * 'dhash': Difference hash
+        * 'whash-haar': Haar wavelet hash
     targetdir : str, (default: None)
         Directory to read the images.
     hash_size : integer (default: 8)
@@ -147,21 +146,17 @@ class Undouble():
         if return_results:
             return self.results
 
-    def compute_hash(self, method=None, hash_size=None):
+    def compute_hash(self, method=None, hash_size=None, return_dict=False):
         """Compute the hash for each image.
 
         Parameters
         ----------
         method : str, (default: 'phash')
-            Method to extract features from images.
-                hashmethod : str (default: 'phash')
-                * 'ahash': Average hash
-                * 'phash': Perceptual hash
-                * 'dhash': Difference hash
-                * 'whash-haar': Haar wavelet hash
-                * 'whash-db4': Daubechies wavelet hash
-                * 'colorhash': HSV color hash
-                * 'crop-resistant': Crop-resistant hash
+            Image hash method.
+            * 'ahash': Average hash
+            * 'phash': Perceptual hash
+            * 'dhash': Difference hash
+            * 'whash-haar': Haar wavelet hash
         hash_size : integer (default: 8)
             The hash_size will be used to scale down the image and create a hash-image of length: hash_size*hash_size.
 
@@ -192,6 +187,8 @@ class Undouble():
         if 'labels' in self.results: self.results.pop('labels')
         if 'xycoord' in self.results: self.results.pop('xycoord')
         if 'feat' in self.results: self.results.pop('feat')
+        if return_dict:
+            return self.results
 
     def group(self, threshold=0, return_dict=False):
         """Find similar images using the hash signatures.
@@ -436,7 +433,7 @@ class Undouble():
             Image.
         hash_size : integer (default: None)
             The hash_size will be used to scale down the image and create a hash-image of length: hash_size*hash_size.
-        as_array : Bool (default: False)
+        to_array : Bool (default: False)
             True: Return the hash-array in the same size as the scaled image.
             False: Return the hash-image vector.
 
@@ -448,15 +445,19 @@ class Undouble():
         """
         if hash_size is None: hash_size=self.params['hash_size']
         if hasattr(img, 'results'):
-            hashes = list(map(lambda x: self.clustimage.compute_hash(x, hash_size=hash_size), self.results['img']))
-        else:
-            hashes = self.clustimage.compute_hash(img, hash_size=hash_size)
-            hashes = [hashes]
+            img = self.results['img']
+        elif len(img.shape)<=3:
+            img = [img]
+
+        # Compute hash
+        hashes = list(map(lambda x: self.clustimage.compute_hash(x, hash_size=hash_size), img))
 
         # Convert to image-hash
-        if not to_array:
+        if to_array:
             hashes = np.array(list(map(lambda x: x.ravel().astype(int), hashes)))
             hashes = np.c_[hashes]
+        else:
+            hashes = list(map(lambda x: x.reshape(hash_size,hash_size), hashes))
 
         return hashes
 
