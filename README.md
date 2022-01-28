@@ -93,7 +93,7 @@ model.compute_hash()
 # 100%|██████████| 214/214 [00:00<00:00, 129241.33it/s]
 
 
-# Find images with image-hash <= threshold
+# Group images with image-hash <= threshold
 model.group(threshold=0)
 
 # [undouble] >INFO> Number of groups with similar images detected: 3
@@ -161,7 +161,7 @@ model.import_data(input_img_array)
 # Compute image-hash
 model.compute_hash()
 
-# Find images with image-hash <= threshold
+# Group images with image-hash <= threshold
 model.group(threshold=0)
 
 # Plot the images
@@ -191,7 +191,7 @@ model.import_data(targetdir)
 # Compute image-hash
 model.compute_hash(method='phash', hash_size=32)
 
-# Find images with image-hash <= threshold
+# Group images with image-hash <= threshold
 model.group(threshold=0)
 
 # Plot the images
