@@ -88,7 +88,7 @@ All examples are created using the underneath code:
         # Grayscaling and scaling
         model.import_data(targetdir)
         # Compute image for only the first image.
-        hashs = model.compute_hash(model.results['img'][0], to_array=True)
+        hashs = model.compute_imghash(model.results['img'][0], to_array=True)
         # Compute the image-hash
         print(method + ' Hash:')
         image_hash = ''.join(hashs[0].astype(int).astype(str).ravel())
@@ -113,8 +113,8 @@ All examples are created using the underneath code:
         ax[1][1].axis('off')
         ax[1][1].set_title(method + ' function')
     
-        # Compute hash for the 10 images.
-        hashs = model.compute_hash(model, to_array=False)
+        # Compute image hash for the 10 images.
+        hashs = model.compute_imghash(model, to_array=False)
     
         # Compute number of differences across all images.
         adjmat = np.zeros((hashs.shape[0], hashs.shape[0]))
