@@ -91,7 +91,7 @@ class Undouble():
     >>> model.import_data(targetdir)
     >>>
     >>> # Compute image-hash
-    >>> model.fit_transform()
+    >>> model.compute_hash()
     >>>
     >>> # Find images with image-hash <= threshold
     >>> model.group(threshold=0)
@@ -147,7 +147,7 @@ class Undouble():
         if return_results:
             return self.results
 
-    def fit_transform(self, method=None, hash_size=None):
+    def compute_hash(self, method=None, hash_size=None):
         """Compute the hash for each image.
 
         Parameters
@@ -207,7 +207,7 @@ class Undouble():
 
         """
         if self.results['img_hash_bin'] is None:
-            logger.warning('Can not group similar images because no features are present. Tip: Use the .fit_transform() function first.')
+            logger.warning('Can not group similar images because no features are present. Tip: Use the compute_hash() function first.')
             return None
 
         # Make sets of images that are similar based on the minimum defined threshold.
@@ -472,7 +472,7 @@ class Undouble():
         if hasattr(self, 'results'):
             return np.array(list(map(lambda x: hex(int(''.join(x.astype(int).astype(str)), 2)), self.results['img_hash_bin'])))
         else:
-            logger.warning('Results missing! Hint: try to first use model.fit_transform()')
+            logger.warning('Results missing! Hint: try to first use compute_hash()')
 
 
 # %% Import example dataset from github.
@@ -835,5 +835,5 @@ def seperate_path(pathname):
 # if __name__ == "__main__":
 #     import undouble as undouble
 #     df = undouble.import_example()
-#     out = undouble.fit_transform(df)
+#     out = undouble.compute_hash(df)
 #     fig,ax = undouble.plot(out)

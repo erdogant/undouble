@@ -22,7 +22,7 @@ Analyze for similar flowers in the example dataset.
     model.import_data(targetdir)
     
     # Compute image-hash
-    model.fit_transform()
+    model.compute_hash()
     
     # Group images with image-hash <= threshold
     model.group(threshold=0)
@@ -112,7 +112,7 @@ The input for the :func:`undouble.undouble.Undouble.import_data` can be three di
     model.import_data(input_img_array)
     
     # Compute image-hash
-    model.fit_transform()
+    model.compute_hash()
     
     # Find images with image-hash <= threshold
     model.group(threshold=0)
@@ -144,7 +144,7 @@ Note that this dataset does not contain ground truth labels with identical image
     # Importing the files files from disk, cleaning and pre-processing
     model.import_data(targetdir)
     # Compute image-hash
-    model.fit_transform()
+    model.compute_hash()
     
     # [undouble] >INFO> Extracting images from: [D://magweg/101_ObjectCategories]
     # [undouble] >INFO> [9144] files are collected recursively from path: [D://magweg/101_ObjectCategories]

@@ -23,7 +23,7 @@ Saving a learned model can be done using the function :func:`undouble.save`:
     X,y_true = undouble.load_example()
 
     # Learn model
-    model = undouble.fit_transform(X, y_true, pos_label='bad')
+    model = undouble.compute_hash(X, y_true, pos_label='bad')
 
     Save model
     status = undouble.save(model, 'learned_model_v1')

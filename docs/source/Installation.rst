@@ -66,7 +66,7 @@ A quick example how to learn a model on a given dataset.
     model.import_data(targetdir)
 
     # Compute image-hash
-    model.fit_transform()
+    model.compute_hash()
 
     # Group images with image-hash <= threshold
     model.group(threshold=0)

@@ -7,7 +7,7 @@ Core functionalities
 The following core functionalities allows to group images on image-hash, and systematically move the images.
 
     * import_data()
-    * fit_transform()
+    * compute_hash()
     * group()
     * move()
     * plot()
@@ -44,9 +44,9 @@ The following parameters can be changed:
 	# Note that feat is still empty and will be filled after computing the image-hashes.
 
 
-fit_transform
+compute_hash
 ^^^^^^^^^^^^^^^^^^^^
-The *fit_transform* function, :func:`undouble.undouble.Undouble.fit_transform`, computes the hash for each image, and returns the adjacency matrix containing image-hash distances between the images.
+The *compute_hash* function, :func:`undouble.undouble.Undouble.compute_hash`, computes the hash for each image, and returns the adjacency matrix containing image-hash distances between the images.
 The image-hash is computed using one of the following functions:
 
     * 'ahash': Average hash
@@ -67,7 +67,7 @@ The image-hash is computed using one of the following functions:
     # Check whether in is dir, list of files or array-like
     model.import_data(filenames)
     # Compute image-hash
-    model.fit_transform()
+    model.compute_hash()
 
     # Note feat now contains image-hash comparison across all images.
     # Each row and column represents the input files model.results['pathnames'] and model.results['filenames']

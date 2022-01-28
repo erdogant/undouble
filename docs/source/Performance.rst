@@ -8,7 +8,7 @@ Performance
 To measure the goodness of fit we use various evaluation metrics to check the classification model’s performance.
 The performance scores can be derived in ``urldetect`` using in the function :func:`urldetect.plot`.
 
-The performance of the model can deviate based on the threshold being used but the theshold this will not affect the learning process :func:`urldetect.fit_transform`.
+The performance of the model can deviate based on the threshold being used but the theshold this will not affect the learning process :func:`urldetect.compute_hash`.
 After learning a model, and predicting new samples with it, each sample will get a probability belowing to the class. In case of our two-class approach the simple rule account: **P(class malicous) = 1-P(class normal)**
 The threshold is used on the probabilities to devide samples into the malicous or normal class.
 

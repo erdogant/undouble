@@ -77,7 +77,7 @@ targetdir = model.import_example(data='flowers')
 model.import_data(targetdir)
 
 # Compute image-hash
-model.fit_transform()
+model.compute_hash()
 
 # [undouble] >INFO> Store examples at [./undouble/data]..
 # [undouble] >INFO> Downloading [flowers] dataset from github source..
@@ -159,7 +159,7 @@ model.import_data(input_directory)
 model.import_data(input_img_array)
 
 # Compute image-hash
-model.fit_transform()
+model.compute_hash()
 
 # Find images with image-hash <= threshold
 model.group(threshold=0)
@@ -189,7 +189,7 @@ targetdir = model.import_example(data='mnist')
 model.import_data(targetdir)
 
 # Compute image-hash
-model.fit_transform(method='phash', hash_size=32)
+model.compute_hash(method='phash', hash_size=32)
 
 # Find images with image-hash <= threshold
 model.group(threshold=0)

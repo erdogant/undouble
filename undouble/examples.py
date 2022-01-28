@@ -20,7 +20,7 @@ targetdir = model.import_example(data='flowers')
 model.import_data(targetdir)
 
 # Compute image-hash
-model.fit_transform(method='phash', hash_size=16)
+model.compute_hash(method='phash', hash_size=16)
 
 # Find images with image-hash <= threshold
 model.group(threshold=5)
@@ -42,7 +42,7 @@ cl = Clustimage(method='phash', params_hash={'threshold':0, 'hash_size':32})
 X = cl.import_example(data='mnist')
 
 # Preprocessing, feature extraction and cluster evaluation
-results = cl.fit_transform(X, min_clust=4, max_clust=15, metric='euclidean', linkage='ward')
+results = cl.compute_hash(X, min_clust=4, max_clust=15, metric='euclidean', linkage='ward')
 
 # Scatter
 cl.scatter(zoom=3, img_mean=False, text=False)
@@ -124,7 +124,7 @@ model.import_data(targetdir)
 
 for method in methods:
     # Compute image-hash
-    model.fit_transform(method=method)
+    model.compute_hash(method=method)
 
     groups = []
     files = []

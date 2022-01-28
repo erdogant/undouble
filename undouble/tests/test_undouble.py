@@ -47,7 +47,7 @@ class TestUNDOUBLE(unittest.TestCase):
         # load example with flowers
         pathnames = cl.import_example(data='flowers')
         # Cluster flowers
-        results = cl.fit_transform(pathnames)
+        results = cl.compute_hash(pathnames)
         # Read the unseen image. Note that the find functionality also performs exactly the same preprocessing steps as for the clustering.
         results_find = cl.find(pathnames[0:2], k=0, alpha=0.05)
 
@@ -98,7 +98,7 @@ class TestUNDOUBLE(unittest.TestCase):
         # load example with flowers
         path_to_imgs = cl.import_example(data='flowers')
         # Extract features (raw images are not stored and handled per-image to save memory)
-        results = cl.fit_transform(path_to_imgs, min_clust=10)
+        results = cl.compute_hash(path_to_imgs, min_clust=10)
         # Check nr. of features
         featshape = cl.results['feat'].shape
         # Predict
@@ -124,10 +124,10 @@ class TestUNDOUBLE(unittest.TestCase):
         # Load example with faces
         X = cl.import_example(data='flowers')
         # Cluster
-        results = cl.fit_transform(X)
+        results = cl.compute_hash(X)
         assert np.all(np.isin([*cl.results.keys()], ['img', 'feat', 'xycoord', 'pathnames', 'filenames', 'labels']))
 
-    def test_fit_transform(self):
+    def test_compute_hash(self):
         # Example data
         cl = Clustimage()
         Xflowers = cl.import_example(data='flowers')
@@ -154,4 +154,4 @@ class TestUNDOUBLE(unittest.TestCase):
             # init
             cl = Clustimage(method=combination[0], embedding=combination[1], grayscale=combination[3], dim=combination[4], verbose=30, params_pca={'n_components':50})
             # Preprocessing and feature extraction
-            assert cl.fit_transform(combination[5], cluster_space=combination[2])
+            assert cl.compute_hash(combination[5], cluster_space=combination[2])
