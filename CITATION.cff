@@ -1,18 +1,20 @@
-cff-version: 1.1.0
-message: "If you use this software, please cite it as below."
-authors:
-  - family-names: Taskesen
+# YAML 1.2
+---
+authors: 
+  -
+    family-names: Taskesen
     given-names: Erdogan
-    orcid: https://orcid.org/0000-0002-3430-9618
-title: erdogant/undouble: 1.1.1
-version: 1.1.1
+    orcid: "https://orcid.org/0000-0002-3430-9618"
+cff-version: "1.1.0"
 date-released: 2022-01-01
 keywords: 
+  - "image hash"
+  - "duplicates"
+  - "image"
   - "python"
-  - "hash"
-  - "images"
-  - "image-hash"
-license: "BSD License"
+license: "BSD"
 message: "If you use this software, please cite it using these metadata."
-repository-code: "https://github.com/erdogant/clustimage"
-title: "Python package undouble is to detect (near-)identical images."
+repository-code: "https://github.com/erdogant/undouble"
+title: "undouble - Python library to detect (near-)identical images."
+version: "1.2.0"
+...
