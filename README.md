@@ -130,6 +130,7 @@ model.move()
 ```python
 
 # Import library
+import matplotlib.pyplot as plt
 from undouble import Undouble
 
 # Init with default settings
@@ -217,7 +218,7 @@ targetdir = model.import_example(data='mnist')
 model.import_data(targetdir)
 
 # Compute image-hash
-model.compute_hash(method='phash', hash_size=32)
+model.compute_hash(method='phash', hash_size=16)
 
 # Group images with image-hash <= threshold
 model.group(threshold=0)
