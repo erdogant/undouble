@@ -13,7 +13,7 @@
 [![Medium](https://img.shields.io/badge/Medium-Blog-blue)](https://towardsdatascience.com/detection-of-duplicate-images-using-image-hash-functions-4d9c53f04a75)
 <!---[![Coffee](https://img.shields.io/badge/coffee-black-grey.svg)](https://erdogant.github.io/donate/?currency=USD&amount=5)-->
 
-* [**A step-by-step guide for clustering images**](https://towardsdatascience.com/a-step-by-step-guide-for-clustering-images-4b45f9906128)
+* [**Detection of Duplicate Images Using Image Hash Functions**](https://towardsdatascience.com/detection-of-duplicate-images-using-image-hash-functions-4d9c53f04a75)
 
 Python package undouble is to detect (near-)identical images.
 
