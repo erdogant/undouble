@@ -6,6 +6,7 @@
 [![Github Forks](https://img.shields.io/github/forks/erdogant/undouble.svg)](https://github.com/erdogant/undouble/network)
 [![GitHub Open Issues](https://img.shields.io/github/issues/erdogant/undouble.svg)](https://github.com/erdogant/undouble/issues)
 [![Project Status](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
+[![Sphinx](https://img.shields.io/badge/Sphinx-Docs-blue)](https://erdogant.github.io/undouble/)
 [![Downloads](https://pepy.tech/badge/undouble/month)](https://pepy.tech/project/undouble)
 [![Downloads](https://pepy.tech/badge/undouble)](https://pepy.tech/project/undouble)
 [![Sphinx](https://img.shields.io/badge/Sphinx-Docs-blue)](https://erdogant.github.io/undouble/)
@@ -24,6 +25,13 @@ Python package ``undouble`` is to detect (near-)identical images.
 * <a href="https://colab.research.google.com/github/erdogant/XXX/blob/master/notebooks/XXX.ipynb"> <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open example In Colab"/> </a> Notebook example 
 * <a href="https://towardsdatascience.com/a-step-by-step-guide-for-clustering-images-4b45f9906128"> <img src="https://img.shields.io/badge/Medium-Blog-blue" alt="Open Blog"/> </a> Blog: A step-by-step guide for clustering images 
 
+[![BuyMeCoffee](https://img.shields.io/badge/buymea-coffee-yellow.svg)](https://www.buymeacoffee.com/erdogant)
+[![Medium](https://img.shields.io/badge/Medium-Blog-blue)](https://towardsdatascience.com/detection-of-duplicate-images-using-image-hash-functions-4d9c53f04a75)
+<!---[![Coffee](https://img.shields.io/badge/coffee-black-grey.svg)](https://erdogant.github.io/donate/?currency=USD&amount=5)-->
+
+* [**Read the blog: Detection of Duplicate Images Using Image Hash Functions**](https://towardsdatascience.com/detection-of-duplicate-images-using-image-hash-functions-4d9c53f04a75)
+
+Python package undouble is to detect (near-)identical images.
 
 The aim of ``undouble`` is to detect (near-)identical images. It works using a multi-step process of pre-processing the
 images (grayscaling, normalizing, and scaling), computing the image hash, and the grouping of images.
@@ -141,6 +149,7 @@ model.move()
 ```python
 
 # Import library
+import matplotlib.pyplot as plt
 from undouble import Undouble
 
 # Init with default settings
@@ -228,7 +237,7 @@ targetdir = model.import_example(data='mnist')
 model.import_data(targetdir)
 
 # Compute image-hash
-model.compute_hash(method='phash', hash_size=32)
+model.compute_hash(method='phash', hash_size=16)
 
 # Group images with image-hash <= threshold
 model.group(threshold=0)
@@ -255,9 +264,5 @@ Please cite in your publications if this is useful for your research (see citati
 See [LICENSE](LICENSE) for details.
 
 ### Other interesting stuf
-* https://ourcodeworld.com/articles/read/1006/how-to-determine-whether-2-images-are-equal-or-not-with-the-perceptual-hash-in-python
-* https://www.pyimagesearch.com/2017/11/27/image-hashing-opencv-python/
 * https://github.com/JohannesBuchner/imagehash
-* https://ourcodeworld.com/articles/read/1006/how-to-determine-whether-2-images-are-equal-or-not-with-the-perceptual-hash-in-python
-* https://stackoverflow.com/questions/64994057/python-image-hashing
-* https://towardsdatascience.com/how-to-cluster-images-based-on-visual-similarity-cd6e7209fe34
+* https://towardsdatascience.com/a-step-by-step-guide-for-clustering-images-4b45f9906128
