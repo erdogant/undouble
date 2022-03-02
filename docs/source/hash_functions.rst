@@ -128,3 +128,12 @@ All examples are created using the underneath code:
     
         # Make a heatmap to demonstrate the differences between the image-hashes
         imagesc.plot(hashs, cmap='gray', col_labels='', row_labels=model.results['filenames'], cbar=False, title=method + '\nAverage difference: %.3f' %(diff), annot=True)
+
+
+.. raw:: html
+
+	<hr>
+	<center>
+		<script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEADP27U&placement=erdogantgithubio" id="_carbonads_js"></script>
+	</center>
+	<hr>

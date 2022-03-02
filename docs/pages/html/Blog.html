@@ -4,9 +4,10 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Performance &mdash; undouble undouble documentation</title>
+  <title>Blog &mdash; undouble undouble documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -17,7 +18,9 @@
         <script src="_static/doctools.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Coding quality" href="Coding%20quality.html" />
+    <link rel="prev" title="Flowers dataset" href="Examples.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -35,6 +38,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
               <p class="caption" role="heading"><span class="caption-text">Background</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="Abstract.html">Abstract</a></li>
@@ -69,12 +73,17 @@
 <li class="toctree-l1"><a class="reference internal" href="Examples.html#objects-dataset">101 objects dataset</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Examples.html#references">References</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Code Documentation</span></p>
-<ul>
+<p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Blog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#github">Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#sponsor-this-project">Sponsor this project</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Coding%20quality.html">Coding quality</a></li>
 <li class="toctree-l1"><a class="reference internal" href="undouble.undouble.html">API References</a></li>
 </ul>
 
+    <a href= "genindex.html">Index</a>
+  
         </div>
       </div>
     </nav>
@@ -89,9 +98,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Performance</li>
+      <li>Blog</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/Performance.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/Blog.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -100,61 +109,40 @@
            <div itemprop="articleBody">
              
   <hr class="docutils" id="code-directive" />
-<section id="performance">
-<h1>Performance<a class="headerlink" href="#performance" title="Permalink to this headline"></a></h1>
-<p>To measure the goodness of fit we use various evaluation metrics to check the classification model’s performance.
-The performance scores can be derived in <code class="docutils literal notranslate"><span class="pre">urldetect</span></code> using in the function <code class="xref py py-func docutils literal notranslate"><span class="pre">urldetect.plot()</span></code>.</p>
-<p>The performance of the model can deviate based on the threshold being used but the theshold this will not affect the learning process <code class="xref py py-func docutils literal notranslate"><span class="pre">urldetect.compute_hash()</span></code>.
-After learning a model, and predicting new samples with it, each sample will get a probability belowing to the class. In case of our two-class approach the simple rule account: <strong>P(class malicous) = 1-P(class normal)</strong>
-The threshold is used on the probabilities to devide samples into the malicous or normal class.</p>
-<section id="auc">
-<h2>AUC<a class="headerlink" href="#auc" title="Permalink to this headline"></a></h2>
-<p>The Area Under The Curve (AUC) and Receiver Operating Characteristics curve (ROC) are one of the most important evaluation metrics for checking any classification model’s performance.
-In our case we designed a two-class model with URLs being <strong>malicous</strong> or not. The probability ranges between [0-1], and the threshold for classification is set at 0.5, where &lt;0.5 is normal and &gt;0.5 is malicous.
-This value can be tweaked to either reduce the number of False positives or True Negatives <code class="xref py py-func docutils literal notranslate"><span class="pre">urldetect.plot()</span></code>.</p>
-<p>The goal of the AUC-ROC is to determine the probability curve and degree or measure of separability by using various thresholds settings.
-It describes <em>how much</em> the model is capable of distinguishing between the classes. The higher the AUC, the better the model is at predicting whereas a AUC of 0.5 represents <em>random</em> results.</p>
-<p>A perfect score would result in an AUC score=1 and ROC curve like this:</p>
-<figure class="align-default" id="roc-best">
-<img alt="../figs/ROC_best.png" src="../figs/ROC_best.png" />
-</figure>
-</section>
-<section id="confusion-matrix">
-<h2>Confusion matrix<a class="headerlink" href="#confusion-matrix" title="Permalink to this headline"></a></h2>
-<p>A confusion matrix is a table that is often used to describe the performance of a classification model (or “classifier”)
-on a set of test data for which the true values are known. It allows the visualization of the performance of an algorithm.</p>
-</section>
-<section id="kappa-score">
-<h2>Kappa score<a class="headerlink" href="#kappa-score" title="Permalink to this headline"></a></h2>
-<p>Cohen’s kappa coefficient is a statistic that is used to measure inter-rated reliability for qualitative (categorical) items.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">scoring</span> <span class="o">=</span> <span class="n">make_scorer</span><span class="p">(</span><span class="n">cohen_kappa_score</span><span class="p">,</span> <span class="n">greater_is_better</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
+<section id="blog">
+<h1>Blog<a class="headerlink" href="#blog" title="Permalink to this headline"></a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><a class="reference external" href="https://towardsdatascience.com/detection-of-duplicate-images-using-image-hash-functions-4d9c53f04a75">Read more details and the usage in the Medium Blog: Detection of Duplicate Images Using Image Hash Functions</a></p>
 </div>
 </section>
-<section id="probability-graph">
-<h2>Probability graph<a class="headerlink" href="#probability-graph" title="Permalink to this headline"></a></h2>
-<p>The probability graph plots the probabilities of the samples being classified.</p>
+<section id="github">
+<h1>Github<a class="headerlink" href="#github" title="Permalink to this headline"></a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><a class="reference external" href="https://github.com/erdogant/undouble/">Source code of undouble can be found at Github</a></p>
+</div>
 </section>
-</section>
-<section id="results">
-<h1>Results<a class="headerlink" href="#results" title="Permalink to this headline"></a></h1>
-<p>The classification performance can be derived using the function <code class="xref py py-func docutils literal notranslate"><span class="pre">urldetect.plot()</span></code>.
-Results for the malicous URLs, using a 5-fold crossvalidation with gridsearch is as follows:</p>
-<figure class="align-default" id="figure-1">
-<a class="reference internal image-reference" href="../figs/Figure_1.png"><img alt="../figs/Figure_1.png" src="../figs/Figure_1.png" /></a>
-</figure>
-<figure class="align-default" id="figure-2">
-<a class="reference internal image-reference" href="../figs/Figure_2.png"><img alt="../figs/Figure_2.png" src="../figs/Figure_2.png" /></a>
-</figure>
-<figure class="align-default" id="figure-3">
-<a class="reference internal image-reference" href="../figs/Figure_3.png"><img alt="../figs/Figure_3.png" src="../figs/Figure_3.png" /></a>
-</figure>
-</section>
+<section id="sponsor-this-project">
+<h1>Sponsor this project<a class="headerlink" href="#sponsor-this-project" title="Permalink to this headline"></a></h1>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If you like this project, star this repo at the github page and become a sponsor!
+Read more why this is important on my sponsor page. The sponsor button will direct you to the sponsor github page.</p>
+</div>
+<iframe src="https://github.com/sponsors/erdogant/button" title="Sponsor erdogant" height="35" width="116" style="border: 0;"></iframe><hr>
+<center>
+        <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEADP27U&placement=erdogantgithubio" id="_carbonads_js"></script>
+</center>
+<hr></section>
 
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Examples.html" class="btn btn-neutral float-left" title="Flowers dataset" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Coding%20quality.html" class="btn btn-neutral float-right" title="Coding quality" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
   <hr/>
 

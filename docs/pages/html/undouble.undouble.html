@@ -7,6 +7,7 @@
   <title>API References &mdash; undouble undouble documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -36,6 +37,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
               <p class="caption" role="heading"><span class="caption-text">Background</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="Abstract.html">Abstract</a></li>
@@ -70,12 +72,17 @@
 <li class="toctree-l1"><a class="reference internal" href="Examples.html#objects-dataset">101 objects dataset</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Examples.html#references">References</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Code Documentation</span></p>
+<p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Blog.html">Blog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Blog.html#github">Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Blog.html#sponsor-this-project">Sponsor this project</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Coding%20quality.html">Coding quality</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">API References</a></li>
 </ul>
 
+    <a href= "genindex.html">Index</a>
+  
         </div>
       </div>
     </nav>
@@ -120,15 +127,11 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>method</strong> (<em>str</em><em>, </em><em>(</em><em>default: 'phash'</em><em>)</em>) – <dl class="simple">
-<dt>Method to extract features from images.</dt><dd><p>hashmethod : str (default: ‘phash’)
+<li><p><strong>method</strong> (<em>str</em><em>, </em><em>(</em><em>default: 'phash'</em><em>)</em>) – Image hash method.
 * ‘ahash’: Average hash
 * ‘phash’: Perceptual hash
 * ‘dhash’: Difference hash
-* ‘whash-haar’: Haar wavelet hash</p>
-</dd>
-</dl>
-</p></li>
+* ‘whash-haar’: Haar wavelet hash</p></li>
 <li><p><strong>targetdir</strong> (<em>str</em><em>, </em><em>(</em><em>default: None</em><em>)</em>) – Directory to read the images.</p></li>
 <li><p><strong>hash_size</strong> (<em>integer</em><em> (</em><em>default: 8</em><em>)</em>) – The hash_size will be used to scale down the image and create a hash-image of length: hash_size*hash_size.</p></li>
 <li><p><strong>ext</strong> (<em>list</em><em>, </em><em>(</em><em>default:</em><em> [</em><em>'png'</em><em>,</em><em>'tiff'</em><em>,</em><em>'jpg'</em><em>]</em><em>)</em>) – Images with the file extentions are used.</p></li>
@@ -205,31 +208,21 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="undouble.undouble.Undouble.compute_hash">
-<span class="sig-name descname"><span class="pre">compute_hash</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hash_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.Undouble.compute_hash" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">compute_hash</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hash_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.Undouble.compute_hash" title="Permalink to this definition"></a></dt>
 <dd><p>Compute the hash for each image.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>method</strong> (<em>str</em><em>, </em><em>(</em><em>default: 'phash'</em><em>)</em>) – <dl class="simple">
-<dt>Method to extract features from images.</dt><dd><p>hashmethod : str (default: ‘phash’)
+<li><p><strong>method</strong> (<em>str</em><em>, </em><em>(</em><em>default: 'phash'</em><em>)</em>) – Image hash method.
 * ‘ahash’: Average hash
 * ‘phash’: Perceptual hash
 * ‘dhash’: Difference hash
-* ‘whash-haar’: Haar wavelet hash
-* ‘whash-db4’: Daubechies wavelet hash
-* ‘colorhash’: HSV color hash
-* ‘crop-resistant’: Crop-resistant hash</p>
-</dd>
-</dl>
-</p></li>
+* ‘whash-haar’: Haar wavelet hash</p></li>
 <li><p><strong>hash_size</strong> (<em>integer</em><em> (</em><em>default: 8</em><em>)</em>) – The hash_size will be used to scale down the image and create a hash-image of length: hash_size*hash_size.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>None.</p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -243,7 +236,7 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>img</strong> (<em>Object</em><em> or </em><em>RGB-image.</em>) – Image.</p></li>
 <li><p><strong>hash_size</strong> (<em>integer</em><em> (</em><em>default: None</em><em>)</em>) – The hash_size will be used to scale down the image and create a hash-image of length: hash_size*hash_size.</p></li>
-<li><p><strong>as_array</strong> (<em>Bool</em><em> (</em><em>default: False</em><em>)</em>) – True: Return the hash-array in the same size as the scaled image.
+<li><p><strong>to_array</strong> (<em>Bool</em><em> (</em><em>default: False</em><em>)</em>) – True: Return the hash-array in the same size as the scaled image.
 False: Return the hash-image vector.</p></li>
 </ul>
 </dd>
@@ -264,11 +257,8 @@ False: Return the hash-image vector.</p></li>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>threshold</strong> (<em>float</em><em>, </em><em>(</em><em>default: 0</em><em>)</em>) – Threshold on the hash value to determine similarity.</p>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>None.</p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -281,11 +271,8 @@ False: Return the hash-image vector.</p></li>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>black_list</strong> (<em>list</em><em>, </em><em>(</em><em>default:</em><em> [</em><em>'undouble'</em><em>]</em><em>)</em>) – Exclude directory with all subdirectories from processing.</p>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>None.</p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -324,11 +311,8 @@ False: Return the hash-image vector.</p></li>
 None: A subdir, named “undouble” is created within each directory.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>None.</p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -345,14 +329,11 @@ None: A subdir, named “undouble” is created within each directory.</p></li>
 <li><p><strong>images.</strong> (<em>Colorscheme for the</em>) – ‘gray’, ‘binary’,  None (uses rgb colorscheme)</p></li>
 <li><p><strong>show_hog</strong> (<em>bool</em><em>, </em><em>(</em><em>default: False</em><em>)</em>) – Plot the hog features next to the input image.</p></li>
 <li><p><strong>min_clust</strong> (<em>int</em><em>, </em><em>(</em><em>default: 1</em><em>)</em>) – Plots are created for clusters with &gt; min_clust samples</p></li>
-<li><p><strong>figsize</strong> (<em>tuple</em><em>, </em><em>(</em><em>default:</em><em> (</em><em>15</em><em>, </em><em>10</em><em>)</em><em></em>) – Size of the figure (height,width).</p></li>
+<li><p><strong>figsize</strong> (<em>tuple</em><em>, </em><em>(</em><em>default:</em><em> (</em><em>15</em><em>, </em><em>10</em><em>)</em><em>.</em>) – Size of the figure (height,width).</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>None.</p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -474,11 +455,8 @@ are generally more blurry.</p>
 <li><p><strong>'iris'</strong> (<em>str</em><em>, </em><em>multi-class</em>) – </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>tuple containing dataset and response variable (X,y)</p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>tuple containing dataset and response variable (X,y).</p>
 </dd>
 </dl>
 </dd></dl>
@@ -565,11 +543,8 @@ are generally more blurry.</p>
 <li><p><strong>writepath</strong> (<em>str.</em>) – Directory to write the file.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>None.</p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None.</p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
@@ -579,7 +554,11 @@ are generally more blurry.</p>
 </div>
 </dd></dl>
 
-</section>
+<hr>
+<center>
+        <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEADP27U&placement=erdogantgithubio" id="_carbonads_js"></script>
+</center>
+<hr></section>
 
 
            </div>

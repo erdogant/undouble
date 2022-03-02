@@ -95,3 +95,11 @@ The following tests are secured using :func:`tests.test_undouble`:
     =========================== 3 passed, 1 warning in 1254.97s (0:20:54) ===========================    
 
 
+
+.. raw:: html
+
+	<hr>
+	<center>
+		<script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEADP27U&placement=erdogantgithubio" id="_carbonads_js"></script>
+	</center>
+	<hr>
