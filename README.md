@@ -142,7 +142,7 @@ The input can be the following three types:
 
 <p align="left">
   <a href="https://erdogant.github.io/undouble/pages/html/Examples.html#mnist-dataset">
-  <img src="https://github.com/erdogant/undouble/blob/main/docs/figs/imghash_example.png" width="400" />
+  <img src="https://github.com/erdogant/undouble/blob/main/docs/figs/mnist_1.png" width="400" />
   </a>
 </p>
 
