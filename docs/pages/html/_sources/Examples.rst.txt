@@ -80,7 +80,7 @@ The image in the group with the highest resolution will be copied, and all other
 
 
 101 objects dataset
-''''''''''''''''''''
+#####################
 
 I utilized the Caltech 101 [1] dataset and saved it to my local disk. I will analyze the results with aHash, pHash, dHash, and Wavelet hash.
 The Caltech dataset contains 9144 real-world images belonging to 101 categories. About 40 to 800 images per category.
@@ -128,8 +128,8 @@ Note that this dataset does not contain ground truth labels with identical image
     model.move()
     
 
-Average hash
---------------
+Average hash results
+**************************
 
 The average hash function detected 135 groups that could be linked to 335 images with an identical hash (threshold=0) based on the input hash size of 8 (64-bit). Despite identical images being detected, most of the groups showed collisions such as the top and bottom left, and/or near-identical images, such as the motorbikes.
 By increasing the hash size to 16 (256-bit), 28 groups for 64 images were detected. No collisions were present but only some near-identical images, such as the motorbikes.
@@ -144,8 +144,9 @@ By increasing the hash size to 16 (256-bit), 28 groups for 64 images were detect
    +---------------------+
 
 
-Differential hash
-------------------
+Differential hash results
+**************************
+
 
 The differential hash function detected 28 images that could be linked to 31 images with an identical hash (threshold=0).
 A visual inspection showed no collisions but near-identical images (two motorbikes) were detected.
@@ -162,8 +163,9 @@ No collisions and no near-identical images were present only images that are vis
    +---------------------+
 
 
-Perceptual hash
-------------------
+Perceptual hash results
+**************************
+
 
 The perceptual hash function detected 38 groups that could be linked to 41 images with an identical hash (threshold=0).
 A visual inspection showed no collisions but near-identical images were detected, such as the motorbikes, as illustrated in the figure below.
@@ -179,8 +181,9 @@ By increasing the hash size to 16 (256-bit), 10 groups for 20 images were detect
    +---------------------+
 
 
-Haar wavelet hash
-------------------
+Haar wavelet hash results
+**************************
+
 
 The wavelet hash function detected 141 groups that could be linked to 513 images with an identical hash (threshold=0) based on the input hash size of 8 (64-bit).
 A visual inspection showed that almost all groups contained either collisions or near-identical images.
@@ -198,8 +201,7 @@ No collisions were present but only some near-identical images, such as the moto
 
 
 
-References
-''''''''''''''''''''
+*References*
 
     * [1] L. Fei-Fei, R. Fergus, and P. Perona. Learning generative visual models from few training examples: an incremental Bayesian approach tested on 101 object categories. IEEE. CVPR 2004, Workshop on Generative-Model Based Vision. 2004
 

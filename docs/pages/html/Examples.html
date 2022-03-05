@@ -69,17 +69,14 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Flowers dataset</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#plot-clusters">Plot clusters</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#get-identical-images">Get identical images</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#move-files">Move files</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#objects-dataset">101 objects dataset</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#average-hash">Average hash</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#differential-hash">Differential hash</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#perceptual-hash">Perceptual hash</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#haar-wavelet-hash">Haar wavelet hash</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#move-files">Move files</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#references">References</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="#objects-dataset">101 objects dataset</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#average-hash-results">Average hash results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#differential-hash-results">Differential hash results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#perceptual-hash-results">Perceptual hash results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#haar-wavelet-hash-results">Haar wavelet hash results</a></li>
 </ul>
 </li>
 </ul>
@@ -185,8 +182,10 @@ The image in the group with the highest resolution will be copied, and all other
 <span class="c1"># &gt;Type &lt;ok&gt; to proceed.</span>
 </pre></div>
 </div>
+</section>
+</section>
 <section id="objects-dataset">
-<h3>101 objects dataset<a class="headerlink" href="#objects-dataset" title="Permalink to this headline"></a></h3>
+<h1>101 objects dataset<a class="headerlink" href="#objects-dataset" title="Permalink to this headline"></a></h1>
 <p>I utilized the Caltech 101 [1] dataset and saved it to my local disk. I will analyze the results with aHash, pHash, dHash, and Wavelet hash.
 The Caltech dataset contains 9144 real-world images belonging to 101 categories. About 40 to 800 images per category.
 The size of each image is roughly 300 x 200 pixels. For the input to undouble, we can simply provide the path location
@@ -230,8 +229,8 @@ Note that this dataset does not contain ground truth labels with identical image
 <span class="n">model</span><span class="o">.</span><span class="n">move</span><span class="p">()</span>
 </pre></div>
 </div>
-<section id="average-hash">
-<h4>Average hash<a class="headerlink" href="#average-hash" title="Permalink to this headline"></a></h4>
+<section id="average-hash-results">
+<h2>Average hash results<a class="headerlink" href="#average-hash-results" title="Permalink to this headline"></a></h2>
 <p>The average hash function detected 135 groups that could be linked to 335 images with an identical hash (threshold=0) based on the input hash size of 8 (64-bit). Despite identical images being detected, most of the groups showed collisions such as the top and bottom left, and/or near-identical images, such as the motorbikes.
 By increasing the hash size to 16 (256-bit), 28 groups for 64 images were detected. No collisions were present but only some near-identical images, such as the motorbikes.</p>
 <table class="docutils align-center" id="id2">
@@ -245,8 +244,8 @@ By increasing the hash size to 16 (256-bit), 28 groups for 64 images were detect
 </tbody>
 </table>
 </section>
-<section id="differential-hash">
-<h4>Differential hash<a class="headerlink" href="#differential-hash" title="Permalink to this headline"></a></h4>
+<section id="differential-hash-results">
+<h2>Differential hash results<a class="headerlink" href="#differential-hash-results" title="Permalink to this headline"></a></h2>
 <p>The differential hash function detected 28 images that could be linked to 31 images with an identical hash (threshold=0).
 A visual inspection showed no collisions but near-identical images (two motorbikes) were detected.
 By increasing the hash size to 16 (256-bit), 8 groups for 16 images were detected. No collisions were present but only some near-identical images, such as the motorbikes. By increasing the hash size to 16 (256-bit), 8 groups for 16 images were detected.
@@ -262,8 +261,8 @@ No collisions and no near-identical images were present only images that are vis
 </tbody>
 </table>
 </section>
-<section id="perceptual-hash">
-<h4>Perceptual hash<a class="headerlink" href="#perceptual-hash" title="Permalink to this headline"></a></h4>
+<section id="perceptual-hash-results">
+<h2>Perceptual hash results<a class="headerlink" href="#perceptual-hash-results" title="Permalink to this headline"></a></h2>
 <p>The perceptual hash function detected 38 groups that could be linked to 41 images with an identical hash (threshold=0).
 A visual inspection showed no collisions but near-identical images were detected, such as the motorbikes, as illustrated in the figure below.
 By increasing the hash size to 16 (256-bit), 10 groups for 20 images were detected. No collisions and no near-identical images were present only images that are visually similar.</p>
@@ -278,8 +277,8 @@ By increasing the hash size to 16 (256-bit), 10 groups for 20 images were detect
 </tbody>
 </table>
 </section>
-<section id="haar-wavelet-hash">
-<h4>Haar wavelet hash<a class="headerlink" href="#haar-wavelet-hash" title="Permalink to this headline"></a></h4>
+<section id="haar-wavelet-hash-results">
+<h2>Haar wavelet hash results<a class="headerlink" href="#haar-wavelet-hash-results" title="Permalink to this headline"></a></h2>
 <p>The wavelet hash function detected 141 groups that could be linked to 513 images with an identical hash (threshold=0) based on the input hash size of 8 (64-bit).
 A visual inspection showed that almost all groups contained either collisions or near-identical images.
 Who had known that a strawberry could have a similar image-hash as the motorbike? By increasing the hash size to 16 (256-bit), 25 groups for 51 images were detected.
@@ -294,10 +293,7 @@ No collisions were present but only some near-identical images, such as the moto
 </tr>
 </tbody>
 </table>
-</section>
-</section>
-<section id="references">
-<h3>References<a class="headerlink" href="#references" title="Permalink to this headline"></a></h3>
+<p><em>References</em></p>
 <blockquote>
 <div><ul class="simple">
 <li><p>[1] L. Fei-Fei, R. Fergus, and P. Perona. Learning generative visual models from few training examples: an incremental Bayesian approach tested on 101 object categories. IEEE. CVPR 2004, Workshop on Generative-Model Based Vision. 2004</p></li>
@@ -308,7 +304,6 @@ No collisions were present but only some near-identical images, such as the moto
         <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEADP27U&placement=erdogantgithubio" id="_carbonads_js"></script>
 </center>
 <hr></section>
-</section>
 </section>
 
 
