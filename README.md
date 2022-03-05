@@ -115,10 +115,6 @@ from undouble import Undouble
 
 # 
 
-##### [Example: Moving similar images in the flower dataset](https://erdogant.github.io/undouble/pages/html/Examples.html#move-files)
-
-# 
-
 ##### [Example: Plot the image hashes](https://erdogant.github.io/undouble/pages/html/Examples.html#plot-image-hash)
 
 
@@ -130,77 +126,27 @@ from undouble import Undouble
 
 # 
 
-#### Example of three different image imports
+##### [Example: Three different imports](https://erdogant.github.io/undouble/pages/html/core_functions.html#input-data)
+
+The input can be the following three types:
+
+    * Path to directory
+    * List of file locations
+    * Numpy array containing images
+
+#
 
 
-```python
+##### [Example: Finding identical mnist digits](https://erdogant.github.io/undouble/pages/html/Examples.html#mnist-dataset)
 
-# Import library
-import os
-from undouble import Undouble
 
-# Init with default settings
-model = Undouble(method='phash', hash_size=16)
+<p align="left">
+  <a href="https://erdogant.github.io/undouble/pages/html/Examples.html#mnist-dataset">
+  <img src="https://github.com/erdogant/undouble/blob/main/docs/figs/mnist_1.png" width="400" />
+  </a>
+</p>
 
-# Import data; Pathnames to the images.
-input_list_of_files = model.import_example(data='flowers')
 
-# Import data; Directory to read.
-input_directory, _ = os.path.split(input_list_of_files[0])
-print(input_directory)
-# '.\\undouble\\undouble\\data\\flower_images'
-
-# Import data; numpy array containing images.
-input_img_array = model.import_example(data='mnist')
-
-# Importing the files files from disk, cleaning and pre-processing
-model.import_data(input_list_of_files)
-model.import_data(input_directory)
-model.import_data(input_img_array)
-
-# Compute image-hash
-model.compute_hash()
-
-# Group images with image-hash <= threshold
-model.group(threshold=0)
-
-# Plot the images
-model.plot()
-
-# Move the images
-# model.move()
-
-```
-
-#### Finding identical mnist digits.
-
-```python
-
-# Import library
-from undouble import Undouble
-
-# Init with default settings
-model = Undouble()
-
-# Import example data
-targetdir = model.import_example(data='mnist')
-
-# Importing the files files from disk, cleaning and pre-processing
-model.import_data(targetdir)
-
-# Compute image-hash
-model.compute_hash(method='phash', hash_size=16)
-
-# Group images with image-hash <= threshold
-model.group(threshold=0)
-
-# Plot the images
-model.plot()
-
-```
-
-#### References
-* https://github.com/erdogant/undouble
 
 #### Citation
 Please cite in your publications if this is useful for your research (see citation).
