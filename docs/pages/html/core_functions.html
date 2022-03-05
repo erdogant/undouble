@@ -195,28 +195,32 @@
 <section id="numpy-array">
 <h2>Numpy-array<a class="headerlink" href="#numpy-array" title="Permalink to this headline"></a></h2>
 <p>Images can also be in the form of a numpy-array.</p>
-<blockquote>
-<div><p># Import data; numpy array containing images.
-input_img_array = model.import_example(data=’mnist’)</p>
-</div></blockquote>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import data; numpy array containing images.</span>
+<span class="n">input_img_array</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">import_example</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="s1">&#39;mnist&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
 </section>
 <section id="processing-images">
 <h2>Processing images<a class="headerlink" href="#processing-images" title="Permalink to this headline"></a></h2>
 <p>Processing the images is performed with the same function, independent of the input-type.</p>
-<blockquote>
-<div><p># Importing the files files from disk, cleaning and pre-processing
-model.import_data(input_list_of_files)
-model.import_data(input_directory)
-model.import_data(input_img_array)</p>
-<p># Compute image-hash
-model.compute_hash()</p>
-<p># Find images with image-hash &lt;= threshold
-model.group(threshold=0)</p>
-<p># Plot the images
-model.plot()</p>
-<p># Move the images
-# model.move()</p>
-</div></blockquote>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Importing the files files from disk, cleaning and pre-processing</span>
+<span class="n">model</span><span class="o">.</span><span class="n">import_data</span><span class="p">(</span><span class="n">input_list_of_files</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">import_data</span><span class="p">(</span><span class="n">input_directory</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">import_data</span><span class="p">(</span><span class="n">input_img_array</span><span class="p">)</span>
+
+<span class="c1"># Compute image-hash</span>
+<span class="n">model</span><span class="o">.</span><span class="n">compute_hash</span><span class="p">()</span>
+
+<span class="c1"># Find images with image-hash &lt;= threshold</span>
+<span class="n">model</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Plot the images</span>
+<span class="n">model</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+
+<span class="c1"># Move the images</span>
+<span class="c1"># model.move()</span>
+</pre></div>
+</div>
 </section>
 <section id="import-with-restriction">
 <h2>Import with restriction<a class="headerlink" href="#import-with-restriction" title="Permalink to this headline"></a></h2>
@@ -239,17 +243,15 @@ model.plot()</p>
 <h1>Compute_hash<a class="headerlink" href="#compute-hash" title="Permalink to this headline"></a></h1>
 <p>The <em>compute_hash</em> function, <a class="reference internal" href="undouble.undouble.html#undouble.undouble.Undouble.compute_hash" title="undouble.undouble.Undouble.compute_hash"><code class="xref py py-func docutils literal notranslate"><span class="pre">undouble.undouble.Undouble.compute_hash()</span></code></a>, computes the hash for each image, and returns the adjacency matrix containing image-hash distances between the images.
 The image-hash is computed using one of the following functions:</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>‘ahash’: Average hash</p></li>
-<li><p>‘phash’: Perceptual hash</p></li>
-<li><p>‘dhash’: Difference hash</p></li>
-<li><p>‘whash-haar’: Haar wavelet hash</p></li>
-<li><p>‘whash-db4’: Daubechies wavelet hash</p></li>
-<li><p>‘colorhash’: HSV color hash</p></li>
-<li><p>‘crop-resistant’: Crop-resistant hash</p></li>
-</ul>
-</div></blockquote>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>* <span class="s1">&#39;ahash&#39;</span>           Average <span class="nb">hash</span>
+* <span class="s1">&#39;phash&#39;</span>           Perceptual <span class="nb">hash</span>
+* <span class="s1">&#39;dhash&#39;</span>           Difference <span class="nb">hash</span>
+* <span class="s1">&#39;whash-haar&#39;</span>      Haar wavelet <span class="nb">hash</span>
+* <span class="s1">&#39;whash-db4&#39;</span>       Daubechies wavelet <span class="nb">hash</span>
+* <span class="s1">&#39;colorhash&#39;</span>       HSV color <span class="nb">hash</span>
+* <span class="s1">&#39;crop-resistant&#39;</span>  Crop-resistant <span class="nb">hash</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initialize</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">Undouble</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;phash&#39;</span><span class="p">,</span> <span class="n">hash_size</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
 <span class="c1"># Import data</span>
@@ -313,11 +315,9 @@ The function can be found here: <a class="reference internal" href="undouble.und
 The reasoning for decolorizing is that most information we need to “recognize” an image is readily present in the grayscale channel.
 In addition, the reduction from 24 bits per pixel for RGB to 8 bits per pixel is computationally more attractive; time-wise and memory-wise.
 The next step is to downsample/scale the image to a smaller size. Most often, a 64-bit hash is chosen,
-which simply means that the image is downsampled to 8 x 8 pixels.</p>
-<p>If <code class="docutils literal notranslate"><span class="pre">grayscale</span></code> is set to <em>True</em>, the <code class="docutils literal notranslate"><span class="pre">cv2.COLOR_GRAY2RGB</span></code> setting from <code class="docutils literal notranslate"><span class="pre">python-opencv</span></code> is used.</p>
-<p>The pre-processing has 4 steps and are exectued in this order.</p>
-<blockquote>
-<div><ul class="simple">
+which simply means that the image is downsampled to 8 x 8 pixels. If <code class="docutils literal notranslate"><span class="pre">grayscale</span></code> is set to <em>True</em>, the <code class="docutils literal notranslate"><span class="pre">cv2.COLOR_GRAY2RGB</span></code> is derived <code class="docutils literal notranslate"><span class="pre">python-opencv</span></code>.</p>
+<dl class="simple">
+<dt>The pre-processing has 4 steps and are exectued in this order.</dt><dd><ul class="simple">
 <li><ol class="arabic simple">
 <li><p>Reading image</p></li>
 </ol>
@@ -335,7 +335,8 @@ which simply means that the image is downsampled to 8 x 8 pixels.</p>
 </ol>
 </li>
 </ul>
-</div></blockquote>
+</dd>
+</dl>
 </section>
 <section id="scaling">
 <h1>scaling<a class="headerlink" href="#scaling" title="Permalink to this headline"></a></h1>

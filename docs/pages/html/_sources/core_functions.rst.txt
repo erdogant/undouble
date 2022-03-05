@@ -84,6 +84,8 @@ Numpy-array
 
 Images can also be in the form of a numpy-array.
 
+.. code:: python
+
     # Import data; numpy array containing images.
     input_img_array = model.import_example(data='mnist')
 
@@ -92,7 +94,9 @@ Processing images
 ======================
 
 Processing the images is performed with the same function, independent of the input-type.
-    
+
+.. code:: python
+
     # Importing the files files from disk, cleaning and pre-processing
     model.import_data(input_list_of_files)
     model.import_data(input_directory)
@@ -136,13 +140,15 @@ Compute_hash
 The *compute_hash* function, :func:`undouble.undouble.Undouble.compute_hash`, computes the hash for each image, and returns the adjacency matrix containing image-hash distances between the images.
 The image-hash is computed using one of the following functions:
 
-    * 'ahash': Average hash
-    * 'phash': Perceptual hash
-    * 'dhash': Difference hash
-    * 'whash-haar': Haar wavelet hash
-    * 'whash-db4': Daubechies wavelet hash
-    * 'colorhash': HSV color hash
-    * 'crop-resistant': Crop-resistant hash
+.. code:: bash
+
+    * 'ahash'		Average hash
+    * 'phash'		Perceptual hash
+    * 'dhash'		Difference hash
+    * 'whash-haar'	Haar wavelet hash
+    * 'whash-db4'	Daubechies wavelet hash
+    * 'colorhash'	HSV color hash
+    * 'crop-resistant'	Crop-resistant hash
 
 
 .. code:: python
@@ -220,12 +226,9 @@ Before we can determine the image-hash from an image, we need to decolorize the 
 The reasoning for decolorizing is that most information we need to "recognize" an image is readily present in the grayscale channel.
 In addition, the reduction from 24 bits per pixel for RGB to 8 bits per pixel is computationally more attractive; time-wise and memory-wise.
 The next step is to downsample/scale the image to a smaller size. Most often, a 64-bit hash is chosen,
-which simply means that the image is downsampled to 8 x 8 pixels.
-
-If ``grayscale`` is set to *True*, the ``cv2.COLOR_GRAY2RGB`` setting from ``python-opencv`` is used.
+which simply means that the image is downsampled to 8 x 8 pixels. If ``grayscale`` is set to *True*, the ``cv2.COLOR_GRAY2RGB`` is derived ``python-opencv``.
 
 The pre-processing has 4 steps and are exectued in this order.
-
     * 1. Reading image
     * 2. Conversion to gray-scale (user defined)
     * 3. Scaling color pixels between [0-255]
