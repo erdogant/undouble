@@ -53,12 +53,12 @@ pip install undouble            # new install
 pip install -U undouble         # update to latest version
 ```
 
-#### Directly install from github source
+##### Directly install from github source
 ```bash
 pip install git+https://github.com/erdogant/undouble
 ```  
 
-#### Import Undouble package
+##### Import Undouble package
 
 ```python
 from undouble import Undouble
