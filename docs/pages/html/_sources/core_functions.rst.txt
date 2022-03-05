@@ -1,5 +1,5 @@
 Core functionalities
-########################
+************************
 
 The following core functionalities allows to group images on image-hash, and systematically move the images.
 

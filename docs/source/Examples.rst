@@ -271,7 +271,7 @@ Finding identical images for the mnist digits can be done as following:
 	model.plot()
 
 
-.. |mnist_group5| image:: ../figs/mnist_1.png.png
+.. |mnist_group5| image:: ../figs/mnist_1.png
 .. table:: Example of images with similar hash
    :align: center
 
