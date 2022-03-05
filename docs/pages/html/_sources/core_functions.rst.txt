@@ -1,34 +1,120 @@
-.. _code_directive:
-
--------------------------------------
-
 Core functionalities
-''''''''''''''''''''''
+########################
+
 The following core functionalities allows to group images on image-hash, and systematically move the images.
 
-    * import_data()
-    * compute_hash()
-    * group()
-    * move()
-    * plot()
+.. code:: python
+
+    .import_data()
+    .compute_hash()
+    .group()
+    .move()
+    .plot()
 
 
-import_data
-^^^^^^^^^^^^^^
-The input for the :func:`undouble.undouble.Undouble.import_data` can be three different types: 
+Input data
+************
+
+The input for the :func:`undouble.undouble.Undouble.import_data` can be the following three types:
 
     * Path to directory
     * List of file locations
     * Numpy array containing images
+
+The scanned files and directories can also be filtered on extention type, or directories can be black listed. Note that these settings need to be set during initialization. The black_list directory is set to undouble by default to make sure that readily moved files are not incorporated in the analysis.
+
+The following parameters can be changed during initialization:
+
+    * Images are imported with the extention ([‘png’,’tiff’,’jpg’,’jfif’]).
+    * Input image can be grayscaled during import.
+    * Resizing images to save memory, such as to (128, 128).
+
+
+.. code:: python
+
+    # Import library
+    from undouble import Undouble
     
-The scanned files and directories can also be filtered on extention type, or directories can be black listed. Note that these settings need to be set during initialization.
-The **black_list** directory is set to *undouble* by default to make sure that readily moved files are not incorporated in the analysis.
+    # Init with default settings
+    model = Undouble(method='phash', hash_size=16)
+    
 
-The following parameters can be changed:
+List of files
+======================
 
-    1. Images are imported with the extention (['png','tiff','jpg','jfif']).
-    2. Input image can be grayscaled during import.
-    3. Resizing images to save memory, such as to (128, 128).
+Read images recursively from a target directory.
+
+.. code:: python
+
+	# Import data; Pathnames to the images.
+	input_list_of_files = model.import_example(data='flowers')
+
+	# [undouble] >INFO> Store examples at [..\undouble\data]..
+	# [undouble] >INFO> Downloading [flowers] dataset from github source..
+	# [undouble] >INFO> Extracting files..
+	# [undouble] >INFO> [214] files are collected recursively from path: [..\undouble\undouble\data\flower_images]
+	
+	# The list image path locations looks as following but may differ on your machine.
+	print(input_list_of_files)
+
+	# ['\\repos\\undouble\\undouble\\data\\flower_images\\0001.png',
+	#  '\\repos\\undouble\\undouble\\data\\flower_images\\0002.png',
+	#  '\\repos\\undouble\\undouble\\data\\flower_images\\0003.png',
+	#  ...]
+
+
+Directory
+======================
+
+Images can also be read recursively from a target directory.
+
+.. code:: python
+
+    # Import data
+    input_directory, _ = os.path.split(input_list_of_files[0])
+
+    # The target directory looks as following:
+    print(input_directory)
+
+    # '.\\undouble\\undouble\\data\\flower_images'
+
+
+Numpy-array
+======================
+
+Images can also be in the form of a numpy-array.
+
+    # Import data; numpy array containing images.
+    input_img_array = model.import_example(data='mnist')
+
+
+Processing images
+======================
+
+Processing the images is performed with the same function, independent of the input-type.
+    
+    # Importing the files files from disk, cleaning and pre-processing
+    model.import_data(input_list_of_files)
+    model.import_data(input_directory)
+    model.import_data(input_img_array)
+    
+    # Compute image-hash
+    model.compute_hash()
+    
+    # Find images with image-hash <= threshold
+    model.group(threshold=0)
+    
+    # Plot the images
+    model.plot()
+    
+    # Move the images
+    # model.move()
+
+
+Import with restriction
+===============================
+
+In the following example we will read only images with the extension png, tiff, jpg and jfif. Images are not transformed into grayscale, and are reduced in dimension to 128x128.
 
 .. code:: python
 
@@ -44,8 +130,9 @@ The following parameters can be changed:
 	# Note that feat is still empty and will be filled after computing the image-hashes.
 
 
-compute_hash
-^^^^^^^^^^^^^^^^^^^^
+Compute_hash
+******************
+
 The *compute_hash* function, :func:`undouble.undouble.Undouble.compute_hash`, computes the hash for each image, and returns the adjacency matrix containing image-hash distances between the images.
 The image-hash is computed using one of the following functions:
 
@@ -86,8 +173,9 @@ The image-hash is computed using one of the following functions:
     # df = pd.DataFrame(data=model.results['feat'], index=model.results['filenames'], columns=model.results['filenames'])
 
 
-group
-^^^^^^^^^^^^^^
+Grouping images
+************************
+
 At this point image-hashes are computed and we can start grouping images with function :func:`undouble.undouble.Undouble.group`.
 The threshold can now be used to either group images with identical hash or images with near-identical hash.
 
@@ -109,8 +197,8 @@ The threshold can now be used to either group images with identical hash or imag
         print(group)
     
 
-move
-^^^^^^^^^^^^^^
+Moving images
+************************
 
 The move function :func:`undouble.undouble.Undouble.move` is created to systematically move the images that are grouped.
 A threshold of 0 will group images with an identical image hash. However, the threshold of 10 showed the best results when undoubling my personal photo deck because photos, such as from bursts, were also grouped.
@@ -118,15 +206,15 @@ Before moving any of the images, the resolution and blurness of all images that 
 The image in the group with the highest resolution will be copied, and all other images are moved to the **undouble** subdirectory.
 
 
-plot
-^^^^^^^^^^^^^^
+Plot
+************
 
 Plot all images that could be combined into a group with identical image-hash or <= threshold. 
 The function can be found here: :func:`undouble.undouble.Undouble.plot`
 
 
 Preprocessing
-''''''''''''''''
+###############
 
 Before we can determine the image-hash from an image, we need to decolorize the image, normalize the pixel values, and scale the image.
 The reasoning for decolorizing is that most information we need to "recognize" an image is readily present in the grayscale channel.
@@ -145,7 +233,7 @@ The pre-processing has 4 steps and are exectued in this order.
 
 
 scaling
-^^^^^^^^
+************
 
 Scaling of images is only applicable for 2D-arrays (images).
 Scaling data is an import pre-processing step to make sure all data is ranged between the minimum and maximum range.
@@ -156,18 +244,19 @@ The images are scaled between [0-255] by the following equation:
 
 
 Resizing
-^^^^^^^^^
+************
 
 Images can be resized, for which 128x128 pixels is the default.
 The function depends on the functionality of ``python-opencv`` with the interpolation: ``interpolation=cv2.INTER_AREA``.
 
 
 Generic functionalities
-''''''''''''''''''''''''
+###########################
+
 ``undouble`` contains various generic functionalities that are internally used but may be usefull too in other applications.
 
 compute_blur
-^^^^^^^^^^^^^
+***************
 load the image, convert it to grayscale, and compute the focus measure of the image using the Variance of Laplacian method.\
 The returned scores <100 are generally more blurry.
 Examples can be found here: :func:`undouble.undouble.compute_blur`
@@ -181,7 +270,7 @@ Examples can be found here: :func:`undouble.undouble.compute_blur`
 
 
 wget
-^^^^^^^^^
+***************
 Download files from the internet and store on disk.
 Examples can be found here: :func:`undouble.undouble.wget`
 
@@ -194,7 +283,7 @@ Examples can be found here: :func:`undouble.undouble.wget`
 
 
 unzip
-^^^^^^^^^
+***************
 Unzip files into a destination directory.
 Examples can be found here: :func:`undouble.undouble.unzip`
 
@@ -207,7 +296,7 @@ Examples can be found here: :func:`undouble.undouble.unzip`
 
 
 set_logger
-^^^^^^^^^^^^
+***************
 Change status of the logger.
 Examples can be found here: :func:`undouble.undouble.set_logger`
 

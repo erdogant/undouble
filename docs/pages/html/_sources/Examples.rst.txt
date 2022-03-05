@@ -1,11 +1,9 @@
-.. _code_directive:
-
--------------------------------------
-
 Flowers dataset
-''''''''''''''''''''
+##################
 
-Analyze for similar flowers in the example dataset.
+
+Analyze for similar flowers in the example dataset. Load the data and initialize a model with **phash**.
+
 
 .. code:: python
 
@@ -26,7 +24,11 @@ Analyze for similar flowers in the example dataset.
     
     # Group images with image-hash <= threshold
     model.group(threshold=0)
+
     
+Plot clusters
+********************
+
     # Plot the images
     model.plot()
 
@@ -47,9 +49,8 @@ Analyze for similar flowers in the example dataset.
    +------------------+
 
 
-
 Get identical images
-''''''''''''''''''''''''
+***********************
 
 .. code:: python
 
@@ -60,7 +61,7 @@ Get identical images
 
 
 Move files
-''''''''''''''''''''''''
+***********************
 
 The move function :func:`undouble.undouble.Undouble.move` will systematically move the images.
 A threshold of 0 will group images with an identical image hash. However, the threshold of 10 showed the best results when undoubling my personal photo deck because photos, such as from bursts, were also grouped.
@@ -76,52 +77,6 @@ The image in the group with the highest resolution will be copied, and all other
     # >[4] images will be moved to the [undouble] directory.
     # >[3] images will be copied to the [undouble] directory.
     # >Type <ok> to proceed.
-
-
-Input for model
-''''''''''''''''''''''''
-
-The input for the :func:`undouble.undouble.Undouble.import_data` can be three different types: 
-
-    * Path to directory
-    * List of file locations
-    * Numpy array containing images
-
-.. code:: python
-
-    # Import library
-    from undouble import Undouble
-    
-    # Init with default settings
-    model = Undouble(method='phash', hash_size=16)
-    
-    # Import data; Pathnames to the images.
-    input_list_of_files = model.import_example(data='flowers')
-    
-    # Import data; Read recursively the directory
-    input_directory, _ = os.path.split(input_list_of_files[0])
-    print(input_directory)
-    # '.\\undouble\\undouble\\data\\flower_images'
-    
-    # Import data; numpy array containing images.
-    input_img_array = model.import_example(data='mnist')
-    
-    # Importing the files files from disk, cleaning and pre-processing
-    model.import_data(input_list_of_files)
-    model.import_data(input_directory)
-    model.import_data(input_img_array)
-    
-    # Compute image-hash
-    model.compute_hash()
-    
-    # Find images with image-hash <= threshold
-    model.group(threshold=0)
-    
-    # Plot the images
-    model.plot()
-    
-    # Move the images
-    # model.move()
 
 
 101 objects dataset

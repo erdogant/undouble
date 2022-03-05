@@ -53,11 +53,18 @@
 <p class="caption" role="heading"><span class="caption-text">Core functionalities</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Core functionalities</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#import-data">import_data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#compute-hash">compute_hash</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#group">group</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#move">move</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#plot">plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#input-data">Input data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#list-of-files">List of files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#directory">Directory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#numpy-array">Numpy-array</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#processing-images">Processing images</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#import-with-restriction">Import with restriction</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#compute-hash">Compute_hash</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#grouping-images">Grouping images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#moving-images">Moving images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#plot">Plot</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="#preprocessing">Preprocessing</a><ul>
@@ -84,17 +91,12 @@
 <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="Examples.html">Flowers dataset</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Examples.html#get-identical-images">Get identical images</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Examples.html#move-files">Move files</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Examples.html#input-for-model">Input for model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Examples.html#objects-dataset">101 objects dataset</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Examples.html#references">References</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="Blog.html">Blog</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Blog.html#github">Github</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Blog.html#sponsor-this-project">Sponsor this project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Documentation.html">Blog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Documentation.html#github">Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Documentation.html#sponsor-this-project">Sponsor this project</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Coding%20quality.html">Coding quality</a></li>
 <li class="toctree-l1"><a class="reference internal" href="undouble.undouble.html">API References</a></li>
 </ul>
@@ -125,22 +127,19 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <hr class="docutils" id="code-directive" />
-<section id="core-functionalities">
+  <section id="core-functionalities">
 <h1>Core functionalities<a class="headerlink" href="#core-functionalities" title="Permalink to this headline"></a></h1>
 <p>The following core functionalities allows to group images on image-hash, and systematically move the images.</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>import_data()</p></li>
-<li><p>compute_hash()</p></li>
-<li><p>group()</p></li>
-<li><p>move()</p></li>
-<li><p>plot()</p></li>
-</ul>
-</div></blockquote>
-<section id="import-data">
-<h2>import_data<a class="headerlink" href="#import-data" title="Permalink to this headline"></a></h2>
-<p>The input for the <a class="reference internal" href="undouble.undouble.html#undouble.undouble.Undouble.import_data" title="undouble.undouble.Undouble.import_data"><code class="xref py py-func docutils literal notranslate"><span class="pre">undouble.undouble.Undouble.import_data()</span></code></a> can be three different types:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">.</span><span class="n">import_data</span><span class="p">()</span>
+<span class="o">.</span><span class="n">compute_hash</span><span class="p">()</span>
+<span class="o">.</span><span class="n">group</span><span class="p">()</span>
+<span class="o">.</span><span class="n">move</span><span class="p">()</span>
+<span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+<section id="input-data">
+<h2>Input data<a class="headerlink" href="#input-data" title="Permalink to this headline"></a></h2>
+<p>The input for the <a class="reference internal" href="undouble.undouble.html#undouble.undouble.Undouble.import_data" title="undouble.undouble.Undouble.import_data"><code class="xref py py-func docutils literal notranslate"><span class="pre">undouble.undouble.Undouble.import_data()</span></code></a> can be the following three types:</p>
 <blockquote>
 <div><ul class="simple">
 <li><p>Path to directory</p></li>
@@ -148,16 +147,85 @@
 <li><p>Numpy array containing images</p></li>
 </ul>
 </div></blockquote>
-<p>The scanned files and directories can also be filtered on extention type, or directories can be black listed. Note that these settings need to be set during initialization.
-The <strong>black_list</strong> directory is set to <em>undouble</em> by default to make sure that readily moved files are not incorporated in the analysis.</p>
-<p>The following parameters can be changed:</p>
+<p>The scanned files and directories can also be filtered on extention type, or directories can be black listed. Note that these settings need to be set during initialization. The black_list directory is set to undouble by default to make sure that readily moved files are not incorporated in the analysis.</p>
+<p>The following parameters can be changed during initialization:</p>
 <blockquote>
-<div><ol class="arabic simple">
+<div><ul class="simple">
 <li><p>Images are imported with the extention ([‘png’,’tiff’,’jpg’,’jfif’]).</p></li>
 <li><p>Input image can be grayscaled during import.</p></li>
 <li><p>Resizing images to save memory, such as to (128, 128).</p></li>
-</ol>
+</ul>
 </div></blockquote>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import library</span>
+<span class="kn">from</span> <span class="nn">undouble</span> <span class="kn">import</span> <span class="n">Undouble</span>
+
+<span class="c1"># Init with default settings</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Undouble</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;phash&#39;</span><span class="p">,</span> <span class="n">hash_size</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="list-of-files">
+<h3>List of files<a class="headerlink" href="#list-of-files" title="Permalink to this headline"></a></h3>
+<p>Read images recursively from a target directory.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import data; Pathnames to the images.</span>
+<span class="n">input_list_of_files</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">import_example</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="s1">&#39;flowers&#39;</span><span class="p">)</span>
+
+<span class="c1"># [undouble] &gt;INFO&gt; Store examples at [..\undouble\data]..</span>
+<span class="c1"># [undouble] &gt;INFO&gt; Downloading [flowers] dataset from github source..</span>
+<span class="c1"># [undouble] &gt;INFO&gt; Extracting files..</span>
+<span class="c1"># [undouble] &gt;INFO&gt; [214] files are collected recursively from path: [..\undouble\undouble\data\flower_images]</span>
+
+<span class="c1"># The list image path locations looks as following but may differ on your machine.</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">input_list_of_files</span><span class="p">)</span>
+
+<span class="c1"># [&#39;\\repos\\undouble\\undouble\\data\\flower_images\\0001.png&#39;,</span>
+<span class="c1">#  &#39;\\repos\\undouble\\undouble\\data\\flower_images\\0002.png&#39;,</span>
+<span class="c1">#  &#39;\\repos\\undouble\\undouble\\data\\flower_images\\0003.png&#39;,</span>
+<span class="c1">#  ...]</span>
+</pre></div>
+</div>
+</section>
+<section id="directory">
+<h3>Directory<a class="headerlink" href="#directory" title="Permalink to this headline"></a></h3>
+<p>Images can also be read recursively from a target directory.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import data</span>
+<span class="n">input_directory</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">input_list_of_files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="c1"># The target directory looks as following:</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">input_directory</span><span class="p">)</span>
+
+<span class="c1"># &#39;.\\undouble\\undouble\\data\\flower_images&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="numpy-array">
+<h3>Numpy-array<a class="headerlink" href="#numpy-array" title="Permalink to this headline"></a></h3>
+<p>Images can also be in the form of a numpy-array.</p>
+<blockquote>
+<div><p># Import data; numpy array containing images.
+input_img_array = model.import_example(data=’mnist’)</p>
+</div></blockquote>
+</section>
+<section id="processing-images">
+<h3>Processing images<a class="headerlink" href="#processing-images" title="Permalink to this headline"></a></h3>
+<p>Processing the images is performed with the same function, independent of the input-type.</p>
+<blockquote>
+<div><p># Importing the files files from disk, cleaning and pre-processing
+model.import_data(input_list_of_files)
+model.import_data(input_directory)
+model.import_data(input_img_array)</p>
+<p># Compute image-hash
+model.compute_hash()</p>
+<p># Find images with image-hash &lt;= threshold
+model.group(threshold=0)</p>
+<p># Plot the images
+model.plot()</p>
+<p># Move the images
+# model.move()</p>
+</div></blockquote>
+</section>
+<section id="import-with-restriction">
+<h3>Import with restriction<a class="headerlink" href="#import-with-restriction" title="Permalink to this headline"></a></h3>
+<p>In the following example we will read only images with the extension png, tiff, jpg and jfif. Images are not transformed into grayscale, and are reduced in dimension to 128x128.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">undouble</span> <span class="kn">import</span> <span class="n">Undouble</span>
 <span class="c1"># Initialize</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">Undouble</span><span class="p">(</span><span class="n">ext</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;png&#39;</span><span class="p">,</span> <span class="s1">&#39;tiff&#39;</span><span class="p">,</span> <span class="s1">&#39;jpg&#39;</span><span class="p">,</span> <span class="s1">&#39;jfif&#39;</span><span class="p">],</span> <span class="n">grayscale</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">))</span>
@@ -171,8 +239,9 @@ The <strong>black_list</strong> directory is set to <em>undouble</em> by default
 </pre></div>
 </div>
 </section>
+</section>
 <section id="compute-hash">
-<h2>compute_hash<a class="headerlink" href="#compute-hash" title="Permalink to this headline"></a></h2>
+<h2>Compute_hash<a class="headerlink" href="#compute-hash" title="Permalink to this headline"></a></h2>
 <p>The <em>compute_hash</em> function, <a class="reference internal" href="undouble.undouble.html#undouble.undouble.Undouble.compute_hash" title="undouble.undouble.Undouble.compute_hash"><code class="xref py py-func docutils literal notranslate"><span class="pre">undouble.undouble.Undouble.compute_hash()</span></code></a>, computes the hash for each image, and returns the adjacency matrix containing image-hash distances between the images.
 The image-hash is computed using one of the following functions:</p>
 <blockquote>
@@ -213,8 +282,8 @@ The image-hash is computed using one of the following functions:</p>
 </pre></div>
 </div>
 </section>
-<section id="group">
-<h2>group<a class="headerlink" href="#group" title="Permalink to this headline"></a></h2>
+<section id="grouping-images">
+<h2>Grouping images<a class="headerlink" href="#grouping-images" title="Permalink to this headline"></a></h2>
 <p>At this point image-hashes are computed and we can start grouping images with function <a class="reference internal" href="undouble.undouble.html#undouble.undouble.Undouble.group" title="undouble.undouble.Undouble.group"><code class="xref py py-func docutils literal notranslate"><span class="pre">undouble.undouble.Undouble.group()</span></code></a>.
 The threshold can now be used to either group images with identical hash or images with near-identical hash.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Group images with image-hash &lt;= threshold</span>
@@ -234,15 +303,15 @@ The threshold can now be used to either group images with identical hash or imag
 </pre></div>
 </div>
 </section>
-<section id="move">
-<h2>move<a class="headerlink" href="#move" title="Permalink to this headline"></a></h2>
+<section id="moving-images">
+<h2>Moving images<a class="headerlink" href="#moving-images" title="Permalink to this headline"></a></h2>
 <p>The move function <a class="reference internal" href="undouble.undouble.html#undouble.undouble.Undouble.move" title="undouble.undouble.Undouble.move"><code class="xref py py-func docutils literal notranslate"><span class="pre">undouble.undouble.Undouble.move()</span></code></a> is created to systematically move the images that are grouped.
 A threshold of 0 will group images with an identical image hash. However, the threshold of 10 showed the best results when undoubling my personal photo deck because photos, such as from bursts, were also grouped.
 Before moving any of the images, the resolution and blurness of all images that are part of a group are checked.
 The image in the group with the highest resolution will be copied, and all other images are moved to the <strong>undouble</strong> subdirectory.</p>
 </section>
 <section id="plot">
-<h2>plot<a class="headerlink" href="#plot" title="Permalink to this headline"></a></h2>
+<h2>Plot<a class="headerlink" href="#plot" title="Permalink to this headline"></a></h2>
 <p>Plot all images that could be combined into a group with identical image-hash or &lt;= threshold.
 The function can be found here: <a class="reference internal" href="undouble.undouble.html#undouble.undouble.Undouble.plot" title="undouble.undouble.Undouble.plot"><code class="xref py py-func docutils literal notranslate"><span class="pre">undouble.undouble.Undouble.plot()</span></code></a></p>
 </section>
