@@ -54,7 +54,6 @@ The following few lines will group the images and make the plots.
 .. |flower_group1| image:: ../figs/flowers1.png
 .. |flower_group2| image:: ../figs/flowers2.png
 .. |flower_group3| image:: ../figs/flowers3.png
-
 .. table:: Groupings
    :align: center
 
@@ -95,6 +94,31 @@ The image in the group with the highest resolution will be copied, and all other
     # >[4] images will be moved to the [undouble] directory.
     # >[3] images will be copied to the [undouble] directory.
     # >Type <ok> to proceed.
+
+
+Plot image hash
+***********************
+
+To plot the image hashes of the flowers we need to return the dict (see parameter). I will plot the hash of 1 flower image but the hashes can be plotted for all images.
+
+.. code:: python
+
+	# Compute image-hash
+	results = model.compute_hash(return_dict=True)
+
+	fig, ax=plt.subplots(1,2)
+	ax[0].imshow(results['img'][0])
+	ax[1].imshow(results['img_hash_bin'][0].reshape(hash_size, hash_size), cmap='gray')
+	plt.title('image hash hex: %s' %(results['img_hash_hex'][0]))
+
+
+.. |flower_group4| image:: ../figs/imghash_example.png
+.. table:: Plot image hash
+   :align: center
+
+   +------------------+
+   | |flower_group4|  |
+   +------------------+
 
 
 101 objects dataset
