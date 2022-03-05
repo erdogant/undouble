@@ -72,9 +72,22 @@ from undouble import Undouble
 
 <p align="left">
   <a href="https://erdogant.github.io/undouble/pages/html/Examples.html#">
-  <img src="https://github.com/erdogant/findpeaks/blob/master/docs/figs/fig2_topology_int.png" width="400" />    
+  <img src="https://github.com/erdogant/undouble/blob/main/docs/figs/flowers1.png" width="400" />
   </a>
 </p>
+
+<p align="left">
+  <a href="https://erdogant.github.io/undouble/pages/html/Examples.html#">
+  <img src="https://github.com/erdogant/undouble/blob/main/docs/figs/flowers2.png" width="400" />
+  </a>
+</p>
+
+<p align="left">
+  <a href="https://erdogant.github.io/undouble/pages/html/Examples.html#">
+  <img src="https://github.com/erdogant/undouble/blob/main/docs/figs/flowers3.png" width="400" />
+  </a>
+</p>
+
 
 # 
 
@@ -99,14 +112,6 @@ from undouble import Undouble
 # >Answer: w
 
 ```
-
-<p align="left">
-  <a href="https://erdogant.github.io/undouble/pages/html/Examples.html#move-files">
-  <img src="https://github.com/erdogant/undouble/blob/main/docs/figs/flowers1.png" width="400" />
-  <img src="https://github.com/erdogant/undouble/blob/main/docs/figs/flowers2.png" width="400" />
-  <img src="https://github.com/erdogant/undouble/blob/main/docs/figs/flowers3.png" width="400" />
-  </a>
-</p>
 
 # 
 
