@@ -21,13 +21,31 @@ Analyze for similar flowers in the example dataset. Load the data and initialize
     
     # Compute image-hash
     model.compute_hash()
-    
-    # Group images with image-hash <= threshold
-    model.group(threshold=0)
+
+    # [undouble] >INFO> Store examples at [./undouble/data]..
+    # [undouble] >INFO> Downloading [flowers] dataset from github source..
+    # [undouble] >INFO> Extracting files..
+    # [undouble] >INFO> [214] files are collected recursively from path: [./undouble/data/flower_images]
+    # [undouble] >INFO> Reading and checking images.
+    # [undouble] >INFO> Reading and checking images.
+    # 100%|---------| 214/214 [00:02<00:00, 96.56it/s]
+    # [undouble] >INFO> Extracting features using method: [phash]
+    # 100%|---------| 214/214 [00:00<00:00, 3579.14it/s]
+    # [undouble] >INFO> Build adjacency matrix with phash differences.
+    # [undouble] >INFO> Extracted features using [phash]: (214, 214)
+    # 100%|---------| 214/214 [00:00<00:00, 129241.33it/s]
 
     
-Plot clusters
-********************
+Group and plot
+************************
+
+All hashes are computed but images with similar hash are not grouped yet.
+The following few lines will group the images and make the plots.
+
+.. code:: python
+
+    # Group images with image-hash <= threshold
+    model.group(threshold=0)
 
     # Plot the images
     model.plot()
@@ -106,9 +124,9 @@ Note that this dataset does not contain ground truth labels with identical image
     # [undouble] >INFO> [9144] images are extracted.
     # [undouble] >INFO> Reading and checking images.
     # [undouble] >INFO> Reading and checking images.
-    # 100%|██████████| 9144/9144 [00:29<00:00, 305.49it/s]
+    # 100%|---------| 9144/9144 [00:29<00:00, 305.49it/s]
     # [undouble] >INFO> Extracting features using method: [ahash]
-    # 100%|██████████| 9144/9144 [00:01<00:00, 5826.17it/s]
+    # 100%|---------| 9144/9144 [00:01<00:00, 5826.17it/s]
     # [undouble] >INFO> Build adjacency matrix with ahash differences.
     
     # Group images that are identical in image-hash, i.e. those with a hash difference of 0.

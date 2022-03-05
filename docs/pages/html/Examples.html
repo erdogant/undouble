@@ -67,7 +67,7 @@
 <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Flowers dataset</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#plot-clusters">Plot clusters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#group-and-plot">Group and plot</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#get-identical-images">Get identical images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#move-files">Move files</a></li>
 </ul>
@@ -133,16 +133,31 @@
 <span class="c1"># Compute image-hash</span>
 <span class="n">model</span><span class="o">.</span><span class="n">compute_hash</span><span class="p">()</span>
 
-<span class="c1"># Group images with image-hash &lt;= threshold</span>
-<span class="n">model</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="c1"># [undouble] &gt;INFO&gt; Store examples at [./undouble/data]..</span>
+<span class="c1"># [undouble] &gt;INFO&gt; Downloading [flowers] dataset from github source..</span>
+<span class="c1"># [undouble] &gt;INFO&gt; Extracting files..</span>
+<span class="c1"># [undouble] &gt;INFO&gt; [214] files are collected recursively from path: [./undouble/data/flower_images]</span>
+<span class="c1"># [undouble] &gt;INFO&gt; Reading and checking images.</span>
+<span class="c1"># [undouble] &gt;INFO&gt; Reading and checking images.</span>
+<span class="c1"># 100%|---------| 214/214 [00:02&lt;00:00, 96.56it/s]</span>
+<span class="c1"># [undouble] &gt;INFO&gt; Extracting features using method: [phash]</span>
+<span class="c1"># 100%|---------| 214/214 [00:00&lt;00:00, 3579.14it/s]</span>
+<span class="c1"># [undouble] &gt;INFO&gt; Build adjacency matrix with phash differences.</span>
+<span class="c1"># [undouble] &gt;INFO&gt; Extracted features using [phash]: (214, 214)</span>
+<span class="c1"># 100%|---------| 214/214 [00:00&lt;00:00, 129241.33it/s]</span>
 </pre></div>
 </div>
-<section id="plot-clusters">
-<h2>Plot clusters<a class="headerlink" href="#plot-clusters" title="Permalink to this headline"></a></h2>
-<blockquote>
-<div><p># Plot the images
-model.plot()</p>
-</div></blockquote>
+<section id="group-and-plot">
+<h2>Group and plot<a class="headerlink" href="#group-and-plot" title="Permalink to this headline"></a></h2>
+<p>All hashes are computed but images with similar hash are not grouped yet.
+The following few lines will group the images and make the plots.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Group images with image-hash &lt;= threshold</span>
+<span class="n">model</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Plot the images</span>
+<span class="n">model</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
 <table class="docutils align-center" id="id1">
 <caption><span class="caption-text">Groupings</span><a class="headerlink" href="#id1" title="Permalink to this table"></a></caption>
 <colgroup>
@@ -207,9 +222,9 @@ Note that this dataset does not contain ground truth labels with identical image
 <span class="c1"># [undouble] &gt;INFO&gt; [9144] images are extracted.</span>
 <span class="c1"># [undouble] &gt;INFO&gt; Reading and checking images.</span>
 <span class="c1"># [undouble] &gt;INFO&gt; Reading and checking images.</span>
-<span class="c1"># 100%|██████████| 9144/9144 [00:29&lt;00:00, 305.49it/s]</span>
+<span class="c1"># 100%|---------| 9144/9144 [00:29&lt;00:00, 305.49it/s]</span>
 <span class="c1"># [undouble] &gt;INFO&gt; Extracting features using method: [ahash]</span>
-<span class="c1"># 100%|██████████| 9144/9144 [00:01&lt;00:00, 5826.17it/s]</span>
+<span class="c1"># 100%|---------| 9144/9144 [00:01&lt;00:00, 5826.17it/s]</span>
 <span class="c1"># [undouble] &gt;INFO&gt; Build adjacency matrix with ahash differences.</span>
 
 <span class="c1"># Group images that are identical in image-hash, i.e. those with a hash difference of 0.</span>
