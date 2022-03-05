@@ -242,6 +242,44 @@ No collisions were present but only some near-identical images, such as the moto
    +---------------------+
 
 
+mnist dataset
+##################
+
+Finding identical images for the mnist digits can be done as following:
+
+.. code:: python
+
+	# Import library
+	from undouble import Undouble
+
+	# Init with default settings
+	model = Undouble()
+
+	# Import example data
+	targetdir = model.import_example(data='mnist')
+
+	# Importing the files files from disk, cleaning and pre-processing
+	model.import_data(targetdir)
+
+	# Compute image-hash
+	model.compute_hash(method='phash', hash_size=16)
+
+	# Group images with image-hash <= threshold
+	model.group(threshold=0)
+
+	# Plot the images
+	model.plot()
+
+
+.. |mnist_group5| image:: ../figs/mnist_1.png.png
+.. table:: Example of images with similar hash
+   :align: center
+
+   +------------------+
+   | |mnist_group5|   |
+   +------------------+
+
+
 
 *References*
 

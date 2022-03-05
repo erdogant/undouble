@@ -80,6 +80,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#haar-wavelet-hash-results">Haar wavelet hash results</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="#mnist-dataset">mnist dataset</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
 <ul>
@@ -332,6 +333,43 @@ No collisions were present but only some near-identical images, such as the moto
 </tr>
 </tbody>
 </table>
+</section>
+</section>
+<section id="mnist-dataset">
+<h1>mnist dataset<a class="headerlink" href="#mnist-dataset" title="Permalink to this headline"></a></h1>
+<p>Finding identical images for the mnist digits can be done as following:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import library</span>
+<span class="kn">from</span> <span class="nn">undouble</span> <span class="kn">import</span> <span class="n">Undouble</span>
+
+<span class="c1"># Init with default settings</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Undouble</span><span class="p">()</span>
+
+<span class="c1"># Import example data</span>
+<span class="n">targetdir</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">import_example</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="s1">&#39;mnist&#39;</span><span class="p">)</span>
+
+<span class="c1"># Importing the files files from disk, cleaning and pre-processing</span>
+<span class="n">model</span><span class="o">.</span><span class="n">import_data</span><span class="p">(</span><span class="n">targetdir</span><span class="p">)</span>
+
+<span class="c1"># Compute image-hash</span>
+<span class="n">model</span><span class="o">.</span><span class="n">compute_hash</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;phash&#39;</span><span class="p">,</span> <span class="n">hash_size</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+
+<span class="c1"># Group images with image-hash &lt;= threshold</span>
+<span class="n">model</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Plot the images</span>
+<span class="n">model</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+<table class="docutils align-center" id="id7">
+<caption><span class="caption-text">Example of images with similar hash</span><a class="headerlink" href="#id7" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><img alt="mnist_group5" src="../figs/mnist_1.png.png" /></p></td>
+</tr>
+</tbody>
+</table>
 <p><em>References</em></p>
 <blockquote>
 <div><ul class="simple">
@@ -343,7 +381,6 @@ No collisions were present but only some near-identical images, such as the moto
         <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEADP27U&placement=erdogantgithubio" id="_carbonads_js"></script>
 </center>
 <hr></section>
-</section>
 
 
            </div>
