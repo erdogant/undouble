@@ -146,7 +146,7 @@ The input can be the following three types:
   </a>
 </p>
 
-
+<hr>
 
 #### Citation
 Please cite in your publications if this is useful for your research (see citation).
