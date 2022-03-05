@@ -12,111 +12,93 @@
 <!---[![BuyMeCoffee](https://img.shields.io/badge/buymea-coffee-yellow.svg)](https://www.buymeacoffee.com/erdogant)-->
 <!---[![Coffee](https://img.shields.io/badge/coffee-black-grey.svg)](https://erdogant.github.io/donate/?currency=USD&amount=5)-->
 
-Python package ``undouble`` is to detect (near-)identical images.
-
-# 
-**Star this repo if you like it! ⭐️**
-#
-
-## Blog/Documentation
-
-* <a href="https://erdogant.github.io/undouble/"> <img src="https://img.shields.io/badge/Sphinx-Docs-Green" alt="Open documentation pages"/> </a> undouble documentation pages 
-* <a href="https://erdogant.medium.com/detection-of-duplicate-images-using-image-hash-functions-4d9c53f04a75"> <img src="https://img.shields.io/badge/Medium-Blog-blue" alt="Open Blog"/> </a> Blog: Detection of Duplicate Images Using Image Hash Functions
-
-
-### Python package undouble is to detect (near-)identical images.
-
-The aim of ``undouble`` is to detect (near-)identical images. It works using a multi-step process of pre-processing the
-images (grayscaling, normalizing, and scaling), computing the image hash, and the grouping of images.
-A threshold of 0 will group images with an identical image hash. The results can easily be explored by the plotting
-functionality and images can be moved with the move functionality. When moving images, the
-image in the group with the largest resolution will be copied, and all other images are moved to the "undouble"
-subdirectory. In case you want to cluster your images, I would recommend reading the [blog](https://towardsdatascience.com/a-step-by-step-guide-for-clustering-images-4b45f9906128) and use the
-[clustimage library](https://github.com/erdogant/clustimage).
+The aim of ``undouble`` is to detect (near-)identical images. It works using a multi-step process of pre-processing the images (grayscaling, normalizing, and scaling), computing the image hash, and the grouping of images. A threshold of 0 will group images with an identical image hash. The results can easily be explored by the plotting
+functionality and images can be moved with the move functionality. When moving images, the image in the group with the largest resolution will be copied, and all other images are moved to the **undouble** subdirectory. In case you want to cluster your images, I would recommend reading the [blog](https://towardsdatascience.com/a-step-by-step-guide-for-clustering-images-4b45f9906128) and use the [clustimage library](https://erdogant.github.io/clustimage).
 
 The following steps are taken in the ``undouble`` library:
- * 1. Read recursively all images from directory with the specified extensions.
- * 2. Compute image hash.
- * 3. Group similar images.
- * 4. Move if desired.
+ * Read recursively all images from directory with the specified extensions.
+ * Compute image hash.
+ * Group similar images.
+ * Move if desired.
+
+
+# 
+**⭐️ Star this repo if you like it ⭐️**
+#
+
+### Blogs
+
+* Read the blog to get a structured overview how to [detect duplicate images using image hash functions.](https://erdogant.medium.com/detection-of-duplicate-images-using-image-hash-functions-4d9c53f04a75")
+
+# 
+
+### [Documentation pages](https://erdogant.github.io/undouble/)
+
+On the [documentation pages](https://erdogant.github.io/undouble/) you can find detailed information about the working of the ``undouble`` with many examples. 
+
+# 
 
 
 ### Installation
-* Install undouble from PyPI (recommended). undouble is compatible with Python 3.6+ and runs on Linux, MacOS X and Windows. 
-* A new environment can be created as following:
 
+##### It is advisable to create a new environment (e.g. with Conda). 
 ```bash
 conda create -n env_undouble python=3.8
 conda activate env_undouble
 ```
 
+##### Install bnlearn from PyPI
 ```bash
 pip install undouble            # new install
 pip install -U undouble         # update to latest version
 ```
 
-* Alternatively, you can install from the GitHub source:
+#### Directly install from github source
 ```bash
-# Directly install from github source
-pip install -e git://github.com/erdogant/undouble.git@0.1.0#egg=master
-pip install git+https://github.com/erdogant/undouble#egg=master
 pip install git+https://github.com/erdogant/undouble
-
-# By cloning
-git clone https://github.com/erdogant/undouble.git
-cd undouble
-pip install -U .
 ```  
 
-#### Import undouble package
+#### Import Undouble package
+
 ```python
 from undouble import Undouble
 ```
 
-#### Example:
+<hr>
+
+### Examples:
+
+##### [Example: Grouping similar images of the flower dataset](https://erdogant.github.io/undouble/pages/html/Examples.html#)
+
+<p align="left">
+  <a href="https://erdogant.github.io/undouble/pages/html/Examples.html#">
+  <img src="https://github.com/erdogant/undouble/blob/main/docs/figs/flowers1.png" width="400" />
+  </a>
+</p>
+
+<p align="left">
+  <a href="https://erdogant.github.io/undouble/pages/html/Examples.html#">
+  <img src="https://github.com/erdogant/undouble/blob/main/docs/figs/flowers2.png" width="400" />
+  </a>
+</p>
+
+<p align="left">
+  <a href="https://erdogant.github.io/undouble/pages/html/Examples.html#">
+  <img src="https://github.com/erdogant/undouble/blob/main/docs/figs/flowers3.png" width="400" />
+  </a>
+</p>
+
+
+# 
+
+##### [Example: List all file names that are identifical](https://erdogant.github.io/undouble/pages/html/Examples.html#get-identical-images)
+
+# 
+
+
+##### [Example: Moving similar images in the flower dataset](https://erdogant.github.io/undouble/pages/html/Examples.html#move-files)
+
 ```python
-
-# Import library
-from undouble import Undouble
-
-# Init with default settings
-model = Undouble(method='phash', hash_size=8)
-
-# Import example data
-targetdir = model.import_example(data='flowers')
-
-# Importing the files files from disk, cleaning and pre-processing
-model.import_data(targetdir)
-
-# Compute image-hash
-model.compute_hash()
-
-# [undouble] >INFO> Store examples at [./undouble/data]..
-# [undouble] >INFO> Downloading [flowers] dataset from github source..
-# [undouble] >INFO> Extracting files..
-# [undouble] >INFO> [214] files are collected recursively from path: [./undouble/data/flower_images]
-# [undouble] >INFO> Reading and checking images.
-# [undouble] >INFO> Reading and checking images.
-# 100%|██████████| 214/214 [00:02<00:00, 96.56it/s]
-# [undouble] >INFO> Extracting features using method: [phash]
-# 100%|██████████| 214/214 [00:00<00:00, 3579.14it/s]
-# [undouble] >INFO> Build adjacency matrix with phash differences.
-# [undouble] >INFO> Extracted features using [phash]: (214, 214)
-# 100%|██████████| 214/214 [00:00<00:00, 129241.33it/s]
-
-
-# Group images with image-hash <= threshold
-model.group(threshold=0)
-
-# [undouble] >INFO> Number of groups with similar images detected: 3
-# [undouble] >INFO> [3] groups are detected for [7] images.
-
-# Plot the images
-model.plot()
-
-# Move the images
-model.move()
-
 # -------------------------------------------------
 # >You are at the point of physically moving files.
 # -------------------------------------------------
@@ -130,46 +112,23 @@ model.move()
 # >Answer: w
 
 ```
-<p align="center">
-  <img src="https://github.com/erdogant/undouble/blob/main/docs/figs/flowers1.png" width="400" />
-  <img src="https://github.com/erdogant/undouble/blob/main/docs/figs/flowers2.png" width="400" />
-  <img src="https://github.com/erdogant/undouble/blob/main/docs/figs/flowers3.png" width="400" />
-</p>
+
+# 
+
+##### [Example: Moving similar images in the flower dataset](https://erdogant.github.io/undouble/pages/html/Examples.html#move-files)
+
+# 
+
+##### [Example: Plot the image hashes](https://erdogant.github.io/undouble/pages/html/Examples.html#plot-image-hash)
 
 
-#### plot image hash
-
-```python
-
-# Import library
-import matplotlib.pyplot as plt
-from undouble import Undouble
-
-# Init with default settings
-hash_size=8
-model = Undouble(method='phash', hash_size=hash_size)
-
-# Import example data
-targetdir = model.import_example(data='flowers')
-
-# Importing the files files from disk, cleaning and pre-processing
-model.import_data(targetdir)
-
-# Compute image-hash
-results = model.compute_hash(return_dict=True)
-
-
-fig, ax=plt.subplots(1,2)
-ax[0].imshow(results['img'][0])
-ax[1].imshow(results['img_hash_bin'][0].reshape(hash_size, hash_size), cmap='gray')
-plt.title('image hash hex: %s' %(results['img_hash_hex'][0]))
-
-```
-
-<p align="center">
+<p align="left">
+  <a href="https://erdogant.github.io/undouble/pages/html/Examples.html#plot-image-hash">
   <img src="https://github.com/erdogant/undouble/blob/main/docs/figs/imghash_example.png" width="400" />
+  </a>
 </p>
 
+# 
 
 #### Example of three different image imports
 
