@@ -9,6 +9,8 @@
 [![Sphinx](https://img.shields.io/badge/Sphinx-Docs-blue)](https://erdogant.github.io/undouble/)
 [![Downloads](https://pepy.tech/badge/undouble/month)](https://pepy.tech/project/undouble)
 [![Downloads](https://pepy.tech/badge/undouble)](https://pepy.tech/project/undouble)
+[![Sphinx](https://img.shields.io/badge/Sphinx-Docs-Green)](https://erdogant.github.io/undouble/)
+<!---[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://erdogant.github.io/pca/pages/html/Documentation.html#colab-notebook)-->
 <!---[![BuyMeCoffee](https://img.shields.io/badge/buymea-coffee-yellow.svg)](https://www.buymeacoffee.com/erdogant)-->
 <!---[![Coffee](https://img.shields.io/badge/coffee-black-grey.svg)](https://erdogant.github.io/donate/?currency=USD&amount=5)-->
 
