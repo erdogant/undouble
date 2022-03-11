@@ -14,7 +14,7 @@ keywords:
   - "python"
 license: "BSD"
 message: "If you use this software, please cite it using these metadata."
-repository-code: "https://github.com/erdogant/undouble"
+repository-code: "https://erdogant.github.io/undouble"
 title: "undouble - Python library to detect (near-)identical images."
 version: "1.2.0"
 ...
