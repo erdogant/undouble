@@ -1,10 +1,7 @@
-# %%
 # from undouble import Undouble
 # import undouble
 # print(dir(undouble))
 # print(undouble.__version__)
-
-targetdir = 'D://magweg/101_ObjectCategories'
 
 # %%
 # Import library
