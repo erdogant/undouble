@@ -65,6 +65,7 @@
 <li class="toctree-l1"><a class="reference internal" href="#grouping-images">Grouping images</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#moving-images">Moving images</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#plot">Plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#plot-hash">Plot hash</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#scaling">scaling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#resizing">Resizing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#compute-blur">compute_blur</a></li>
@@ -127,8 +128,9 @@
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">.</span><span class="n">import_data</span><span class="p">()</span>
 <span class="o">.</span><span class="n">compute_hash</span><span class="p">()</span>
 <span class="o">.</span><span class="n">group</span><span class="p">()</span>
-<span class="o">.</span><span class="n">move</span><span class="p">()</span>
 <span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="o">.</span><span class="n">plot_hash</span><span class="p">()</span>
+<span class="o">.</span><span class="n">move</span><span class="p">()</span>
 </pre></div>
 </div>
 </section>
@@ -311,6 +313,44 @@ The image in the group with the highest resolution will be copied, and all other
 <h1>Plot<a class="headerlink" href="#plot" title="Permalink to this headline"></a></h1>
 <p>Plot all images that could be combined into a group with identical image-hash or &lt;= threshold.
 The function can be found here: <a class="reference internal" href="undouble.undouble.html#undouble.undouble.Undouble.plot" title="undouble.undouble.Undouble.plot"><code class="xref py py-func docutils literal notranslate"><span class="pre">undouble.undouble.Undouble.plot()</span></code></a></p>
+</section>
+<section id="plot-hash">
+<h1>Plot hash<a class="headerlink" href="#plot-hash" title="Permalink to this headline"></a></h1>
+<p>This functionality is practical if you need to investigate the grouping of images based on the hashes that are generated: <a class="reference internal" href="undouble.undouble.html#undouble.undouble.Undouble.plot_hash" title="undouble.undouble.Undouble.plot_hash"><code class="xref py py-func docutils literal notranslate"><span class="pre">undouble.undouble.Undouble.plot_hash()</span></code></a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import library</span>
+<span class="kn">from</span> <span class="nn">undouble</span> <span class="kn">import</span> <span class="n">Undouble</span>
+
+<span class="c1"># Init with default settings</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Undouble</span><span class="p">()</span>
+
+<span class="c1"># Import example data</span>
+<span class="c1"># targetdir = model.import_example(data=&#39;flowers&#39;)</span>
+
+<span class="c1"># Importing the files files from disk, cleaning and pre-processing</span>
+<span class="n">model</span><span class="o">.</span><span class="n">import_data</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;./undouble/data/flower_images/&#39;</span><span class="p">)</span>
+
+<span class="c1"># Compute image-hash</span>
+<span class="n">model</span><span class="o">.</span><span class="n">compute_hash</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;phash&#39;</span><span class="p">,</span> <span class="n">hash_size</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+
+<span class="c1"># Plot the image-hash for a set of indexes</span>
+<span class="n">model</span><span class="o">.</span><span class="n">plot_hash</span><span class="p">(</span><span class="n">idx</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+
+<span class="c1"># Plot the image-hash for a set of filenames</span>
+<span class="n">filenames</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;filenames&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">filenames</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;0001.png&#39;</span><span class="p">,</span> <span class="s1">&#39;0002.png&#39;</span><span class="p">]</span>
+<span class="n">model</span><span class="o">.</span><span class="n">plot_hash</span><span class="p">(</span><span class="n">filenames</span><span class="o">=</span><span class="n">filenames</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils align-center" id="id1">
+<caption><span class="caption-text">Plot image hash</span><a class="headerlink" href="#id1" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><img alt="imghash01" src="_images/imghash01.png" /></p></td>
+</tr>
+</tbody>
+</table>
 <p>Before we can determine the image-hash from an image, we need to decolorize the image, normalize the pixel values, and scale the image.
 The reasoning for decolorizing is that most information we need to “recognize” an image is readily present in the grayscale channel.
 In addition, the reduction from 24 bits per pixel for RGB to 8 bits per pixel is computationally more attractive; time-wise and memory-wise.

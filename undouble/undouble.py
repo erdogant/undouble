@@ -366,7 +366,7 @@ class Undouble():
         """
         return import_example(data=data, url=url)
 
-    def plot_hash(self, idx=None, filenames=None, title=None):
+    def plot_hash(self, idx=None, filenames=None):
         """Plot the image-hash.
 
         Parameters
@@ -375,8 +375,6 @@ class Undouble():
             The index of the images to plot.
         filenames : list of str, optional
             The (list of) filenames to plot.
-        title : str, Default: None
-            Title of the plot.
 
         Returns
         -------
@@ -428,8 +426,7 @@ class Undouble():
             # Make the BGR image and RGB image
             ax[0].imshow(self.results['img'][idx][..., ::-1])
             ax[1].imshow(self.results['img_hash_bin'][idx].reshape(self.params['hash_size'], self.params['hash_size']), cmap='gray')
-            if title is None:
-                title = '[%s]' %(self.results['filenames'][idx])
+            title = '[%s]' %(self.results['filenames'][idx])
             ax[0].set_title(title)
             # ax[0].axis('off')
             ax[0].get_xaxis().set_ticks([])

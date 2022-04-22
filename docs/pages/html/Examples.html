@@ -58,6 +58,7 @@
 <li class="toctree-l1"><a class="reference internal" href="core_functions.html#grouping-images">Grouping images</a></li>
 <li class="toctree-l1"><a class="reference internal" href="core_functions.html#moving-images">Moving images</a></li>
 <li class="toctree-l1"><a class="reference internal" href="core_functions.html#plot">Plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_functions.html#plot-hash">Plot hash</a></li>
 <li class="toctree-l1"><a class="reference internal" href="core_functions.html#scaling">scaling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="core_functions.html#resizing">Resizing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="core_functions.html#compute-blur">compute_blur</a></li>
@@ -212,6 +213,18 @@ The image in the group with the highest resolution will be copied, and all other
 <section id="plot-image-hash">
 <h2>Plot image hash<a class="headerlink" href="#plot-image-hash" title="Permalink to this headline"></a></h2>
 <p>To plot the image hashes of the flowers we need to return the dict (see parameter). I will plot the hash of 1 flower image but the hashes can be plotted for all images.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="c1"># plot the image-hash for some specified indexes:</span>
+    <span class="c1"># The index is based on the ordering in the results:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+    <span class="c1"># Make the plot for the first index</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">plot_hash</span><span class="p">(</span><span class="n">idx</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="c1"># Make the plot for a specific filenames</span>
+<span class="n">filenames</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;filenames&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">plot_hash</span><span class="p">(</span><span class="n">filenames</span><span class="o">=</span><span class="n">filenames</span><span class="p">)</span>
+</pre></div>
+</div>
+<p># Doing the same only manually:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute image-hash</span>
 <span class="n">results</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">compute_hash</span><span class="p">(</span><span class="n">return_dict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 

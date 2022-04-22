@@ -8,8 +8,9 @@ The following core functionalities allows to group images on image-hash, and sys
     .import_data()
     .compute_hash()
     .group()
-    .move()
     .plot()
+    .plot_hash()
+    .move()
 
 
 Input data
@@ -217,6 +218,46 @@ Plot
 
 Plot all images that could be combined into a group with identical image-hash or <= threshold. 
 The function can be found here: :func:`undouble.undouble.Undouble.plot`
+
+
+Plot hash
+************
+
+This functionality is practical if you need to investigate the grouping of images based on the hashes that are generated: :func:`undouble.undouble.Undouble.plot_hash`
+
+.. code:: python
+
+    # Import library
+    from undouble import Undouble
+
+    # Init with default settings
+    model = Undouble()
+
+    # Import example data
+    # targetdir = model.import_example(data='flowers')
+
+    # Importing the files files from disk, cleaning and pre-processing
+    model.import_data(r'./undouble/data/flower_images/')
+
+    # Compute image-hash
+    model.compute_hash(method='phash', hash_size=6)
+
+    # Plot the image-hash for a set of indexes
+    model.plot_hash(idx=[0, 1])
+
+    # Plot the image-hash for a set of filenames
+    filenames = model.results['filenames'][0:2]
+    filenames = ['0001.png', '0002.png']
+    model.plot_hash(filenames=filenames)
+
+
+.. |imghash01| image:: ../figs/imghash01.png
+.. table:: Plot image hash
+   :align: center
+
+   +------------------+
+   | |imghash01|      |
+   +------------------+
 
 
 Preprocessing
