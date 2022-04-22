@@ -17,7 +17,7 @@ model = Undouble()
 model.import_data(r'D:\REPOS\undouble\undouble\data\flower_images/')
 
 # Compute image-hash
-model.compute_hash(method='phash', hash_size=6)
+model.compute_hash(method='phash', hash_size=16)
 
 # Find images with image-hash <= threshold
 model.group(threshold=5)
@@ -32,7 +32,7 @@ model.plot()
 model.plot_hash()
 
 model.plot_hash(filenames=['deson.png', 'deson-copy.png'])
-model.plot_hash(filenames=['NOVA-NA-Dry-Iron-Grey-SDL881739255-1-3a886.jpeg', 'nova-plus-1100-w-amaze-ni-10-original-imaf3qxpabhhdwss.jpeg'], title='')
+model.plot_hash(filenames=['NOVA-NA-Dry-Iron-Grey-SDL881739255-1-3a886.jpeg', 'nova-plus-1100-w-amaze-ni-10-original-imaf3qxpabhhdwss.jpeg'])
 
 import pandas as pd
 df = pd.DataFrame(index=[model.results['filenames']], data=model.results['img_hash_hex'], columns=['image_hash_hex'])
