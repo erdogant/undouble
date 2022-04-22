@@ -19,6 +19,7 @@ import shutil
 import cv2
 import copy
 from ismember import ismember
+import matplotlib.pyplot as plt
 
 logger = logging.getLogger('')
 for handler in logger.handlers[:]:  # get rid of existing old handlers
@@ -107,7 +108,7 @@ class Undouble():
 
     """
 
-    def __init__(self, method='phash', targetdir='', grayscale=False, dim=(128, 128), hash_size=8, ext=['png', 'tiff', 'jpg', 'jfif'], verbose=20):
+    def __init__(self, method='phash', targetdir='', grayscale=False, dim=(128, 128), hash_size=8, ext=['png', 'tiff', 'jpg', 'jfif', 'jpeg'], verbose=20):
         """Initialize undouble with user-defined parameters."""
         if isinstance(ext, str): ext = [ext]
         # Clean readily fitted models to ensure correct results
@@ -364,6 +365,28 @@ class Undouble():
 
         """
         return import_example(data=data, url=url)
+
+    def plot_hash(self, filenames, cmap=None, title=None, figsize=(15, 10)):
+        if isinstance(filenames, str):
+            filenames = [filenames]
+
+        fig, axs = plt.subplots(len(filenames), 2)
+        for f, ax in zip(filenames, axs):
+            idx = np.where(self.results['filenames']==f)[0][0]
+            # Make the BGR image and RGB image
+            ax[0].imshow(self.results['img'][idx][..., ::-1])
+            ax[1].imshow(self.results['img_hash_bin'][idx].reshape(16, 16), cmap='gray')
+            if title is None:
+                title = '[%s]' %(self.results['filenames'][idx])
+            ax[0].set_title(title)
+            # ax[0].axis('off')
+            ax[0].get_xaxis().set_ticks([])
+            ax[0].get_yaxis().set_ticks([])
+            ax[1].set_title('Image hash')
+            # ax[1].axis('off')
+            ax[1].get_xaxis().set_ticks([])
+            ax[1].get_yaxis().set_ticks([])
+        return fig, ax
 
     def plot(self, cmap=None, figsize=(15, 10)):
         """Plot the results.
