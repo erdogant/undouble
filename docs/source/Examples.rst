@@ -103,6 +103,21 @@ To plot the image hashes of the flowers we need to return the dict (see paramete
 
 .. code:: python
 
+	# plot the image-hash for some specified indexes:
+	# The index is based on the ordering in the results:
+	print(model.results.keys())
+	# Make the plot for the first index
+	model.plot_hash(idx=[0])
+    
+	# Make the plot for a specific filenames
+    filenames = model.results['filenames'][0:2]
+	model.plot_hash(filenames=filenames)
+
+
+# Doing the same only manually:
+
+.. code:: python
+
 	# Compute image-hash
 	results = model.compute_hash(return_dict=True)
 

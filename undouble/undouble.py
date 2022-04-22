@@ -366,16 +366,68 @@ class Undouble():
         """
         return import_example(data=data, url=url)
 
-    def plot_hash(self, filenames, cmap=None, title=None, figsize=(15, 10)):
-        if isinstance(filenames, str):
+    def plot_hash(self, idx=None, filenames=None, title=None):
+        """Plot the image-hash.
+
+        Parameters
+        ----------
+        idx : list of int, optional
+            The index of the images to plot.
+        filenames : list of str, optional
+            The (list of) filenames to plot.
+        title : str, Default: None
+            Title of the plot.
+
+        Returns
+        -------
+        fig : Figure
+        ax : Axis
+
+        Examples
+        --------
+        >>> # Import library
+        >>> from undouble import Undouble
+        >>>
+        >>> # Init with default settings
+        >>> model = Undouble()
+        >>>
+        >>> # Import example data
+        >>> # targetdir = model.import_example(data='flowers')
+        >>>
+        >>> # Importing the files files from disk, cleaning and pre-processing
+        >>> model.import_data(r'./undouble/data/flower_images/')
+        >>>
+        >>> # Compute image-hash
+        >>> model.compute_hash(method='phash', hash_size=6)
+        >>>
+        >>> Plot the image-hash for a set of indexes
+        >>> model.plot_hash(idx=[0, 1])
+        >>>
+        >>> Plot the image-hash for a set of filenames
+        >>> filenames = model.results['filenames'][0:2]
+        >>> filenames = ['0001.png', '0002.png']
+        >>> model.plot_hash(filenames=filenames)
+        >>>
+
+        """
+        if idx is None and filenames is None:
+            logger.error('You must either specify [idx] or [filenames] as input.\nExample: model.plot_hash(filenames=["01.png", "02.png"])')
+            return None, None
+        if idx is not None:
+            logger.info('Gathering filenames based on input index.')
+            if isinstance(idx, int) or isinstance(idx, float): idx = [idx]
+            filenames = self.results['filenames'][idx]
+        if (filenames is not None) and isinstance(filenames, str):
             filenames = [filenames]
 
         fig, axs = plt.subplots(len(filenames), 2)
+        if len(filenames)==1: axs = [axs]
         for f, ax in zip(filenames, axs):
+            logger.info('Creating hash plot for [%s]' %(f))
             idx = np.where(self.results['filenames']==f)[0][0]
             # Make the BGR image and RGB image
             ax[0].imshow(self.results['img'][idx][..., ::-1])
-            ax[1].imshow(self.results['img_hash_bin'][idx].reshape(16, 16), cmap='gray')
+            ax[1].imshow(self.results['img_hash_bin'][idx].reshape(self.params['hash_size'], self.params['hash_size']), cmap='gray')
             if title is None:
                 title = '[%s]' %(self.results['filenames'][idx])
             ax[0].set_title(title)

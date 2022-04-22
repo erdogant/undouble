@@ -17,10 +17,10 @@ model = Undouble()
 model.import_data(r'D:\REPOS\undouble\undouble\data\flower_images/')
 
 # Compute image-hash
-model.compute_hash(method='phash', hash_size=16)
+model.compute_hash(method='phash', hash_size=6)
 
 # Find images with image-hash <= threshold
-model.group(threshold=6)
+model.group(threshold=5)
 
 # Plot the images
 model.plot()
@@ -29,6 +29,8 @@ model.plot()
 # model.move()
 
 # %%
+model.plot_hash()
+
 model.plot_hash(filenames=['deson.png', 'deson-copy.png'])
 model.plot_hash(filenames=['NOVA-NA-Dry-Iron-Grey-SDL881739255-1-3a886.jpeg', 'nova-plus-1100-w-amaze-ni-10-original-imaf3qxpabhhdwss.jpeg'], title='')
 
