@@ -295,6 +295,39 @@ Finding identical images for the mnist digits can be done as following:
    +------------------+
 
 
+Import images from url location
+##################################
+
+Images can also be imported from url locations.
+Each image is first downloaded and stored on a (specified) temp directory.
+In this example we will download 5 images from url locations. Note that url images and path locations can be combined.
+
+.. code:: python
+
+	from undouble import Undouble
+
+	# Init with default settings
+	model = Undouble()
+
+	# Importing the files files from disk, cleaning and pre-processing
+	url_to_images = ['https://erdogant.github.io/datasets/images/flower_images/flower_orange.png',
+			 'https://erdogant.github.io/datasets/images/flower_images/flower_white_1.png',
+			 'https://erdogant.github.io/datasets/images/flower_images/flower_white_2.png',
+			 'https://erdogant.github.io/datasets/images/flower_images/flower_yellow_1.png',
+			 'https://erdogant.github.io/datasets/images/flower_images/flower_yellow_2.png']
+
+	# Import into model
+	model.import_data(url_to_images)
+
+	# Compute image-hash
+	model.compute_hash(method='phash', hash_size=16)
+
+	# Find images with image-hash <= threshold
+	model.group(threshold=0)
+
+	# Plot the images
+	model.plot()
+
 
 *References*
 
