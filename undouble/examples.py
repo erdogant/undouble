@@ -3,6 +3,36 @@
 # print(dir(undouble))
 # print(undouble.__version__)
 
+# %% Import list of images from url adresses
+
+# Import library
+from undouble import Undouble
+
+# Init with default settings
+model = Undouble()
+
+# Importing the files files from disk, cleaning and pre-processing
+url_to_images = ['https://erdogant.github.io/datasets/images/flower_images/flower_orange.png',
+                 'https://erdogant.github.io/datasets/images/flower_images/flower_white_1.png',
+                 'https://erdogant.github.io/datasets/images/flower_images/flower_white_2.png',
+                 'https://erdogant.github.io/datasets/images/flower_images/flower_yellow_1.png',
+                 'https://erdogant.github.io/datasets/images/flower_images/flower_yellow_2.png']
+
+# Import into model
+model.import_data(url_to_images)
+
+# Compute image-hash
+model.compute_hash(method='phash', hash_size=16)
+
+# Find images with image-hash <= threshold
+model.group(threshold=0)
+
+# Plot the images
+model.plot()
+
+# Plot hash
+# model.plot_hash([4])
+
 # %%
 # Import library
 from undouble import Undouble
@@ -11,7 +41,7 @@ from undouble import Undouble
 model = Undouble()
 
 # Import example data
-# targetdir = model.import_example(data='flowers')
+targetdir = model.import_example(data='flowers')
 
 # Importing the files files from disk, cleaning and pre-processing
 model.import_data(r'D:\REPOS\undouble\undouble\data\flower_images/')
