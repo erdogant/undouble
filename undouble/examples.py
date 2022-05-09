@@ -16,7 +16,9 @@ url_to_images = ['https://erdogant.github.io/datasets/images/flower_images/flowe
                  'https://erdogant.github.io/datasets/images/flower_images/flower_white_1.png',
                  'https://erdogant.github.io/datasets/images/flower_images/flower_white_2.png',
                  'https://erdogant.github.io/datasets/images/flower_images/flower_yellow_1.png',
-                 'https://erdogant.github.io/datasets/images/flower_images/flower_yellow_2.png']
+                 'https://erdogant.github.io/datasets/images/flower_images/flower_yellow_2.png',
+                 'https://www.gardendesign.com/pictures/images/675x529Max/site_3/helianthus-yellow-flower-pixabay_11863.jpg',
+                 'https://www.gardendesign.com/pictures/images/675x529Max/site_3/helianthus-yellow-flower-pixabay_11863.jpg']
 
 # Import into model
 model.import_data(url_to_images)
@@ -45,6 +47,8 @@ targetdir = model.import_example(data='flowers')
 
 # Importing the files files from disk, cleaning and pre-processing
 model.import_data(r'D:\REPOS\undouble\undouble\data\flower_images/')
+model.import_data(r'D:\undouble_examples/')
+
 
 # Compute image-hash
 model.compute_hash(method='phash', hash_size=16)
@@ -60,6 +64,7 @@ model.plot()
 
 # %%
 model.plot_hash()
+model.plot_hash(filenames=['165252721-d734174b-b5f6-4768-aa82-0ffd13d05f70.png', '165252723-407ba7ca-4df1-43d2-8fec-4bb82dfb6a35.png'])
 
 model.plot_hash(filenames=['deson.png', 'deson-copy.png'])
 model.plot_hash(filenames=['NOVA-NA-Dry-Iron-Grey-SDL881739255-1-3a886.jpeg', 'nova-plus-1100-w-amaze-ni-10-original-imaf3qxpabhhdwss.jpeg'])
