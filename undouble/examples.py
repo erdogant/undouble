@@ -35,6 +35,8 @@ model.plot()
 # Plot hash
 # model.plot_hash([4])
 
+model.clean_files()
+
 # %%
 # Import library
 from undouble import Undouble

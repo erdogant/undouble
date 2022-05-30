@@ -207,6 +207,9 @@ class Undouble():
         if self.results['img_hash_bin'] is None:
             logger.warning('Can not group similar images because no features are present. Tip: Use the compute_hash() function first.')
             return None
+        if self.results['pathnames'] is None:
+            logger.warning("Can not group images because results['pathnames']=None. This happen due to the use of 'clean_files' functionality.")
+            return None
 
         # Make sets of images that are similar based on the minimum defined threshold.
         pathnames, indexes, thresholds = [], [], []
@@ -343,6 +346,20 @@ class Undouble():
             if params and hasattr(self, 'clustimage'): del self.clustimage
         # Store results
         # self.results = {'img':None, 'feat':None, 'xycoord':None, 'pathnames':None, 'labels': None}
+
+    def clean_files(self):
+        """Remove the entire temp directory with all its contents."""
+        # Cleaning temp directory
+
+        if os.path.isdir(self.clustimage.params['tempdir']):
+            files_in_tempdir = os.listdir(self.clustimage.params['tempdir'])
+            _, idx = ismember(files_in_tempdir, self.results['filenames'])
+            logger.info('Removing images in temp directory %s', self.clustimage.params['tempdir'])
+            for i in idx:
+                logger.debug('remove: %s', self.results['pathnames'][i])
+                os.remove(self.results['pathnames'][i])
+                self.results['filenames'][i]=None
+                self.results['pathnames'][i]=None
 
     def import_example(self, data='flowers', url=None):
         """Import example dataset from github source.
