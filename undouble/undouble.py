@@ -360,11 +360,11 @@ class Undouble():
                 os.remove(self.results['pathnames'][i])
                 self.results['filenames'][i]=None
                 self.results['pathnames'][i]=None
-        if clean_tempdir:
-            logger.info('Removing the entire temp directory %s', self.clustimage.params['tempdir'])
-            shutil.rmtree(self.clustimage.params['tempdir'])
-            self.results['filenames'] = None
-            self.results['pathnames'] = None
+            if clean_tempdir:
+                logger.info('Removing the entire temp directory %s', self.clustimage.params['tempdir'])
+                shutil.rmtree(self.clustimage.params['tempdir'])
+                self.results['filenames'] = None
+                self.results['pathnames'] = None
 
     def import_example(self, data='flowers', url=None):
         """Import example dataset from github source.
