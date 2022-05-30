@@ -112,7 +112,7 @@ class Undouble():
         """Initialize undouble with user-defined parameters."""
         if isinstance(ext, str): ext = [ext]
         # Clean readily fitted models to ensure correct results
-        self.clean()
+        self.clean_init()
         if verbose<=0: verbose=60
         # Store user setting in params
         self.params = {'method': method, 'grayscale': grayscale, 'dim': dim, 'ext': ext, 'hash_size': hash_size, 'verbose': verbose}
@@ -334,7 +334,7 @@ class Undouble():
             else:
                 shutil.move(file, os.path.join(movedir, os.path.split(file)[1]))
 
-    def clean(self, params=True, results=True):
+    def clean_init(self, params=True, results=True):
         """Clean or removing previous results and models to ensure correct working."""
         if hasattr(self, 'results'):
             logger.info('Cleaning previous fitted model results')
