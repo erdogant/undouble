@@ -347,7 +347,7 @@ class Undouble():
         # Store results
         # self.results = {'img':None, 'feat':None, 'xycoord':None, 'pathnames':None, 'labels': None}
 
-    def clean_files(self):
+    def clean_files(self, clean_tempdir=False):
         """Remove the entire temp directory with all its contents."""
         # Cleaning temp directory
 
@@ -360,6 +360,11 @@ class Undouble():
                 os.remove(self.results['pathnames'][i])
                 self.results['filenames'][i]=None
                 self.results['pathnames'][i]=None
+        if clean_tempdir:
+            logger.info('Removing the entire temp directory %s', self.clustimage.params['tempdir'])
+            shutil.rmtree(self.clustimage.params['tempdir'])
+            self.results['filenames'] = None
+            self.results['pathnames'] = None
 
     def import_example(self, data='flowers', url=None):
         """Import example dataset from github source.

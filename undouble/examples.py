@@ -35,7 +35,7 @@ model.plot()
 # Plot hash
 # model.plot_hash([4])
 
-model.clean_files()
+model.clean_files(clean_tempdir=True)
 
 # %%
 # Import library
