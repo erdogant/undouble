@@ -16,7 +16,7 @@ class TestUNDOUBLE(unittest.TestCase):
         assert model.results['img'].shape==(214, 128, 128, 3)
         assert len(model.results['pathnames'])==214
         assert len(model.results['filenames'])==214
-        assert set(model.results.keys())==set(['img', 'feat', 'pathnames', 'filenames'])
+        assert set(model.results.keys())==set(['img', 'feat', 'pathnames', 'filenames', 'url'])
 
     def test_compute_imghash(self):
         model = Undouble()
@@ -51,7 +51,7 @@ class TestUNDOUBLE(unittest.TestCase):
         model.import_data(X, return_results=False)
         # Compute Hash
         model.compute_hash()
-        assert set(model.results.keys())==set(['img', 'pathnames', 'filenames', 'img_hash_bin', 'img_hash_hex', 'adjmat'])
+        assert set(model.results.keys())==set(['img', 'url', 'pathnames', 'filenames', 'img_hash_bin', 'img_hash_hex', 'adjmat'])
         assert np.all(model.results['img_hash_bin'][0] == [ True, False, False,  True, False,  True, False,  True,  True,
                                                            False, False,  True,  True,  True, False, False, False,  True,
                                                            True,  True, False, False,  True, False, False,  True,  True,
