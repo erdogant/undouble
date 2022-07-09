@@ -171,6 +171,10 @@ class Undouble():
         if method is not None:
             self.params['method'] = method
             self.clustimage.params['method'] = method
+        if method=='whash-haar':
+            if (np.ceil(np.log2(hash_size)) != np.floor(np.log2(hash_size))):
+                logger.error('hash_size should be power of 2 (8, 16, 32, 64, ..., etc)')
+                return None
         if method=='crop-resistant-hash':
             logger.info('Hash size is set to 8 for crop-resistant and can not be changed.')
             hash_size=8
