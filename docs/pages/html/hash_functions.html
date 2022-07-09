@@ -72,6 +72,7 @@
 <li class="toctree-l1"><a class="reference internal" href="#perceptual-hash">Perceptual hash</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#differential-hash">Differential hash</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#haar-wavelet-hash">Haar wavelet hash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#crop-resistant-hash">Crop-resistant hash</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#create-the-images">Create the images</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
@@ -172,6 +173,43 @@
 </tr>
 </tbody>
 </table>
+</section>
+<section id="crop-resistant-hash">
+<h1>Crop-resistant hash<a class="headerlink" href="#crop-resistant-hash" title="Permalink to this headline"></a></h1>
+<p>The Crop resistant hash is implemented as described in the paper “Efficient Cropping-Resistant Robust Image Hashing”. DOI 10.1109/ARES.2014.85. This algorithm partitions the image into bright and dark segments, using a watershed-like algorithm, and then does an image hash on each segment. This makes the image much more resistant to cropping than other algorithms, with the paper claiming resistance to up to 50% cropping, while most other algorithms stop at about 5% cropping.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import library</span>
+<span class="kn">from</span> <span class="nn">undouble</span> <span class="kn">import</span> <span class="n">Undouble</span>
+
+<span class="c1"># Init with default settings</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Undouble</span><span class="p">()</span>
+
+<span class="c1"># Import example data</span>
+<span class="n">targetdir</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">import_example</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="s1">&#39;flowers&#39;</span><span class="p">)</span>
+
+<span class="c1"># Importing the files files from disk, cleaning and pre-processing</span>
+<span class="n">model</span><span class="o">.</span><span class="n">import_data</span><span class="p">(</span><span class="n">targetdir</span><span class="p">)</span>
+
+<span class="c1"># Compute image-hash</span>
+<span class="n">model</span><span class="o">.</span><span class="n">compute_hash</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;crop-resistant-hash&#39;</span><span class="p">)</span>
+
+<span class="c1"># Find images with image-hash &lt;= threshold</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="c1"># Plot the images</span>
+<span class="n">model</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+
+<span class="c1"># Print the output for demonstration</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+<span class="c1"># The detected groups</span>
+<span class="n">model</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;select_pathnames&#39;</span><span class="p">]</span>
+<span class="n">model</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;select_scores&#39;</span><span class="p">]</span>
+<span class="n">model</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;select_idx&#39;</span><span class="p">]</span>
+
+<span class="c1"># Plot the hash for the first group</span>
+<span class="n">model</span><span class="o">.</span><span class="n">plot_hash</span><span class="p">(</span><span class="n">filenames</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;filenames&#39;</span><span class="p">][</span><span class="n">model</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;select_idx&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]])</span>
+</pre></div>
+</div>
 </section>
 <section id="create-the-images">
 <h1>Create the images<a class="headerlink" href="#create-the-images" title="Permalink to this headline"></a></h1>

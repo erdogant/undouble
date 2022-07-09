@@ -62,6 +62,47 @@ After the first step of decolorizing and scaling, a two-dimensional wavelet tran
    +----------+
 
 
+Crop-resistant hash
+--------------------------
+
+The Crop resistant hash is implemented as described in the paper "Efficient Cropping-Resistant Robust Image Hashing". DOI 10.1109/ARES.2014.85. This algorithm partitions the image into bright and dark segments, using a watershed-like algorithm, and then does an image hash on each segment. This makes the image much more resistant to cropping than other algorithms, with the paper claiming resistance to up to 50% cropping, while most other algorithms stop at about 5% cropping.
+
+
+.. code:: python
+
+	# Import library
+	from undouble import Undouble
+
+	# Init with default settings
+	model = Undouble()
+
+	# Import example data
+	targetdir = model.import_example(data='flowers')
+
+	# Importing the files files from disk, cleaning and pre-processing
+	model.import_data(targetdir)
+
+	# Compute image-hash
+	model.compute_hash(method='crop-resistant-hash')
+
+	# Find images with image-hash <= threshold
+	results = model.group(threshold=5)
+
+	# Plot the images
+	model.plot()
+
+	# Print the output for demonstration
+	print(model.results.keys())
+
+	# The detected groups
+	model.results['select_pathnames']
+	model.results['select_scores']
+	model.results['select_idx']
+
+	# Plot the hash for the first group
+	model.plot_hash(filenames=model.results['filenames'][model.results['select_idx'][0]])
+
+
 Create the images
 --------------------------
 

@@ -71,6 +71,7 @@
 <li class="toctree-l1"><a class="reference internal" href="hash_functions.html#perceptual-hash">Perceptual hash</a></li>
 <li class="toctree-l1"><a class="reference internal" href="hash_functions.html#differential-hash">Differential hash</a></li>
 <li class="toctree-l1"><a class="reference internal" href="hash_functions.html#haar-wavelet-hash">Haar wavelet hash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hash_functions.html#crop-resistant-hash">Crop-resistant hash</a></li>
 <li class="toctree-l1"><a class="reference internal" href="hash_functions.html#create-the-images">Create the images</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
@@ -209,8 +210,14 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="undouble.undouble.Undouble.clean">
-<span class="sig-name descname"><span class="pre">clean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">results</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.Undouble.clean" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="undouble.undouble.Undouble.clean_files">
+<span class="sig-name descname"><span class="pre">clean_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">clean_tempdir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.Undouble.clean_files" title="Permalink to this definition"></a></dt>
+<dd><p>Remove the entire temp directory with all its contents.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="undouble.undouble.Undouble.clean_init">
+<span class="sig-name descname"><span class="pre">clean_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">results</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.Undouble.clean_init" title="Permalink to this definition"></a></dt>
 <dd><p>Clean or removing previous results and models to ensure correct working.</p>
 </dd></dl>
 
@@ -225,7 +232,8 @@
 * ‘ahash’: Average hash
 * ‘phash’: Perceptual hash
 * ‘dhash’: Difference hash
-* ‘whash-haar’: Haar wavelet hash</p></li>
+* ‘whash-haar’: Haar wavelet hash
+* ‘crop-resistant-hash’ : Crop resistance hash</p></li>
 <li><p><strong>hash_size</strong> (<em>integer</em><em> (</em><em>default: 8</em><em>)</em>) – The hash_size will be used to scale down the image and create a hash-image of length: hash_size*hash_size.</p></li>
 </ul>
 </dd>
