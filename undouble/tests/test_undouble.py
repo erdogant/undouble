@@ -62,7 +62,7 @@ class TestUNDOUBLE(unittest.TestCase):
                                                            False])
 
         param_grid = {
-        	'method': ['ahash','phash','dhash','whash-haar'],#,'crop-resistant'],
+        	'method': ['ahash','phash','dhash','whash-haar','crop-resistant-hash'],
         	'grayscale':[True, False],
         	'hash_size' : [4, 8, 16],
             'dim' : [(64,64), (128,128), (256,256)]

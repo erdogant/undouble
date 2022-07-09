@@ -158,6 +158,7 @@ class Undouble():
             * 'phash': Perceptual hash
             * 'dhash': Difference hash
             * 'whash-haar': Haar wavelet hash
+            * 'crop-resistant-hash' : Crop resistance hash
         hash_size : integer (default: 8)
             The hash_size will be used to scale down the image and create a hash-image of length: hash_size*hash_size.
 
@@ -170,6 +171,9 @@ class Undouble():
         if method is not None:
             self.params['method'] = method
             self.clustimage.params['method'] = method
+        if method=='crop-resistant-hash':
+            logger.info('Hash size is set to 8 for crop-resistant and can not be changed.')
+            hash_size=8
         if hash_size is not None:
             self.params['hash_size'] = hash_size
             self.clustimage.params_hash['hash_size'] = hash_size
