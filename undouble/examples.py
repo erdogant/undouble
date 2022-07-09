@@ -3,6 +3,38 @@
 # print(dir(undouble))
 # print(undouble.__version__)
 
+# %% Check crop-resistant-hash
+# Import library
+from undouble import Undouble
+
+# Init with default settings
+model = Undouble()
+
+# Import example data
+targetdir = model.import_example(data='flowers')
+
+# Importing the files files from disk, cleaning and pre-processing
+model.import_data(targetdir[0:100])
+
+# Compute image-hash
+model.compute_hash(method='crop-resistant-hash')
+
+# Find images with image-hash <= threshold
+results = model.group(threshold=25)
+print(model.results.keys())
+model.results['select_pathnames'][0]
+model.results['select_idx'][0]
+
+# Plot the images
+model.plot()
+
+# Plot the hash
+model.plot_hash(filenames=model.results['filenames'][model.results['select_idx'][0]])
+
+import pandas as pd
+df = pd.DataFrame(index=[model.results['filenames']], data=model.results['img_hash_hex'], columns=['image_hash_hex'])
+
+
 # %% Import list of images from url adresses
 
 # Import library
