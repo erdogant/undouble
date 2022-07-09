@@ -18,7 +18,7 @@ targetdir = model.import_example(data='flowers')
 model.import_data(targetdir)
 
 # Compute image-hash
-model.compute_hash(method='whash-haar', hash_size=31)
+model.compute_hash(method='whash-haar', hash_size=32)
 
 results = model.group(threshold=5)
 
