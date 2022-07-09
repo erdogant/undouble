@@ -239,8 +239,8 @@ class Undouble():
 
         # Sort on threshold
         for i, _ in enumerate(thresholds):
-            # indexes[i] = indexes[i][isort]
-            isort=np.argsort(thresholds[i])
+            isort = np.argsort(thresholds[i])
+            indexes[i] = indexes[i][isort]
             pathnames[i] = pathnames[i][isort]
             thresholds[i] = thresholds[i][isort]
 
@@ -248,6 +248,7 @@ class Undouble():
         idx = np.argsort(list(map(lambda x: os.path.split(x[0])[0], pathnames)))
         self.results['select_pathnames'] = np.array(pathnames)[idx].tolist()
         self.results['select_scores'] = np.array(thresholds)[idx].tolist()
+        self.results['select_idx'] = indexes
         logger.info('[%d] groups with similar image-hash.' %(len(self.results['select_pathnames'])))
 
         totfiles = np.sum(list(map(len, self.results['select_pathnames'])))
