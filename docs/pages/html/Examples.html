@@ -15,11 +15,12 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Blog" href="Documentation.html" />
+    <link rel="next" title="Sponsor" href="Documentation.html" />
     <link rel="prev" title="Average hash" href="hash_functions.html" /> 
 </head>
 
@@ -96,9 +97,10 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="Documentation.html">Blog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Documentation.html">Sponsor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Documentation.html#medium-blog">Medium Blog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Documentation.html#github">Github</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Documentation.html#sponsor-this-project">Sponsor this project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Documentation.html#citing">Citing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Coding%20quality.html">Coding quality</a></li>
 <li class="toctree-l1"><a class="reference internal" href="undouble.undouble.html">API References</a></li>
 </ul>
@@ -130,7 +132,7 @@
            <div itemprop="articleBody">
              
   <section id="flowers-dataset">
-<h1>Flowers dataset<a class="headerlink" href="#flowers-dataset" title="Permalink to this headline"></a></h1>
+<h1>Flowers dataset<a class="headerlink" href="#flowers-dataset" title="Permalink to this heading"></a></h1>
 <p>Analyze for similar flowers in the example dataset. Load the data and initialize a model with <strong>phash</strong>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import library</span>
 <span class="kn">from</span> <span class="nn">undouble</span> <span class="kn">import</span> <span class="n">Undouble</span>
@@ -162,7 +164,7 @@
 </pre></div>
 </div>
 <section id="group-and-plot">
-<h2>Group and plot<a class="headerlink" href="#group-and-plot" title="Permalink to this headline"></a></h2>
+<h2>Group and plot<a class="headerlink" href="#group-and-plot" title="Permalink to this heading"></a></h2>
 <p>All hashes are computed but images with similar hash are not grouped yet.
 The following few lines will group the images and make the plots.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Group images with image-hash &lt;= threshold</span>
@@ -188,7 +190,7 @@ The following few lines will group the images and make the plots.</p>
 </table>
 </section>
 <section id="get-identical-images">
-<h2>Get identical images<a class="headerlink" href="#get-identical-images" title="Permalink to this headline"></a></h2>
+<h2>Get identical images<a class="headerlink" href="#get-identical-images" title="Permalink to this heading"></a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import library</span>
 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;select_pathnames&#39;</span><span class="p">]):</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;----------------------------GROUP </span><span class="si">%s</span><span class="s1">----------------------------&#39;</span> <span class="o">%</span><span class="n">i</span><span class="p">)</span>
@@ -197,7 +199,7 @@ The following few lines will group the images and make the plots.</p>
 </div>
 </section>
 <section id="move-files">
-<h2>Move files<a class="headerlink" href="#move-files" title="Permalink to this headline"></a></h2>
+<h2>Move files<a class="headerlink" href="#move-files" title="Permalink to this heading"></a></h2>
 <p>The move function <a class="reference internal" href="undouble.undouble.html#undouble.undouble.Undouble.move" title="undouble.undouble.Undouble.move"><code class="xref py py-func docutils literal notranslate"><span class="pre">undouble.undouble.Undouble.move()</span></code></a> will systematically move the images.
 A threshold of 0 will group images with an identical image hash. However, the threshold of 10 showed the best results when undoubling my personal photo deck because photos, such as from bursts, were also grouped.
 Before moving any of the images, the resolution and blurness of all images that are part of a group are checked.
@@ -213,7 +215,7 @@ The image in the group with the highest resolution will be copied, and all other
 </div>
 </section>
 <section id="plot-image-hash">
-<h2>Plot image hash<a class="headerlink" href="#plot-image-hash" title="Permalink to this headline"></a></h2>
+<h2>Plot image hash<a class="headerlink" href="#plot-image-hash" title="Permalink to this heading"></a></h2>
 <p>To plot the image hashes of the flowers we need to return the dict (see parameter). I will plot the hash of 1 flower image but the hashes can be plotted for all images.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="c1"># plot the image-hash for some specified indexes:</span>
     <span class="c1"># The index is based on the ordering in the results:</span>
@@ -249,7 +251,7 @@ The image in the group with the highest resolution will be copied, and all other
 </section>
 </section>
 <section id="objects-dataset">
-<h1>101 objects dataset<a class="headerlink" href="#objects-dataset" title="Permalink to this headline"></a></h1>
+<h1>101 objects dataset<a class="headerlink" href="#objects-dataset" title="Permalink to this heading"></a></h1>
 <p>I utilized the Caltech 101 [1] dataset and saved it to my local disk. I will analyze the results with aHash, pHash, dHash, and Wavelet hash.
 The Caltech dataset contains 9144 real-world images belonging to 101 categories. About 40 to 800 images per category.
 The size of each image is roughly 300 x 200 pixels. For the input to undouble, we can simply provide the path location
@@ -294,7 +296,7 @@ Note that this dataset does not contain ground truth labels with identical image
 </pre></div>
 </div>
 <section id="average-hash-results">
-<h2>Average hash results<a class="headerlink" href="#average-hash-results" title="Permalink to this headline"></a></h2>
+<h2>Average hash results<a class="headerlink" href="#average-hash-results" title="Permalink to this heading"></a></h2>
 <p>The average hash function detected 135 groups that could be linked to 335 images with an identical hash (threshold=0) based on the input hash size of 8 (64-bit). Despite identical images being detected, most of the groups showed collisions such as the top and bottom left, and/or near-identical images, such as the motorbikes.
 By increasing the hash size to 16 (256-bit), 28 groups for 64 images were detected. No collisions were present but only some near-identical images, such as the motorbikes.</p>
 <table class="docutils align-center" id="id3">
@@ -309,7 +311,7 @@ By increasing the hash size to 16 (256-bit), 28 groups for 64 images were detect
 </table>
 </section>
 <section id="differential-hash-results">
-<h2>Differential hash results<a class="headerlink" href="#differential-hash-results" title="Permalink to this headline"></a></h2>
+<h2>Differential hash results<a class="headerlink" href="#differential-hash-results" title="Permalink to this heading"></a></h2>
 <p>The differential hash function detected 28 images that could be linked to 31 images with an identical hash (threshold=0).
 A visual inspection showed no collisions but near-identical images (two motorbikes) were detected.
 By increasing the hash size to 16 (256-bit), 8 groups for 16 images were detected. No collisions were present but only some near-identical images, such as the motorbikes. By increasing the hash size to 16 (256-bit), 8 groups for 16 images were detected.
@@ -326,7 +328,7 @@ No collisions and no near-identical images were present only images that are vis
 </table>
 </section>
 <section id="perceptual-hash-results">
-<h2>Perceptual hash results<a class="headerlink" href="#perceptual-hash-results" title="Permalink to this headline"></a></h2>
+<h2>Perceptual hash results<a class="headerlink" href="#perceptual-hash-results" title="Permalink to this heading"></a></h2>
 <p>The perceptual hash function detected 38 groups that could be linked to 41 images with an identical hash (threshold=0).
 A visual inspection showed no collisions but near-identical images were detected, such as the motorbikes, as illustrated in the figure below.
 By increasing the hash size to 16 (256-bit), 10 groups for 20 images were detected. No collisions and no near-identical images were present only images that are visually similar.</p>
@@ -342,7 +344,7 @@ By increasing the hash size to 16 (256-bit), 10 groups for 20 images were detect
 </table>
 </section>
 <section id="haar-wavelet-hash-results">
-<h2>Haar wavelet hash results<a class="headerlink" href="#haar-wavelet-hash-results" title="Permalink to this headline"></a></h2>
+<h2>Haar wavelet hash results<a class="headerlink" href="#haar-wavelet-hash-results" title="Permalink to this heading"></a></h2>
 <p>The wavelet hash function detected 141 groups that could be linked to 513 images with an identical hash (threshold=0) based on the input hash size of 8 (64-bit).
 A visual inspection showed that almost all groups contained either collisions or near-identical images.
 Who had known that a strawberry could have a similar image-hash as the motorbike? By increasing the hash size to 16 (256-bit), 25 groups for 51 images were detected.
@@ -360,7 +362,7 @@ No collisions were present but only some near-identical images, such as the moto
 </section>
 </section>
 <section id="mnist-dataset">
-<h1>mnist dataset<a class="headerlink" href="#mnist-dataset" title="Permalink to this headline"></a></h1>
+<h1>mnist dataset<a class="headerlink" href="#mnist-dataset" title="Permalink to this heading"></a></h1>
 <p>Finding identical images for the mnist digits can be done as following:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import library</span>
 <span class="kn">from</span> <span class="nn">undouble</span> <span class="kn">import</span> <span class="n">Undouble</span>
@@ -396,7 +398,7 @@ No collisions were present but only some near-identical images, such as the moto
 </table>
 </section>
 <section id="import-images-from-url-location">
-<h1>Import images from url location<a class="headerlink" href="#import-images-from-url-location" title="Permalink to this headline"></a></h1>
+<h1>Import images from url location<a class="headerlink" href="#import-images-from-url-location" title="Permalink to this heading"></a></h1>
 <p>Images can also be imported from url locations.
 Each image is first downloaded and stored on a (specified) temp directory.
 In this example we will download 5 images from url locations. Note that url images and path locations can be combined.</p>
@@ -442,7 +444,7 @@ In this example we will download 5 images from url locations. Note that url imag
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="hash_functions.html" class="btn btn-neutral float-left" title="Average hash" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="Documentation.html" class="btn btn-neutral float-right" title="Blog" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="Documentation.html" class="btn btn-neutral float-right" title="Sponsor" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
