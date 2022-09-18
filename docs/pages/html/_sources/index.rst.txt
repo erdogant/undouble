@@ -19,9 +19,10 @@ It works using a multi-step process of pre-processing the images (grayscaling, n
 	`Read more details and the usage in the Medium Blog: Detection of Duplicate Images Using Image Hash Functions <https://towardsdatascience.com/detection-of-duplicate-images-using-image-hash-functions-4d9c53f04a75>`_
 
 
-Star is important
-======================
-If you ❤️ this project, **star** this repo at the `github page <https://github.com/erdogant/undouble/>`_!
+
+You contribution is important
+==============================
+If you ❤️ this project, **star** this repo at the `github page <https://github.com/erdogant/undouble/>`_ and have a look at the `sponser page <https://github.com/erdogant/undouble/pages/html/Documentation.html>`_!
 
 
 Github
