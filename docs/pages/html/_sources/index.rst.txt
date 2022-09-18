@@ -22,7 +22,7 @@ It works using a multi-step process of pre-processing the images (grayscaling, n
 
 You contribution is important
 ==============================
-If you ❤️ this project, **star** this repo at the `github page <https://github.com/erdogant/undouble/>`_ and have a look at the `sponser page <https://github.com/erdogant/undouble/pages/html/Documentation.html>`_!
+If you ❤️ this project, **star** this repo at the `github page <https://github.com/erdogant/undouble/>`_ and have a look at the `sponser page <https://erdogant.github.io/undouble/pages/html/Documentation.html>`_!
 
 
 Github
