@@ -104,6 +104,9 @@ class Undouble():
 
     References
     ----------
+    * Blog: https://towardsdatascience.com/detection-of-duplicate-images-using-image-hash-functions-4d9c53f04a75
+    * Github: https://github.com/erdogant/undouble
+    * Documentation: https://erdogant.github.io/undouble/
     * https://content-blockchain.org/research/testing-different-image-hash-functions/
 
     """

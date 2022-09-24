@@ -62,9 +62,10 @@ Example
 >>> # Move the images
 >>> model.move()
 
-
 References
 ----------
-https://github.com/erdogant/undouble
+* Blog: https://towardsdatascience.com/detection-of-duplicate-images-using-image-hash-functions-4d9c53f04a75
+* Github: https://github.com/erdogant/undouble
+* Documentation: https://erdogant.github.io/undouble/
 
 """
