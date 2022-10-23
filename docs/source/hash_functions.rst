@@ -1,11 +1,32 @@
-.. _code_directive:
-
--------------------------------------
-
 Average hash
---------------------------
+========================
 
 After the decolorizing and scaling step, each pixel block is compared to the average (as the name suggests) of all pixel values of the image. In the example below, we will generate a 64-bit hash, which means that the image is scaled to 8×8 pixels. If the value in the pixel block is larger than the average, it gets value 1 (white) and otherwise a 0 (black). The final image hash is followed by flattening the array into a vector.
+
+.. code:: python
+
+	# Initialize with hash
+	model = Undouble(method='ahash')
+
+	# Import example
+	X = model.import_example(data='cat_and_dog')
+	imgs = model.import_data(X, return_results=True)
+
+	# Compute hash for a single image
+	hashs = model.compute_imghash(imgs['img'][0], to_array=False, hash_size=8)
+
+	# The hash is a binairy array or vector.
+	print(hashs)
+
+	# Plot the image using the undouble plot_hash functionality
+	model.results['img_hash_bin']
+	model.plot_hash(idx=0)
+
+	# Plot the image manually
+	fig, ax = plt.subplots(1, 2, figsize=(8,8))
+	ax[0].imshow(imgs['img'][0])
+	ax[1].imshow(hashs[0])
+
 
 .. |ahash| image:: ../figs/ahash.png
 
@@ -18,9 +39,33 @@ After the decolorizing and scaling step, each pixel block is compared to the ave
 
 
 Perceptual hash
---------------------------
+========================
 
 After the first step of decolorizing, a Discrete Cosine Transform (DCT) is applied; first per row and afterward per column. The pixels with high frequencies are cropped to 8 x 8 pixels. Each pixel block is then compared to the median of all gray values of the image. If the value in the pixel block is larger than the median, it gets value 1 and otherwise a 0. The final image hash is followed by flattening the array into a vector.
+
+.. code:: python
+
+	# Initialize with hash
+	model = Undouble(method='phash')
+
+	# Import example
+	X = model.import_example(data='cat_and_dog')
+	imgs = model.import_data(X, return_results=True)
+
+	# Compute hash for a single image
+	hashs = model.compute_imghash(imgs['img'][0], to_array=False, hash_size=8)
+
+	# The hash is a binairy array or vector.
+	print(hashs)
+
+	# Plot the image using the undouble plot_hash functionality
+	model.results['img_hash_bin']
+	model.plot_hash(idx=0)
+
+	# Plot the image manually
+	fig, ax = plt.subplots(1, 2, figsize=(8,8))
+	ax[0].imshow(imgs['img'][0])
+	ax[1].imshow(hashs[0])
 
 .. |phash| image:: ../figs/phash.png
 
@@ -33,9 +78,35 @@ After the first step of decolorizing, a Discrete Cosine Transform (DCT) is appli
 
 
 Differential hash
---------------------------
+========================
 
 After the first step of decolorizing and scaling, the pixels are serially (from left to right per row) compared to their neighbor to the right. If the byte at position x is less than the byte at position (x+1), it gets value 1 and otherwise a 0. The final image hash is followed by flattening the array into a vector.
+
+.. code:: python
+
+	# Initialize with hash
+	model = Undouble(method='dhash')
+
+	# Import example
+	X = model.import_example(data='cat_and_dog')
+	imgs = model.import_data(X, return_results=True)
+
+	# Compute hash for a single image
+	hashs = model.compute_imghash(imgs['img'][0], to_array=False, hash_size=8)
+
+	# The hash is a binairy array or vector.
+	print(hashs)
+
+	# Plot the image using the undouble plot_hash functionality
+	model.results['img_hash_bin']
+	model.plot_hash(idx=0)
+
+	# Plot the image manually
+	fig, ax = plt.subplots(1, 2, figsize=(8,8))
+	ax[0].imshow(imgs['img'][0])
+	ax[1].imshow(hashs[0])
+
+
 
 .. |dhash| image:: ../figs/dhash.png
 
@@ -48,9 +119,34 @@ After the first step of decolorizing and scaling, the pixels are serially (from 
 
 
 Haar wavelet hash
---------------------------
+========================
 
 After the first step of decolorizing and scaling, a two-dimensional wavelet transform is applied to the image. Each pixel block is then compared to the median of all gray values of the image. If the value in the pixel block is larger than the median, it gets value 1 and otherwise a 0. The final image hash is followed by flattening the array into a vector.
+
+.. code:: python
+
+	# Initialize with hash
+	model = Undouble(method='whash-haar')
+
+	# Import example
+	X = model.import_example(data='cat_and_dog')
+	imgs = model.import_data(X, return_results=True)
+
+	# Compute hash for a single image
+	hashs = model.compute_imghash(imgs['img'][0], to_array=False, hash_size=8)
+
+	# The hash is a binairy array or vector.
+	print(hashs)
+
+	# Plot the image using the undouble plot_hash functionality
+	model.results['img_hash_bin']
+	model.plot_hash(idx=0)
+
+	# Plot the image manually
+	fig, ax = plt.subplots(1, 2, figsize=(8,8))
+	ax[0].imshow(imgs['img'][0])
+	ax[1].imshow(hashs[0])
+
 
 .. |whash| image:: ../figs/whash.png
 
@@ -63,7 +159,7 @@ After the first step of decolorizing and scaling, a two-dimensional wavelet tran
 
 
 Crop-resistant hash
---------------------------
+========================
 
 The Crop resistant hash is implemented as described in the paper "Efficient Cropping-Resistant Robust Image Hashing". DOI 10.1109/ARES.2014.85. This algorithm partitions the image into bright and dark segments, using a watershed-like algorithm, and then does an image hash on each segment. This makes the image much more resistant to cropping than other algorithms, with the paper claiming resistance to up to 50% cropping, while most other algorithms stop at about 5% cropping.
 
@@ -103,8 +199,8 @@ The Crop resistant hash is implemented as described in the paper "Efficient Crop
 	model.plot_hash(filenames=model.results['filenames'][model.results['select_idx'][0]])
 
 
-Create the images
---------------------------
+Plot image hash
+========================
 
 All examples are created using the underneath code:
 

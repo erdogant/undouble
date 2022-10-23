@@ -1,7 +1,34 @@
-# from undouble import Undouble
+from undouble import Undouble
 # import undouble
 # print(dir(undouble))
 # print(undouble.__version__)
+
+# %% Issue #7
+from undouble import Undouble
+import matplotlib.pyplot as plt
+
+# Initialize with method
+model = Undouble(method='dhash')
+
+# Import flowers example
+# X = model.import_example(data='flowers')
+X = model.import_example(data='cat_and_dog')
+imgs = model.import_data(X, return_results=True)
+
+# Compute hash for a single image
+hashs = model.compute_imghash(imgs['img'][0], to_array=False, hash_size=8)
+
+# The hash is a binairy array or vector.
+print(hashs)
+
+# Plot the image using the undouble plot_hash functionality
+model.results['img_hash_bin']
+model.plot_hash(idx=0)
+
+# Plot the image
+fig, ax = plt.subplots(1, 2, figsize=(8,8))
+ax[0].imshow(imgs['img'][0])
+ax[1].imshow(hashs[0])
 
 # %% Check crop-resistant-hash
 

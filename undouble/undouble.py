@@ -539,11 +539,6 @@ class Undouble():
     def compute_imghash(self, img, hash_size=None, to_array=False):
         """Compute image hash per image.
 
-        Description
-        -----------
-        Return for the input image the hash.
-        Details about the structure score functionality can be found here: :func:`undouble.undouble.compute_imghash`.
-
         Parameters
         ----------
         img : Object or RGB-image.
