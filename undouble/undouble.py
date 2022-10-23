@@ -53,6 +53,7 @@ class Undouble():
         * 'phash': Perceptual hash
         * 'dhash': Difference hash
         * 'whash-haar': Haar wavelet hash
+        * 'crop-resistant-hash': Crop resistant hash
     targetdir : str, (default: None)
         Directory to read the images.
     hash_size : integer (default: 8)
@@ -424,7 +425,7 @@ class Undouble():
         >>> model = Undouble()
         >>>
         >>> # Import example data
-        >>> # targetdir = model.import_example(data='flowers')
+        >>> targetdir = model.import_example(data='flowers')
         >>>
         >>> # Importing the files files from disk, cleaning and pre-processing
         >>> model.import_data(r'./undouble/data/flower_images/')
@@ -548,6 +549,36 @@ class Undouble():
             True: Return the hash-array in the same size as the scaled image.
             False: Return the hash-image vector.
 
+        Examples
+        --------
+        >>> from undouble import Undouble
+        >>> import matplotlib.pyplot as plt
+        >>>
+        >>> # Initialize with method
+        >>> model = Undouble(method='ahash')
+        >>>
+        >>> # Import flowers example
+        >>> X = model.import_example(data='flowers')
+        >>> imgs = model.import_data(X, return_results=True)
+        >>>
+        >>> # Compute hash for a single image
+        >>> hashs = model.compute_imghash(imgs['img'][0], to_array=False, hash_size=8)
+        >>>
+        >>> # The hash is a binairy array or vector.
+        >>> print(hashs)
+        >>>
+        >>> # Plot the image using the undouble plot_hash functionality
+        >>> model.results['img_hash_bin']
+        >>> model.plot_hash(idx=0)
+        >>>
+        >>> # Plot the image
+        >>> fig, ax = plt.subplots(1, 2, figsize=(8,8))
+        >>> ax[0].imshow(imgs['img'][0])
+        >>> ax[1].imshow(hashs[0])
+        >>>
+        >>> # Compute hash for multiple images
+        >>> hashs = model.compute_imghash(imgs['img'][0:10], to_array=False, hash_size=8)
+
         Returns
         -------
         imghash : numpy-array
@@ -570,6 +601,8 @@ class Undouble():
         else:
             hashes = list(map(lambda x: x.reshape(hash_size,hash_size), hashes))
 
+        # Store the hash
+        self.results['img_hash_bin'] = hashes
         return hashes
 
     def bin2hex(self):
