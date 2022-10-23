@@ -432,6 +432,9 @@ class Undouble():
         >>> # Compute image-hash
         >>> model.compute_hash(method='phash', hash_size=6)
         >>>
+        >>> # Hashes are stored in the result dict.
+        >>> model.results['img_hash_bin']
+        >>>
         >>> Plot the image-hash for a set of indexes
         >>> model.plot_hash(idx=[0, 1])
         >>>
