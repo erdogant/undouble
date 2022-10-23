@@ -37,7 +37,7 @@ class Undouble():
 
     Description
     -----------
-    Python package undouble is to detect (near-)identical images.
+    Python package undouble is to detect (near-)identical images based on image hashes.
 
     The following steps are taken:
         1. Read recursively all images from directory with the specified extensions.
@@ -537,7 +537,12 @@ class Undouble():
             raise Exception(logger.error('Results missing! Hint: try to first use the model.group() functionality'))
 
     def compute_imghash(self, img, hash_size=None, to_array=False):
-        """Compute hash.
+        """Compute image hash per image.
+
+        Description
+        -----------
+        Return for the input image the hash.
+        Details about the structure score functionality can be found here: :func:`undouble.undouble.compute_imghash`.
 
         Parameters
         ----------
