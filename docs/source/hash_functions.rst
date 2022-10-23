@@ -3,6 +3,7 @@ Average hash
 
 After the decolorizing and scaling step, each pixel block is compared to the average (as the name suggests) of all pixel values of the image. In the example below, we will generate a 64-bit hash, which means that the image is scaled to 8×8 pixels. If the value in the pixel block is larger than the average, it gets value 1 (white) and otherwise a 0 (black). The final image hash is followed by flattening the array into a vector.
 
+
 .. code:: python
 
 	# Initialize with hash
