@@ -150,7 +150,7 @@ class Undouble():
         if return_results:
             return self.results
 
-    def compute_hash(self, method=None, hash_size=None, return_dict=False):
+    def compute_hash(self, method=None, hash_size=8, return_dict=False):
         """Compute the hash for each image.
 
         Parameters
