@@ -15,6 +15,7 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -29,6 +30,9 @@
         <div class="wy-side-nav-search" >
             <a href="index.html" class="icon icon-home"> undouble
           </a>
+              <div class="version">
+                1.2.9
+              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -117,8 +121,14 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-undouble.undouble">
-<span id="api-references"></span><h1>API References<a class="headerlink" href="#module-undouble.undouble" title="Permalink to this headline"></a></h1>
+  <hr>
+<center>
+        <script async src="https://media.ethicalads.io/media/client/ethicalads.min.js"></script>
+        <div data-ea-publisher="erdogantgithubio" data-ea-type="text"></div>
+        <!-- <div data-ea-publisher="erdogantgithubio" data-ea-type="text" data-ea-style="fixedfooter"></div> -->
+</center>
+<hr><section id="module-undouble.undouble">
+<span id="api-references"></span><h1>API References<a class="headerlink" href="#module-undouble.undouble" title="Permalink to this heading"></a></h1>
 <p>Python package undouble is to detect (near-)identical images.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="undouble.undouble.Undouble">
@@ -242,11 +252,8 @@
 <li><p><strong>hash_size</strong> (<em>integer</em><em> (</em><em>default: 8</em><em>)</em>) – The hash_size will be used to scale down the image and create a hash-image of length: hash_size*hash_size.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>None.</p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -313,11 +320,8 @@ False: Return the hash-image vector.</p></li>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>threshold</strong> (<em>float</em><em>, </em><em>(</em><em>default: 0</em><em>)</em>) – Threshold on the hash value to determine similarity.</p>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>None.</p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -330,11 +334,8 @@ False: Return the hash-image vector.</p></li>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>black_list</strong> (<em>list</em><em>, </em><em>(</em><em>default:</em><em> [</em><em>'undouble'</em><em>]</em><em>)</em>) – Exclude directory with all subdirectories from processing.</p>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>None.</p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -373,11 +374,8 @@ False: Return the hash-image vector.</p></li>
 None: A subdir, named “undouble” is created within each directory.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>None.</p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -394,14 +392,11 @@ None: A subdir, named “undouble” is created within each directory.</p></li>
 <li><p><strong>images.</strong> (<em>Colorscheme for the</em>) – ‘gray’, ‘binary’,  None (uses rgb colorscheme)</p></li>
 <li><p><strong>show_hog</strong> (<em>bool</em><em>, </em><em>(</em><em>default: False</em><em>)</em>) – Plot the hog features next to the input image.</p></li>
 <li><p><strong>min_clust</strong> (<em>int</em><em>, </em><em>(</em><em>default: 1</em><em>)</em>) – Plots are created for clusters with &gt; min_clust samples</p></li>
-<li><p><strong>figsize</strong> (<em>tuple</em><em>, </em><em>(</em><em>default:</em><em> (</em><em>15</em><em>, </em><em>10</em><em>)</em><em></em>) – Size of the figure (height,width).</p></li>
+<li><p><strong>figsize</strong> (<em>tuple</em><em>, </em><em>(</em><em>default:</em><em> (</em><em>15</em><em>, </em><em>10</em><em>)</em><em>.</em>) – Size of the figure (height,width).</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>None.</p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -573,11 +568,8 @@ are generally more blurry.</p>
 <li><p><strong>'iris'</strong> (<em>str</em><em>, </em><em>multi-class</em>) – </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>tuple containing dataset and response variable (X,y)</p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>tuple containing dataset and response variable (X,y).</p>
 </dd>
 </dl>
 </dd></dl>
@@ -664,11 +656,8 @@ are generally more blurry.</p>
 <li><p><strong>writepath</strong> (<em>str.</em>) – Directory to write the file.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>None.</p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None.</p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
@@ -680,7 +669,10 @@ are generally more blurry.</p>
 
 <hr>
 <center>
-        <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEADP27U&placement=erdogantgithubio" id="_carbonads_js"></script>
+        <script async src="https://media.ethicalads.io/media/client/ethicalads.min.js"></script>
+        <!-- Show an image ad -->
+        <!-- <div data-ea-publisher="erdogantgithubio" data-ea-type="image"></div> -->
+        <div data-ea-publisher="erdogantgithubio" data-ea-type="image" data-ea-style="stickybox"></div>
 </center>
 <hr></section>
 

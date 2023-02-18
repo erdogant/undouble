@@ -1,11 +1,4 @@
 """Python package undouble is to detect (near-)identical images."""
-# --------------------------------------------------
-# Name        : undouble.py
-# Author      : E.Taskesen
-# Contact     : erdogant@gmail.com
-# github      : https://github.com/erdogant/undouble
-# Licence     : See licences
-# --------------------------------------------------
 
 import os
 import requests
@@ -35,8 +28,6 @@ logger = logging.getLogger()
 class Undouble():
     """Detect duplicate images.
 
-    Description
-    -----------
     Python package undouble is to detect (near-)identical images based on image hashes.
 
     The following steps are taken:
@@ -177,7 +168,7 @@ class Undouble():
             self.clustimage.params['method'] = method
         if method=='whash-haar':
             if (np.ceil(np.log2(hash_size)) != np.floor(np.log2(hash_size))):
-                logger.error('hash_size should be power of 2 (8, 16, 32, 64, ..., etc)')
+                logger.error('hash_size should be power of 2 (8, 16, 32, 64, ...)')
                 return None
         if method=='crop-resistant-hash':
             logger.info('Hash size is set to 8 for crop-resistant and can not be changed.')
@@ -270,8 +261,6 @@ class Undouble():
     def move(self, filters=None, targetdir=None):
         """Move images.
 
-        Description
-        -----------
         Files are moved that are listed by the group() functionality.
 
         Parameters
@@ -327,8 +316,6 @@ class Undouble():
     def _move_to_dir(self, pathnames, targetdir, make_moved_filename_consistent=True):
         """Move to target directory.
 
-        Description
-        -----------
         The first pathname is copied, the other are moved.
 
         Parameters
@@ -382,8 +369,6 @@ class Undouble():
     def import_example(self, data='flowers', url=None):
         """Import example dataset from github source.
 
-        Description
-        -----------
         Import one of the few datasets from github source or specify your own download url link.
 
         Parameters
@@ -624,8 +609,6 @@ class Undouble():
 def import_example(data='flowers', url=None):
     """Import example dataset from github source.
 
-    Description
-    -----------
     Import one of the few datasets from github source or specify your own download url link.
 
     Parameters
@@ -705,8 +688,6 @@ def _compute_rank(scores, higher_is_better=True):
 def sort_images(pathnames, hash_scores=None, sort_first_img=False):
     """Sort images.
 
-    Description
-    -----------
     Sort images on the following conditions:
         1. Resolution
         2. Amount of blur
@@ -892,8 +873,6 @@ def unzip(path_to_zip):
 def compute_blur(pathname):
     """Compute amount of blur in image.
 
-    Description
-    -----------
     load the image, convert it to grayscale, and compute the focus measure of
     the image using the Variance of Laplacian method. The returned scores <100
     are generally more blurry.

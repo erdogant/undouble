@@ -15,6 +15,7 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -30,6 +31,9 @@
         <div class="wy-side-nav-search" >
             <a href="index.html" class="icon icon-home"> undouble
           </a>
+              <div class="version">
+                1.2.9
+              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -118,8 +122,14 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="average-hash">
-<h1>Average hash<a class="headerlink" href="#average-hash" title="Permalink to this headline"></a></h1>
+  <hr>
+<center>
+        <script async src="https://media.ethicalads.io/media/client/ethicalads.min.js"></script>
+        <div data-ea-publisher="erdogantgithubio" data-ea-type="text"></div>
+        <!-- <div data-ea-publisher="erdogantgithubio" data-ea-type="text" data-ea-style="fixedfooter"></div> -->
+</center>
+<hr><section id="average-hash">
+<h1>Average hash<a class="headerlink" href="#average-hash" title="Permalink to this heading"></a></h1>
 <p>After the decolorizing and scaling step, each pixel block is compared to the average (as the name suggests) of all pixel values of the image. In the example below, we will generate a 64-bit hash, which means that the image is scaled to 8×8 pixels. If the value in the pixel block is larger than the average, it gets value 1 (white) and otherwise a 0 (black). The final image hash is followed by flattening the array into a vector.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initialize with hash</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">Undouble</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;ahash&#39;</span><span class="p">)</span>
@@ -156,7 +166,7 @@
 </table>
 </section>
 <section id="perceptual-hash">
-<h1>Perceptual hash<a class="headerlink" href="#perceptual-hash" title="Permalink to this headline"></a></h1>
+<h1>Perceptual hash<a class="headerlink" href="#perceptual-hash" title="Permalink to this heading"></a></h1>
 <p>After the first step of decolorizing, a Discrete Cosine Transform (DCT) is applied; first per row and afterward per column. The pixels with high frequencies are cropped to 8 x 8 pixels. Each pixel block is then compared to the median of all gray values of the image. If the value in the pixel block is larger than the median, it gets value 1 and otherwise a 0. The final image hash is followed by flattening the array into a vector.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initialize with hash</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">Undouble</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;phash&#39;</span><span class="p">)</span>
@@ -193,7 +203,7 @@
 </table>
 </section>
 <section id="differential-hash">
-<h1>Differential hash<a class="headerlink" href="#differential-hash" title="Permalink to this headline"></a></h1>
+<h1>Differential hash<a class="headerlink" href="#differential-hash" title="Permalink to this heading"></a></h1>
 <p>After the first step of decolorizing and scaling, the pixels are serially (from left to right per row) compared to their neighbor to the right. If the byte at position x is less than the byte at position (x+1), it gets value 1 and otherwise a 0. The final image hash is followed by flattening the array into a vector.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initialize with hash</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">Undouble</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;dhash&#39;</span><span class="p">)</span>
@@ -230,7 +240,7 @@
 </table>
 </section>
 <section id="haar-wavelet-hash">
-<h1>Haar wavelet hash<a class="headerlink" href="#haar-wavelet-hash" title="Permalink to this headline"></a></h1>
+<h1>Haar wavelet hash<a class="headerlink" href="#haar-wavelet-hash" title="Permalink to this heading"></a></h1>
 <p>After the first step of decolorizing and scaling, a two-dimensional wavelet transform is applied to the image. Each pixel block is then compared to the median of all gray values of the image. If the value in the pixel block is larger than the median, it gets value 1 and otherwise a 0. The final image hash is followed by flattening the array into a vector.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initialize with hash</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">Undouble</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;whash-haar&#39;</span><span class="p">)</span>
@@ -267,7 +277,7 @@
 </table>
 </section>
 <section id="crop-resistant-hash">
-<h1>Crop-resistant hash<a class="headerlink" href="#crop-resistant-hash" title="Permalink to this headline"></a></h1>
+<h1>Crop-resistant hash<a class="headerlink" href="#crop-resistant-hash" title="Permalink to this heading"></a></h1>
 <p>The Crop resistant hash is implemented as described in the paper “Efficient Cropping-Resistant Robust Image Hashing”. DOI 10.1109/ARES.2014.85. This algorithm partitions the image into bright and dark segments, using a watershed-like algorithm, and then does an image hash on each segment. This makes the image much more resistant to cropping than other algorithms, with the paper claiming resistance to up to 50% cropping, while most other algorithms stop at about 5% cropping.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import library</span>
 <span class="kn">from</span> <span class="nn">undouble</span> <span class="kn">import</span> <span class="n">Undouble</span>
@@ -304,7 +314,7 @@
 </div>
 </section>
 <section id="plot-image-hash">
-<h1>Plot image hash<a class="headerlink" href="#plot-image-hash" title="Permalink to this headline"></a></h1>
+<h1>Plot image hash<a class="headerlink" href="#plot-image-hash" title="Permalink to this heading"></a></h1>
 <p>All examples are created using the underneath code:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># pip install imagesc</span>
 
@@ -369,7 +379,10 @@
 </div>
 <hr>
 <center>
-        <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEADP27U&placement=erdogantgithubio" id="_carbonads_js"></script>
+        <script async src="https://media.ethicalads.io/media/client/ethicalads.min.js"></script>
+        <!-- Show an image ad -->
+        <!-- <div data-ea-publisher="erdogantgithubio" data-ea-type="image"></div> -->
+        <div data-ea-publisher="erdogantgithubio" data-ea-type="image" data-ea-style="stickybox"></div>
 </center>
 <hr></section>
 
