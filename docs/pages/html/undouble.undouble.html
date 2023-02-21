@@ -17,6 +17,7 @@
         <script src="_static/underscore.js"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -92,7 +93,35 @@
 <li class="toctree-l1"><a class="reference internal" href="Documentation.html#github">Github</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Documentation.html#citing">Citing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Coding%20quality.html">Coding quality</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">API References</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API References</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#undouble.undouble.Undouble"><code class="docutils literal notranslate"><span class="pre">Undouble</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#undouble.undouble.Undouble.bin2hex"><code class="docutils literal notranslate"><span class="pre">Undouble.bin2hex()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#undouble.undouble.Undouble.clean_files"><code class="docutils literal notranslate"><span class="pre">Undouble.clean_files()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#undouble.undouble.Undouble.clean_init"><code class="docutils literal notranslate"><span class="pre">Undouble.clean_init()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#undouble.undouble.Undouble.compute_hash"><code class="docutils literal notranslate"><span class="pre">Undouble.compute_hash()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#undouble.undouble.Undouble.compute_imghash"><code class="docutils literal notranslate"><span class="pre">Undouble.compute_imghash()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#undouble.undouble.Undouble.group"><code class="docutils literal notranslate"><span class="pre">Undouble.group()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#undouble.undouble.Undouble.import_data"><code class="docutils literal notranslate"><span class="pre">Undouble.import_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#undouble.undouble.Undouble.import_example"><code class="docutils literal notranslate"><span class="pre">Undouble.import_example()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#undouble.undouble.Undouble.move"><code class="docutils literal notranslate"><span class="pre">Undouble.move()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#undouble.undouble.Undouble.plot"><code class="docutils literal notranslate"><span class="pre">Undouble.plot()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#undouble.undouble.Undouble.plot_hash"><code class="docutils literal notranslate"><span class="pre">Undouble.plot_hash()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#undouble.undouble.compute_blur"><code class="docutils literal notranslate"><span class="pre">compute_blur()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#undouble.undouble.create_targetdir"><code class="docutils literal notranslate"><span class="pre">create_targetdir()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#undouble.undouble.disable_tqdm"><code class="docutils literal notranslate"><span class="pre">disable_tqdm()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#undouble.undouble.filter_checks"><code class="docutils literal notranslate"><span class="pre">filter_checks()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#undouble.undouble.get_existing_pathnames"><code class="docutils literal notranslate"><span class="pre">get_existing_pathnames()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#undouble.undouble.import_example"><code class="docutils literal notranslate"><span class="pre">import_example()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#undouble.undouble.load_example"><code class="docutils literal notranslate"><span class="pre">load_example()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#undouble.undouble.seperate_path"><code class="docutils literal notranslate"><span class="pre">seperate_path()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#undouble.undouble.set_logger"><code class="docutils literal notranslate"><span class="pre">set_logger()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#undouble.undouble.sort_images"><code class="docutils literal notranslate"><span class="pre">sort_images()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#undouble.undouble.unzip"><code class="docutils literal notranslate"><span class="pre">unzip()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#undouble.undouble.wget"><code class="docutils literal notranslate"><span class="pre">wget()</span></code></a></li>
+</ul>
+</li>
 </ul>
 
     <a href= "genindex.html">Index</a>
@@ -121,13 +150,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <hr>
-<center>
-        <script async src="https://media.ethicalads.io/media/client/ethicalads.min.js"></script>
-        <div data-ea-publisher="erdogantgithubio" data-ea-type="text"></div>
-        <!-- <div data-ea-publisher="erdogantgithubio" data-ea-type="text" data-ea-style="fixedfooter"></div> -->
-</center>
-<hr><section id="module-undouble.undouble">
+  <section id="module-undouble.undouble">
 <span id="api-references"></span><h1>API References<a class="headerlink" href="#module-undouble.undouble" title="Permalink to this heading"></a></h1>
 <p>Python package undouble is to detect (near-)identical images.</p>
 <dl class="py class">
@@ -408,8 +431,8 @@ None: A subdir, named “undouble” is created within each directory.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>idx</strong> (<em>list of int</em><em>, </em><em>optional</em>) – The index of the images to plot.</p></li>
-<li><p><strong>filenames</strong> (<em>list of str</em><em>, </em><em>optional</em>) – The (list of) filenames to plot.</p></li>
+<li><p><strong>idx</strong> (<em>list</em><em> of </em><em>int</em><em>, </em><em>optional</em>) – The index of the images to plot.</p></li>
+<li><p><strong>filenames</strong> (<em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – The (list of) filenames to plot.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -509,7 +532,7 @@ are generally more blurry.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>pathnames</strong> (<em>list of str</em>) – pathnames to the images.</p></li>
+<li><p><strong>pathnames</strong> (<em>list</em><em> of </em><em>str</em>) – pathnames to the images.</p></li>
 <li><p><strong>filters</strong> (<em>list</em><em>, </em><em>(</em><em>Default:</em><em> [</em><em>'location'</em><em>]</em><em>)</em>) – ‘location’ : Only move images that are seen in the same directory.</p></li>
 </ul>
 </dd>
@@ -528,7 +551,7 @@ are generally more blurry.</p>
 <dd><p>Get existing pathnames.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>pathnames</strong> (<em>list of str</em>) – pathnames to the images.</p>
+<dd class="field-odd"><p><strong>pathnames</strong> (<em>list</em><em> of </em><em>str</em>) – pathnames to the images.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -580,7 +603,7 @@ are generally more blurry.</p>
 <dd><p>Seperate path.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>pathnames</strong> (<em>list of str</em>) – pathnames to the images.</p>
+<dd class="field-odd"><p><strong>pathnames</strong> (<em>list</em><em> of </em><em>str</em>) – pathnames to the images.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><ul class="simple">
@@ -612,7 +635,7 @@ are generally more blurry.</p>
 </dl>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>pathnames</strong> (<em>list of str.</em>) – Absolute locations to image path.</p>
+<dd class="field-odd"><p><strong>pathnames</strong> (<em>list</em><em> of </em><em>str.</em>) – Absolute locations to image path.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>images sorted on conditions.</p>
