@@ -3,6 +3,35 @@ from undouble import Undouble
 # print(dir(undouble))
 # print(undouble.__version__)
 
+# %% Issue: group does not work, Check crop-resistant-hash
+
+# Import library
+from undouble import Undouble
+
+# Init with default settings
+model = Undouble()
+
+# Import example data
+targetdir = model.import_example(data='flowers')
+
+# Importing the files files from disk, cleaning and pre-processing
+model.import_data(targetdir)
+
+# Compute image-hash
+model.compute_hash(method='whash-haar', hash_size=32)
+
+results = model.group(threshold=5)
+
+# Plot the images
+model.plot()
+
+# Plot the hash
+model.plot_hash(filenames=model.results['filenames'][model.results['select_idx'][0]])
+
+import pandas as pd
+df = pd.DataFrame(index=[model.results['filenames']], data=model.results['img_hash_hex'], columns=['image_hash_hex'])
+
+
 # %% Issue #7
 from undouble import Undouble
 import matplotlib.pyplot as plt
@@ -30,33 +59,6 @@ fig, ax = plt.subplots(1, 2, figsize=(8,8))
 ax[0].imshow(imgs['img'][0])
 ax[1].imshow(hashs[0])
 
-# %% Check crop-resistant-hash
-
-# Import library
-from undouble import Undouble
-
-# Init with default settings
-model = Undouble()
-
-# Import example data
-targetdir = model.import_example(data='flowers')
-
-# Importing the files files from disk, cleaning and pre-processing
-model.import_data(targetdir)
-
-# Compute image-hash
-model.compute_hash(method='whash-haar', hash_size=32)
-
-results = model.group(threshold=5)
-
-# Plot the images
-model.plot()
-
-# Plot the hash
-model.plot_hash(filenames=model.results['filenames'][model.results['select_idx'][0]])
-
-import pandas as pd
-df = pd.DataFrame(index=[model.results['filenames']], data=model.results['img_hash_hex'], columns=['image_hash_hex'])
 
 # %% Check crop-resistant-hash
 
