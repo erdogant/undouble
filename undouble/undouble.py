@@ -245,8 +245,8 @@ class Undouble():
 
         # Sort on directory
         idx = np.argsort(list(map(lambda x: os.path.split(x[0])[0], pathnames)))
-        self.results['select_pathnames'] = np.array(pathnames)[idx].tolist()
-        self.results['select_scores'] = np.array(thresholds)[idx].tolist()
+        self.results['select_pathnames'] = np.array(pathnames, dtype=object)[idx].tolist()
+        self.results['select_scores'] = np.array(thresholds, dtype=object)[idx].tolist()
         self.results['select_idx'] = indexes
         logger.info('[%d] groups with similar image-hash.' %(len(self.results['select_pathnames'])))
 
