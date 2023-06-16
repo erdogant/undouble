@@ -487,7 +487,7 @@ class Undouble():
         self._check_status()
         ncols=None
         cmap = cl._set_cmap(cmap, self.params['grayscale'])
-        colorscale = 0 if self.params['grayscale'] else 1
+        colorscale = 0 if self.params['grayscale'] else 2
 
         # Plot the clustered images
         if (self.results.get('select_pathnames', None) is not None):

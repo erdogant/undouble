@@ -12,15 +12,13 @@ from undouble.undouble import (
 
 __author__ = 'Erdogan Tasksen'
 __email__ = 'erdogant@gmail.com'
-__version__ = '1.2.9'
+__version__ = '1.2.10'
 
 # module level doc-string
 __doc__ = """
 undouble
 =====================================================================
 
-Description
------------
 Python package undouble is to detect (near-)identical images.
 
 The aim of ``undouble`` is to detect (near-)identical images. It works using a multi-step proces of pre-processing the
