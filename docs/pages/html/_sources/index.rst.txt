@@ -58,6 +58,13 @@ Content
 
 .. toctree::
   :maxdepth: 1
+  :caption: Input/ Output
+
+  input_output
+  
+
+.. toctree::
+  :maxdepth: 1
   :caption: Core functionalities
 
   core_functions

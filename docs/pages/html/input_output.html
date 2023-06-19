@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Input &mdash; undouble undouble documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Core functionalities" href="core_functions.html" />
+    <link rel="prev" title="Installation" href="Installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            undouble
+          </a>
+              <div class="version">
+                1.2.10
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <p class="caption" role="heading"><span class="caption-text">Background</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Abstract.html">Abstract</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Abstract.html#schematic-overview">Schematic overview</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Installation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html#uninstalling">Uninstalling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html#quickstart">Quickstart</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Input/ Output</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Input</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#directory">Directory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#file-locations">File locations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#numpy-array">Numpy Array</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#output">Output</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Core functionalities</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="core_functions.html">Core functionalities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_functions.html#compute-hash">Compute_hash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_functions.html#grouping-images">Grouping images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_functions.html#id1">Moving images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_functions.html#plot">Plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_functions.html#plot-hash">Plot hash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_functions.html#scaling">scaling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_functions.html#resizing">Resizing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_functions.html#compute-blur">compute_blur</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_functions.html#wget">wget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_functions.html#unzip">unzip</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_functions.html#set-logger">set_logger</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">hash_functions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="hash_functions.html">Average hash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hash_functions.html#perceptual-hash">Perceptual hash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hash_functions.html#differential-hash">Differential hash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hash_functions.html#haar-wavelet-hash">Haar wavelet hash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hash_functions.html#crop-resistant-hash">Crop-resistant hash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hash_functions.html#plot-image-hash">Plot image hash</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Examples.html">Flowers dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Examples.html#objects-dataset">101 objects dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Examples.html#mnist-dataset">mnist dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Examples.html#import-images-from-url-location">Import images from url location</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Documentation.html">Sponsor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Documentation.html#medium-blog">Medium Blog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Documentation.html#github">Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Documentation.html#citing">Citing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Coding%20quality.html">Coding quality</a></li>
+<li class="toctree-l1"><a class="reference internal" href="undouble.undouble.html">API References</a></li>
+</ul>
+
+    <a href= "genindex.html">Index</a>
+  
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">undouble</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Input</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/input_output.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="input">
+<h1>Input<a class="headerlink" href="#input" title="Permalink to this heading"></a></h1>
+<p>The input for the <a class="reference internal" href="undouble.undouble.html#undouble.undouble.Undouble.import_data" title="undouble.undouble.Undouble.import_data"><code class="xref py py-func docutils literal notranslate"><span class="pre">undouble.undouble.Undouble.import_data()</span></code></a> can be the following three types:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Directory path</p></li>
+<li><p>File locations</p></li>
+<li><p>Numpy array containing images</p></li>
+</ul>
+</div></blockquote>
+<p>The scanned files and directories can also be filtered on extention type, or directories can be black listed. Note that these settings need to be set during initialization. The black_list directory is set to undouble by default to make sure that readily moved files are not incorporated in the analysis.</p>
+<p>The following parameters can be changed during initialization:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Images are imported with the extention ([‘png’,’tiff’,’jpg’,’jfif’]).</p></li>
+<li><p>Input image can be grayscaled during import.</p></li>
+<li><p>Resizing images to save memory, such as to (128, 128).</p></li>
+</ul>
+</div></blockquote>
+<section id="directory">
+<h2>Directory<a class="headerlink" href="#directory" title="Permalink to this heading"></a></h2>
+<p>Images can imported recursively from a target directory.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import library</span>
+<span class="kn">from</span> <span class="nn">undouble</span> <span class="kn">import</span> <span class="n">Undouble</span>
+
+<span class="c1"># Init with default settings</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Undouble</span><span class="p">()</span>
+
+<span class="c1"># Import data</span>
+<span class="n">input_list_of_files</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">import_example</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="s1">&#39;flowers&#39;</span><span class="p">)</span>
+<span class="n">input_directory</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">input_list_of_files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="c1"># The target directory looks as following:</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">input_directory</span><span class="p">)</span>
+<span class="c1"># &#39;C:\\TEMP\\flower_images&#39;</span>
+
+<span class="c1"># Importing the files files from disk, cleaning and pre-processing</span>
+<span class="n">model</span><span class="o">.</span><span class="n">import_data</span><span class="p">(</span><span class="n">input_directory</span><span class="p">)</span>
+
+<span class="c1"># [clustimage] &gt;INFO&gt; Extracting images from: [C:\\TEMP\\flower_images]</span>
+<span class="c1"># [clustimage] &gt;INFO&gt; [214] files are collected recursively from path: [C:\\TEMP\\flower_images]</span>
+<span class="c1"># [clustimage] &gt;INFO&gt; [214] images are extracted.</span>
+<span class="c1"># [clustimage] &gt;INFO&gt; Reading and checking images.</span>
+<span class="c1"># [clustimage] &gt;INFO&gt; Reading and checking images.</span>
+<span class="c1"># [clustimage]: 100%|██████████| 214/214 [00:01&lt;00:00, 133.25it/s]</span>
+
+<span class="c1"># Compute hash</span>
+<span class="n">model</span><span class="o">.</span><span class="n">compute_hash</span><span class="p">()</span>
+
+<span class="c1"># Find images with image-hash &lt;= threshold</span>
+<span class="n">model</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Plot the images</span>
+<span class="n">model</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="file-locations">
+<h2>File locations<a class="headerlink" href="#file-locations" title="Permalink to this heading"></a></h2>
+<p>Read images recursively from a target directory.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import library</span>
+<span class="kn">from</span> <span class="nn">undouble</span> <span class="kn">import</span> <span class="n">Undouble</span>
+
+<span class="c1"># Init with default settings</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Undouble</span><span class="p">()</span>
+
+<span class="c1"># Import data; Pathnames to the images.</span>
+<span class="n">input_list_of_files</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">import_example</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="s1">&#39;flowers&#39;</span><span class="p">)</span>
+
+<span class="c1"># [undouble] &gt;INFO&gt; Store examples at [..\undouble\data]..</span>
+<span class="c1"># [undouble] &gt;INFO&gt; Downloading [flowers] dataset from github source..</span>
+<span class="c1"># [undouble] &gt;INFO&gt; Extracting files..</span>
+<span class="c1"># [undouble] &gt;INFO&gt; [214] files are collected recursively from path: [..\undouble\undouble\data\flower_images]</span>
+
+<span class="c1"># The list image path locations looks as following but may differ on your machine.</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">input_list_of_files</span><span class="p">)</span>
+
+<span class="c1"># [&#39;\\repos\\undouble\\undouble\\data\\flower_images\\0001.png&#39;,</span>
+<span class="c1">#  &#39;\\repos\\undouble\\undouble\\data\\flower_images\\0002.png&#39;,</span>
+<span class="c1">#  &#39;\\repos\\undouble\\undouble\\data\\flower_images\\0003.png&#39;,</span>
+<span class="c1">#  ...]</span>
+
+<span class="n">model</span><span class="o">.</span><span class="n">import_data</span><span class="p">(</span><span class="n">input_list_of_files</span><span class="p">)</span>
+
+<span class="c1"># [clustimage] &gt;INFO&gt; Reading and checking images.</span>
+<span class="c1"># [clustimage] &gt;INFO&gt; Reading and checking images.</span>
+<span class="c1"># [clustimage]: 100%|██████████| 214/214 [00:02&lt;00:00, 76.44it/s]</span>
+
+<span class="c1"># Compute hash</span>
+<span class="n">model</span><span class="o">.</span><span class="n">compute_hash</span><span class="p">()</span>
+
+<span class="c1"># Find images with image-hash &lt;= threshold</span>
+<span class="n">model</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Plot the images</span>
+<span class="n">model</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="numpy-array">
+<h2>Numpy Array<a class="headerlink" href="#numpy-array" title="Permalink to this heading"></a></h2>
+<p>Images can also be in the form of a numpy-array.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import library</span>
+<span class="kn">from</span> <span class="nn">undouble</span> <span class="kn">import</span> <span class="n">Undouble</span>
+
+<span class="c1"># Init with default settings</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Undouble</span><span class="p">()</span>
+
+<span class="c1"># Import data; numpy array containing images.</span>
+<span class="n">IMG</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">import_example</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="s1">&#39;mnist&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">IMG</span><span class="p">)</span>
+<span class="c1"># array([[ 0.,  0.,  5., ...,  0.,  0.,  0.],</span>
+<span class="c1">#        [ 0.,  0.,  0., ..., 10.,  0.,  0.],</span>
+<span class="c1">#        [ 0.,  0.,  0., ..., 16.,  9.,  0.],</span>
+<span class="c1">#        ...,</span>
+<span class="c1">#        [ 0.,  0.,  1., ...,  6.,  0.,  0.],</span>
+<span class="c1">#        [ 0.,  0.,  2., ..., 12.,  0.,  0.],</span>
+<span class="c1">#        [ 0.,  0., 10., ..., 12.,  1.,  0.]])</span>
+
+<span class="c1"># Compute hash</span>
+<span class="n">model</span><span class="o">.</span><span class="n">compute_hash</span><span class="p">()</span>
+
+<span class="c1"># Find images with image-hash &lt;= threshold</span>
+<span class="n">model</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Plot the images</span>
+<span class="n">model</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="output">
+<h1>Output<a class="headerlink" href="#output" title="Permalink to this heading"></a></h1>
+<p>The output is stored in model.results</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import library</span>
+<span class="kn">from</span> <span class="nn">undouble</span> <span class="kn">import</span> <span class="n">Undouble</span>
+
+<span class="c1"># Print all keys</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+<span class="c1"># dict_keys([&#39;img&#39;,</span>
+<span class="c1">#            &#39;pathnames&#39;,</span>
+<span class="c1">#            &#39;url&#39;,</span>
+<span class="c1">#            &#39;filenames&#39;,</span>
+<span class="c1">#            &#39;img_hash_bin&#39;,</span>
+<span class="c1">#            &#39;img_hash_hex&#39;,</span>
+<span class="c1">#            &#39;adjmat&#39;,</span>
+<span class="c1">#            &#39;select_pathnames&#39;,</span>
+<span class="c1">#            &#39;select_scores&#39;,</span>
+<span class="c1">#            &#39;select_idx&#39;,</span>
+<span class="c1">#            &#39;stats&#39;])</span>
+
+<span class="c1"># Pathnames</span>
+<span class="n">model</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;pathnames&#39;</span><span class="p">]</span>
+
+<span class="c1"># array([&#39;D:\\REPOS\\undouble\\undouble\\data\\flower_images\\0001.png&#39;,</span>
+<span class="c1">#        &#39;D:\\REPOS\\undouble\\undouble\\data\\flower_images\\0002.png&#39;,</span>
+<span class="c1">#        &#39;D:\\REPOS\\undouble\\undouble\\data\\flower_images\\0003.png&#39;,...</span>
+
+<span class="c1"># Filenames</span>
+<span class="n">model</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;filenames&#39;</span><span class="p">]</span>
+<span class="c1"># array([&#39;0001.png&#39;, &#39;0002.png&#39;, &#39;0003.png&#39;,...</span>
+
+<span class="c1"># Adjacency matrix</span>
+<span class="n">model</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;adjmat&#39;</span><span class="p">]</span>
+<span class="c1"># array([[ 0, 24, 24, ..., 30, 28, 26],</span>
+<span class="c1">#        [24,  0, 28, ..., 28, 18, 36],</span>
+<span class="c1">#        [24, 28,  0, ..., 28, 28, 28],</span>
+<span class="c1">#        ...,</span>
+<span class="c1">#        [30, 28, 28, ...,  0, 24, 34],</span>
+<span class="c1">#        [28, 18, 28, ..., 24,  0, 34],</span>
+<span class="c1">#        [26, 36, 28, ..., 34, 34,  0]])</span>
+
+<span class="c1"># Select groupings</span>
+<span class="n">model</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;select_idx&#39;</span><span class="p">]</span>
+<span class="c1"># [array([81, 82], dtype=int64),</span>
+<span class="c1">#  array([90, 91, 92], dtype=int64),</span>
+<span class="c1">#  array([169, 170], dtype=int64)]</span>
+</pre></div>
+</div>
+<hr>
+<center>
+        <script async src="https://media.ethicalads.io/media/client/ethicalads.min.js"></script>
+        <!-- Show an image ad -->
+        <!-- <div data-ea-publisher="erdogantgithubio" data-ea-type="image"></div> -->
+        <div data-ea-publisher="erdogantgithubio" data-ea-type="image" data-ea-style="stickybox"></div>
+</center>
+<hr></section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="core_functions.html" class="btn btn-neutral float-right" title="Core functionalities" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, Erdogan Taskesen.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
