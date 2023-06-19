@@ -196,7 +196,7 @@ The output is stored in model.results
 Extract Groups
 ******************
 
-Extracting the results groupwise can be done by combining the output index with the pathnames or filenames.
+Extracting the groups can be done using the group-index combined with the pathnames (or filenames).
 
 .. code:: python
 
