@@ -67,6 +67,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="#output">Output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#extract-groups">Extract Groups</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Core functionalities</span></p>
 <ul>
@@ -314,6 +315,52 @@
 <span class="c1"># [array([81, 82], dtype=int64),</span>
 <span class="c1">#  array([90, 91, 92], dtype=int64),</span>
 <span class="c1">#  array([169, 170], dtype=int64)]</span>
+</pre></div>
+</div>
+</section>
+<section id="extract-groups">
+<h1>Extract Groups<a class="headerlink" href="#extract-groups" title="Permalink to this heading"></a></h1>
+<p>Extracting the results groupwise can be done by combining the output index with the pathnames or filenames.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import library</span>
+<span class="kn">from</span> <span class="nn">undouble</span> <span class="kn">import</span> <span class="n">Undouble</span>
+
+<span class="c1"># Init with default settings</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Undouble</span><span class="p">()</span>
+
+<span class="c1"># Import data; Pathnames to the images.</span>
+<span class="n">input_list_of_files</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">import_example</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="s1">&#39;flowers&#39;</span><span class="p">)</span>
+
+<span class="c1"># Import data from files.</span>
+<span class="n">model</span><span class="o">.</span><span class="n">import_data</span><span class="p">(</span><span class="n">input_list_of_files</span><span class="p">)</span>
+
+<span class="c1"># Compute hash</span>
+<span class="n">model</span><span class="o">.</span><span class="n">compute_hash</span><span class="p">()</span>
+
+<span class="c1"># Find images with image-hash &lt;= threshold</span>
+<span class="n">model</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># [undouble] &gt;INFO&gt; [3] groups with similar image-hash.</span>
+<span class="c1"># [undouble] &gt;INFO&gt; [3] groups are detected for [7] images.</span>
+
+<span class="c1"># Plot the images</span>
+<span class="n">model</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+
+<span class="c1"># Extract the pathnames for each group</span>
+<span class="k">for</span> <span class="n">idx_group</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;select_idx&#39;</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">idx_group</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;pathnames&#39;</span><span class="p">][</span><span class="n">idx_group</span><span class="p">])</span>
+
+
+<span class="c1"># [81 82]</span>
+<span class="c1"># [&#39;D:\\REPOS\\undouble\\undouble\\data\\flower_images\\0082 - Copy.png&#39;</span>
+<span class="c1">#  &#39;D:\\REPOS\\undouble\\undouble\\data\\flower_images\\0082.png&#39;]</span>
+<span class="c1"># [90 91 92]</span>
+<span class="c1"># [&#39;D:\\REPOS\\undouble\\undouble\\data\\flower_images\\0090 - Copy (2).png&#39;</span>
+<span class="c1">#  &#39;D:\\REPOS\\undouble\\undouble\\data\\flower_images\\0090 - Copy.png&#39;</span>
+<span class="c1">#  &#39;D:\\REPOS\\undouble\\undouble\\data\\flower_images\\0090.png&#39;]</span>
+<span class="c1"># [169 170]</span>
+<span class="c1"># [&#39;D:\\REPOS\\undouble\\undouble\\data\\flower_images\\0167 - Copy.png&#39;</span>
+<span class="c1">#  &#39;D:\\REPOS\\undouble\\undouble\\data\\flower_images\\0167.png&#39;]</span>
 </pre></div>
 </div>
 <hr>

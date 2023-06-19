@@ -193,4 +193,54 @@ The output is stored in model.results
 	#  array([169, 170], dtype=int64)]
 
 
+Extract Groups
+******************
+
+Extracting the results groupwise can be done by combining the output index with the pathnames or filenames.
+
+.. code:: python
+
+	# Import library
+	from undouble import Undouble
+
+	# Init with default settings
+	model = Undouble()
+
+	# Import data; Pathnames to the images.
+	input_list_of_files = model.import_example(data='flowers')
+
+	# Import data from files.
+	model.import_data(input_list_of_files)
+
+	# Compute hash
+	model.compute_hash()
+    
+	# Find images with image-hash <= threshold
+	model.group(threshold=0)
+
+	# [undouble] >INFO> [3] groups with similar image-hash.
+	# [undouble] >INFO> [3] groups are detected for [7] images.
+
+	# Plot the images
+	model.plot()
+
+	# Extract the pathnames for each group
+	for idx_group in model.results['select_idx']:
+	    print(idx_group)
+	    print(model.results['pathnames'][idx_group])
+
+
+	# [81 82]
+	# ['D:\\REPOS\\undouble\\undouble\\data\\flower_images\\0082 - Copy.png'
+	#  'D:\\REPOS\\undouble\\undouble\\data\\flower_images\\0082.png']
+	# [90 91 92]
+	# ['D:\\REPOS\\undouble\\undouble\\data\\flower_images\\0090 - Copy (2).png'
+	#  'D:\\REPOS\\undouble\\undouble\\data\\flower_images\\0090 - Copy.png'
+	#  'D:\\REPOS\\undouble\\undouble\\data\\flower_images\\0090.png']
+	# [169 170]
+	# ['D:\\REPOS\\undouble\\undouble\\data\\flower_images\\0167 - Copy.png'
+	#  'D:\\REPOS\\undouble\\undouble\\data\\flower_images\\0167.png']
+
+
+
 .. include:: add_bottom.add
