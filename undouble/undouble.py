@@ -124,9 +124,42 @@ class Undouble():
         black_list : list, (default: ['undouble'])
             Exclude directory with all subdirectories from processing.
 
+        Example
+        -------
+        >>> # Import library
+        >>> from undouble import Undouble
+        >>> #
+        >>> # Init with default settings
+        >>> model = Undouble()
+        >>> #
+        >>> #
+        >>> # Import example flower data set
+        >>> list_of_filepaths = model.import_example(data='flowers')
+        >>> #
+        >>> # Read from file names
+        >>> model.import_data(input_list_of_files)
+        >>> #
+        >>> #
+        >>> # Read from directory
+        >>> input_directory, _ = os.path.split(input_list_of_files[0])
+        >>> model.import_data(input_directory)
+        >>> #
+        >>> #
+        >>> # Import from numpy array
+        >>> IMG = model.import_example(data='mnist')
+        >>> # Compute hash
+        >>> model.compute_hash()
+        >>> #
+        >>> #
+        >>> # Find images with image-hash <= threshold
+        >>> model.group(threshold=0)
+        >>> #
+        >>> # Plot the images
+        >>> model.plot()
+
         Returns
         -------
-        None.
+        model.results
 
         """
         if isinstance(black_list, str): black_list = [black_list]
