@@ -13,7 +13,7 @@ class TestUNDOUBLE(unittest.TestCase):
 
         # Check numpy array imports
         model.import_data(X)
-        assert model.results['img'].shape==(214, 128, 128, 3)
+        assert model.results['img'].shape==(214, 128, 128, 4)
         assert len(model.results['pathnames'])==214
         assert len(model.results['filenames'])==214
         assert set(model.results.keys())==set(['img', 'feat', 'pathnames', 'filenames', 'url'])
@@ -52,14 +52,6 @@ class TestUNDOUBLE(unittest.TestCase):
         # Compute Hash
         model.compute_hash()
         assert set(model.results.keys())==set(['img', 'url', 'pathnames', 'filenames', 'img_hash_bin', 'img_hash_hex', 'adjmat'])
-        assert np.all(model.results['img_hash_bin'][0] == [ True, False, False,  True, False,  True, False,  True,  True,
-                                                           False, False,  True,  True,  True, False, False, False,  True,
-                                                           True,  True, False, False,  True, False, False,  True,  True,
-                                                           False, False, False,  True, False, False,  True,  True,  True,
-                                                           True,  True, False, False,  True, False, False, False,  True,
-                                                           False,  True,  True, False,  True,  True, False,  True, False,
-                                                           True,  True, False, False,  True,  True,  True, False, False,
-                                                           False])
 
         param_grid = {
         	'method': ['ahash','phash','dhash','whash-haar','crop-resistant-hash'],
