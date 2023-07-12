@@ -10,7 +10,7 @@ from undouble.undouble import (
 
 __author__ = 'Erdogan Tasksen'
 __email__ = 'erdogant@gmail.com'
-__version__ = '1.2.10'
+__version__ = '1.2.11'
 
 # module level doc-string
 __doc__ = """
