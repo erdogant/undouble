@@ -245,9 +245,9 @@
 <span class="n">model</span> <span class="o">=</span> <span class="n">Undouble</span><span class="p">()</span>
 
 <span class="c1"># Import data; numpy array containing images.</span>
-<span class="n">IMG</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">import_example</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="s1">&#39;mnist&#39;</span><span class="p">)</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">import_example</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="s1">&#39;mnist&#39;</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">IMG</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 <span class="c1"># array([[ 0.,  0.,  5., ...,  0.,  0.,  0.],</span>
 <span class="c1">#        [ 0.,  0.,  0., ..., 10.,  0.,  0.],</span>
 <span class="c1">#        [ 0.,  0.,  0., ..., 16.,  9.,  0.],</span>

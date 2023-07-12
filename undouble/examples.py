@@ -3,6 +3,40 @@ from undouble import Undouble
 # print(dir(undouble))
 # print(undouble.__version__)
 
+# %%
+# Import library
+from undouble import Undouble
+
+# Init with default settings
+model = Undouble()
+
+# Import data; Pathnames to the images.
+input_list_of_files, y = model.import_example(data='faces')
+# input_list_of_files, y = model.import_example(data='mnist')
+# input_list_of_files = model.import_example(data='flowers')
+# input_list_of_files = model.import_example(data='cat_and_dog')
+
+# Import data from files.
+model.import_data(input_list_of_files)
+
+# Compute hash
+model.compute_hash()
+
+# Find images with image-hash <= threshold
+model.group()
+
+# [undouble] >INFO> [3] groups with similar image-hash.
+# [undouble] >INFO> [3] groups are detected for [7] images.
+
+# Plot the images
+model.plot()
+
+# Extract the pathnames for each group
+for idx_group in model.results['select_idx']:
+    print(idx_group)
+    print(model.results['pathnames'][idx_group])
+
+
 # %% Issue: group does not work, Check crop-resistant-hash
 
 # Import library

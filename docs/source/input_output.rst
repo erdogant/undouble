@@ -118,9 +118,9 @@ Images can also be in the form of a numpy-array.
 	model = Undouble()
 
 	# Import data; numpy array containing images.
-	IMG = model.import_example(data='mnist')
+	X, y = model.import_example(data='mnist')
 
-	print(IMG)
+	print(X)
 	# array([[ 0.,  0.,  5., ...,  0.,  0.,  0.],
 	#        [ 0.,  0.,  0., ..., 10.,  0.,  0.],
 	#        [ 0.,  0.,  0., ..., 16.,  9.,  0.],

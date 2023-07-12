@@ -271,10 +271,10 @@ Finding identical images for the mnist digits can be done as following:
 	model = Undouble()
 
 	# Import example data
-	targetdir = model.import_example(data='mnist')
+	X, y = model.import_example(data='mnist')
 
 	# Importing the files files from disk, cleaning and pre-processing
-	model.import_data(targetdir)
+	model.import_data(X)
 
 	# Compute image-hash
 	model.compute_hash(method='phash', hash_size=16)

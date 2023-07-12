@@ -365,10 +365,10 @@ No collisions were present but only some near-identical images, such as the moto
 <span class="n">model</span> <span class="o">=</span> <span class="n">Undouble</span><span class="p">()</span>
 
 <span class="c1"># Import example data</span>
-<span class="n">targetdir</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">import_example</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="s1">&#39;mnist&#39;</span><span class="p">)</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">import_example</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="s1">&#39;mnist&#39;</span><span class="p">)</span>
 
 <span class="c1"># Importing the files files from disk, cleaning and pre-processing</span>
-<span class="n">model</span><span class="o">.</span><span class="n">import_data</span><span class="p">(</span><span class="n">targetdir</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">import_data</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 
 <span class="c1"># Compute image-hash</span>
 <span class="n">model</span><span class="o">.</span><span class="n">compute_hash</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;phash&#39;</span><span class="p">,</span> <span class="n">hash_size</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>

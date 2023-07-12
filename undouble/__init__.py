@@ -1,11 +1,9 @@
+from datazets import get as import_example
+
 from undouble.undouble import Undouble
 
 from undouble.undouble import (
-    import_example,
-    load_example,
     compute_blur,
-    wget,
-    unzip,
     seperate_path,
 )
 

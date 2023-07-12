@@ -1,12 +1,11 @@
 """Python package undouble is to detect (near-)identical images."""
 
 import os
-import requests
 import logging
 import numpy as np
 from tqdm import tqdm
-import zipfile
 from clustimage import Clustimage
+import datazets as dz
 import clustimage.clustimage as cl
 import shutil
 import cv2
@@ -15,10 +14,8 @@ from ismember import ismember
 import matplotlib.pyplot as plt
 
 logger = logging.getLogger('')
-for handler in logger.handlers[:]:  # get rid of existing old handlers
-    logger.removeHandler(handler)
+[logger.removeHandler(handler) for handler in logger.handlers[:]]
 console = logging.StreamHandler()
-# formatter = logging.Formatter('[%(asctime)s] [undouble]> %(levelname)s> %(message)s', datefmt='%H:%M:%S')
 formatter = logging.Formatter('[undouble] >%(levelname)s> %(message)s')
 console.setFormatter(formatter)
 logger.addHandler(console)
@@ -399,25 +396,43 @@ class Undouble():
                 self.results['filenames'] = None
                 self.results['pathnames'] = None
 
-    def import_example(self, data='flowers', url=None):
+    def import_example(self, data='flowers', url=None, sep=','):
         """Import example dataset from github source.
 
-        Import one of the few datasets from github source or specify your own download url link.
+        Import one of the datasets from github source or specify your own download url link.
 
         Parameters
         ----------
         data : str
-            Name of datasets: 'flowers', 'mnist', 'cat_and_dog'
+            Images:
+                * 'faces'
+                * 'mnist'
+            Files with images:
+                * 'southern_nebula'
+                * 'flowers'
+                * 'scenes'
+                * 'cat_and_dog'
+
         url : str
             url link to to dataset.
 
         Returns
         -------
-        pd.DataFrame()
-            Dataset containing mixed features.
+        list: images
+
+        References
+        ----------
+            * https://github.com/erdogant/datazets
 
         """
-        return import_example(data=data, url=url)
+        df = dz.get(data=data, url=url, sep=sep)
+
+        if data=='mnist' or data=='faces':
+            X=df.iloc[:, 1:].values
+            y=df['target'].values
+            return X, y
+        else:
+            return df
 
     def plot_hash(self, idx=None, filenames=None):
         """Plot the image-hash.
@@ -617,7 +632,7 @@ class Undouble():
             hashes = np.array(list(map(lambda x: x.ravel().astype(int), hashes)))
             hashes = np.c_[hashes]
         else:
-            hashes = list(map(lambda x: x.reshape(hash_size,hash_size), hashes))
+            hashes = list(map(lambda x: x.reshape(hash_size, hash_size), hashes))
 
         # Store the hash
         self.results['img_hash_bin'] = hashes
@@ -636,39 +651,6 @@ class Undouble():
             return np.array(list(map(lambda x: hex(int(''.join(x.astype(int).astype(str)), 2)), self.results['img_hash_bin'])))
         else:
             logger.warning('Results missing! Hint: try to first use compute_hash()')
-
-
-# %% Import example dataset from github.
-def import_example(data='flowers', url=None):
-    """Import example dataset from github source.
-
-    Import one of the few datasets from github source or specify your own download url link.
-
-    Parameters
-    ----------
-    data : str
-        Name of datasets: 'flowers', 'faces', 'mnist', 'cat_and_dog'
-    url : str
-        url link to to dataset.
-    verbose : int, (default: 20)
-        Print progress to screen. The default is 3.
-        60: None, 40: Error, 30: Warn, 20: Info, 10: Debug
-
-    Returns
-    -------
-    pd.DataFrame()
-        Dataset containing mixed features.
-
-    """
-    curpath = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data')
-    if data=='cat_and_dog':
-        df = cl.import_example(data=None, url='https://erdogant.github.io/datasets/cat_and_dog.zip', curpath=curpath)
-    else:
-        df = cl.import_example(data=data, curpath=curpath)
-    # Return
-    return df
-
-    # %% Set target directory
 
 
 def create_targetdir(pathname, targetdir):
@@ -803,103 +785,6 @@ def filter_checks(pathnames, filters):
         locOK = np.all(np.isin(loc[0], loc))
 
     return np.all([fileOK, resOK, locOK])
-
-
-# %% Download files from github source
-def wget(url, writepath):
-    """Retrieve file from url.
-
-    Parameters
-    ----------
-    url : str.
-        Internet source.
-    writepath : str.
-        Directory to write the file.
-
-    Returns
-    -------
-    None.
-
-    Example
-    -------
-    >>> import clustimage as cl
-    >>> images = cl.wget('https://erdogant.github.io/datasets/flower_images.zip', 'c://temp//flower_images.zip')
-
-    """
-    r = requests.get(url, stream=True)
-    with open(writepath, "wb") as fd:
-        for chunk in r.iter_content(chunk_size=1024):
-            fd.write(chunk)
-
-
-# %% Import example dataset from github.
-def load_example(data='breast'):
-    """Import example dataset from sklearn.
-
-    Parameters
-    ----------
-    'breast' : str, two-class
-    'titanic': str, two-class
-    'iris' : str, multi-class
-
-    Returns
-    -------
-    tuple containing dataset and response variable (X,y).
-
-    """
-    try:
-        from sklearn import datasets
-    except:
-        print('This requires: <pip install sklearn>')
-        return None, None
-
-    if data=='iris':
-        X, y = datasets.load_iris(return_X_y=True)
-    elif data=='breast':
-        X, y = datasets.load_breast_cancer(return_X_y=True)
-    elif data=='titanic':
-        X, y = datasets.fetch_openml("titanic", version=1, as_frame=True, return_X_y=True)
-
-    return X, y
-
-
-# %% unzip
-def unzip(path_to_zip):
-    """Unzip files.
-
-    Parameters
-    ----------
-    path_to_zip : str
-        Path of the zip file.
-
-    Returns
-    -------
-    getpath : str
-        Path containing the unzipped files.
-
-    Example
-    -------
-    >>> import clustimage as cl
-    >>> dirpath = cl.unzip('c://temp//flower_images.zip')
-
-    """
-    getpath = None
-    if path_to_zip[-4:]=='.zip':
-        if not os.path.isdir(path_to_zip):
-            logger.info('Extracting files..')
-            pathname, _ = os.path.split(path_to_zip)
-            # Unzip
-            zip_ref = zipfile.ZipFile(path_to_zip, 'r')
-            zip_ref.extractall(pathname)
-            zip_ref.close()
-            getpath = path_to_zip.replace('.zip', '')
-            if not os.path.isdir(getpath):
-                logger.error('Extraction failed.')
-                getpath = None
-    else:
-        logger.warning('Input is not a zip file: [%s]', path_to_zip)
-    # Return
-    return getpath
 
 
 # %%
