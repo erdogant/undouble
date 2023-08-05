@@ -4,6 +4,26 @@ from undouble import Undouble
 # print(undouble.__version__)
 
 # %%
+
+# %% issue #9 homogenious part
+model = Undouble(method='phash')
+# Import flowers example
+X = model.import_example(data='flowers')
+X = X[182:184]
+# Import data
+# model.import_data(X, return_results=False)
+# Compute Hash
+# model.compute_hash()
+# assert set(model.results.keys())==set(['img', 'url', 'pathnames', 'filenames', 'img_hash_bin', 'img_hash_hex', 'adjmat'])
+
+combination = ('crop-resistant-hash', False, 16, (256, 256))
+model = Undouble(method=combination[0], grayscale=combination[1], hash_size=combination[2], dim=combination[3], verbose=40)
+# Import data
+model.import_data(X, return_results=False)
+# Compute Hash
+model.compute_hash(return_dict=True)
+    
+# %%
 # Import library
 from undouble import Undouble
 
