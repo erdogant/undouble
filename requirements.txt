@@ -1,6 +1,6 @@
 matplotlib
 numpy
 tqdm
-clustimage>="1.5.17"
+clustimage>="1.5.19"
 ismember
 datazets>="0.1.7"
