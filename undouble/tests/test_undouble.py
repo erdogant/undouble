@@ -65,6 +65,7 @@ class TestUNDOUBLE(unittest.TestCase):
         combinations=list(combinations)
 
         for combination in tqdm(combinations):
+            print(combination)
             model = Undouble(method=combination[0], grayscale=combination[1], hash_size=combination[2], dim=combination[3], verbose=40)
             # Import data
             model.import_data(X, return_results=False)
