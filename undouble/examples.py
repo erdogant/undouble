@@ -5,6 +5,7 @@ from undouble import Undouble
 
 # %%
 
+
 # %% issue #9 homogenious part
 model = Undouble(method='phash')
 # Import flowers example

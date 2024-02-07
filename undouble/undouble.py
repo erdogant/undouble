@@ -216,6 +216,9 @@ class Undouble():
         # Build adjacency matrix for the image-hash based on nr. of differences
         logger.info('Compute adjacency matrix [%gx%g] with absolute differences based on the image-hash of [%s].' %(self.results['img_hash_bin'].shape[0], self.results['img_hash_bin'].shape[0], self.params['method']))
         self.results['adjmat'] = (self.results['img_hash_bin'][:, None, :] != self.results['img_hash_bin']).sum(2)
+        # An alternative solution
+        # self.result = np.not_equal(self.results['img_hash_bin'][:, None, :], self.results['img_hash_bin']).sum(2)
+
 
         # Remove keys that are not used.
         if 'labels' in self.results: self.results.pop('labels')
