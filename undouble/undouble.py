@@ -322,60 +322,81 @@ class Undouble():
             if not os.path.isdir(targetdir): raise Exception(logger.error(''))
         # logger.info('Detected images: [%d] across of [%d] groups.' %(totfiles, totgroup))
 
-        totfiles = np.sum(list(map(len, self.results['select_pathnames'])))
-        totgroup = len(self.results['select_pathnames'])
-        tdir = 'undouble' if targetdir is None else targetdir
-        answer = input('\n-------------------------------------------------\n>You are at the point of physically moving files.\n-------------------------------------------------\n>[%d] similar images are detected over [%d] groups.\n>[%d] images will be moved to the [%s] subdirectory.\n>[%d] images will be copied to the [%s] subdirectory.\n\n>[C]ontinue moving all files.\n>[W]ait in each directory.\n>[Q]uit\n>Answer: ' %(totfiles, totgroup, totfiles - totgroup, tdir, totgroup, tdir))
-        answer = str.lower(answer)
-        if answer == 'q':
+        if gui:
+            # Libraries
+            from tkinter import Tk
+            from undouble.gui import Gui
+            # Create the root Tkinter window
+            # root = Tk()
+            # # Initialize the ImageMoverApp
+            # app = Gui(root, self.results['select_pathnames'])
+            # # Run the Tkinter mainloop
+            # root.mainloop()
+
+            for pathnames in self.results['select_pathnames']:
+                # print(pathnames)
+                # Check whether move is allowed
+                # filterOK = filter_checks(pathnames, filters)
+                root = Tk()
+                # Initialize the ImageMoverApp
+                app = Gui(root, [pathnames])
+                # Run the Tkinter mainloop
+                root.mainloop()
+            # Return
             return
+        else:
+            totfiles = np.sum(list(map(len, self.results['select_pathnames'])))
+            totgroup = len(self.results['select_pathnames'])
+            tdir = 'undouble' if targetdir is None else targetdir
+            # answer = input('\n-------------------------------------------------\n>You are at the point of physically moving files.\n-------------------------------------------------\n>[%d] similar images are detected over [%d] groups.\n>[%d] images will be moved to the [%s] subdirectory.\n>[%d] images will be copied to the [%s] subdirectory.\n\n>[C]ontinue moving all files.\n>[W]ait in each directory.\n>[Q]uit\n>Answer: ' %(totfiles, totgroup, totfiles - totgroup, tdir, totgroup, tdir))
+            answer = input(
+                '\n--------------------------------------------------------------------\n'
+                '>This functions allows you to physically move the duplicate files!\n'
+                '--------------------------------------------------------------------\n'
+                '>[%d] similar images are detected over [%d] groups.\n'
+                '>[%d] images will be moved to the [%s] subdirectory.\n'
+                '>[%d] images will be copied to the [%s] subdirectory.\n'
+                '--------------------------------------------------------------------\n'
+                '>[A]utomatically move all file without warnings.\n'
+                '>[M]ove files per directory.\n'
+                '>[Q]uit\n'
+                '--------------------------------------------------------------------\n'
+                '>Answer: ' % (totfiles, totgroup, totfiles - totgroup, tdir, totgroup, tdir)
+            )
+            answer = str.lower(answer)
+            if answer == 'q':
+                return
+    
+            # For each group, check the resolution and location.
+            pathmem = ''
+            for pathnames in self.results['select_pathnames']:
+                curdir = os.path.split(pathnames[0])[0]
+                if pathmem != curdir:
+                    pathmem = curdir
+                    logger.info('Working in dir: [%s]' %(curdir))
+                    if answer != 'a':
+                        answer = input('--------------------------------------------------------------------\n'
+                                       '>Press <enter> to proceed to the next directory.\n'
+                                       '>[A]utomatically move all file without warnings.\n'
+                                       '>[Q]uit\nAnswer: ')
+                        answer = str.lower(answer)
+                        if answer == 'q':
+                            return
+    
+                # Check file exists
+                pathnames = np.array(pathnames)
+                pathnames = pathnames[list(map(os.path.isfile, pathnames))]
+    
+                # Check whether move is allowed
+                filterOK = filter_checks(pathnames, filters)
+    
+                # Move to targetdir
+                if filterOK:
+                    # Sort images on resolution and least amount of blur (best first)
+                    pathnames = sort_images(pathnames)['pathnames']
+                    # Move to dir
+                    move_to_dir(pathnames, targetdir, make_moved_filename_consistent=make_moved_filename_consistent)
 
-        # For each group, check the resolution and location.
-        pathmem=''
-        for pathnames in self.results['select_pathnames']:
-            curdir=os.path.split(pathnames[0])[0]
-            if pathmem!=curdir:
-                pathmem=curdir
-                logger.info('Working in dir: [%s]' %(curdir))
-                if answer!='c':
-                    answer = input('><enter> to proceed to the next directory.\n>[C]ontinue to move all files.\n>[Q]uit\nAnswer: ')
-                    answer = str.lower(answer)
-                    if answer == 'q': return
-            # Check file exists
-            pathnames = np.array(pathnames)
-            pathnames = pathnames[list(map(os.path.isfile, pathnames))]
-            # Check whether move is allowed
-            filterOK = filter_checks(pathnames, filters)
-            # Move to targetdir
-            if filterOK:
-                # Sort images on resolution and least amount of blur (best first)
-                pathnames = sort_images(pathnames)['pathnames']
-                # Move to dir
-                self._move_to_dir(pathnames, targetdir, make_moved_filename_consistent=True)
-
-    def _move_to_dir(self, pathnames, targetdir, make_moved_filename_consistent=True):
-        """Move to target directory.
-
-        The first pathname is copied, the other are moved.
-
-        Parameters
-        ----------
-        pathnames : list of str
-        targetdir : target directory to copy and move the files
-
-        """
-        # Create targetdir
-        movedir, dirname, filename, ext = create_targetdir(pathnames[0], targetdir)
-        # 1. Copy first file to targetdir and add "_COPY"
-        shutil.copy(pathnames[0], os.path.join(movedir, filename + '_COPY' + ext))
-        # 2. Move all others
-        for i, file in enumerate(pathnames[1:]):
-            logger.debug(file)
-            if make_moved_filename_consistent:
-                ext = os.path.split(file)[1][-4:].lower()
-                shutil.move(file, os.path.join(movedir, filename + '_' + str(i) + ext))
-            else:
-                shutil.move(file, os.path.join(movedir, os.path.split(file)[1]))
 
     def clean_init(self, params=True, results=True):
         """Clean or removing previous results and models to ensure correct working."""
@@ -663,7 +684,61 @@ class Undouble():
             logger.warning('Results missing! Hint: try to first use compute_hash()')
 
 
-def create_targetdir(pathname, targetdir):
+# %%
+def move_to_dir(pathnames, targetdir, make_moved_filename_consistent=False):
+    """Move to target directory.
+
+    The first pathname is copied, the other are moved.
+
+    Parameters
+    ----------
+    pathnames : list of str
+    targetdir : target directory to copy and move the files
+
+    """
+    # Create targetdir
+    movedir, dirname, filename, ext = create_targetdir(pathnames[0], targetdir)
+    # 1. Copy first file to targetdir and add "_COPY"
+    shutil.copy(pathnames[0], os.path.join(movedir, filename + '_KEPT' + ext))
+
+    # 2. Move all others
+    for i, file in enumerate(pathnames[1:]):
+        logger.info(f'Moving> {file}')
+        if make_moved_filename_consistent:
+            ext = os.path.split(file)[1][-4:].lower()
+            shutil.move(file, os.path.join(movedir, filename + '_MOVED_' + str(i) + '.' + ext))
+        else:
+            # Original filename
+            # shutil.move(file, os.path.join(movedir, os.path.split(file)[1]))
+            _, filename1, ext1 = seperate_path(os.path.split(file)[1])
+            shutil.move(file, os.path.join(movedir, filename1 + '_MOVED' + ext1))
+
+
+# %%
+def move_to_dir_gui(pathnames, targetdir):
+    """Move to target directory.
+
+    The first pathname is copied, the other are moved.
+
+    Parameters
+    ----------
+    pathnames : list of str
+    targetdir : target directory to copy and move the files
+
+    """
+
+    # 2. Move all others
+    for filepath in pathnames:
+        # logger.info(f'Moving> {filepath} -> ')
+        if os.path.isfile(filepath):
+            # Create targetdir
+            movedir, _, filename, ext = create_targetdir(filepath, targetdir)
+            # Original filename
+            shutil.move(filepath, os.path.join(movedir, filename + ext))
+            logger.info(f'Moving> {filepath} -> {os.path.join(movedir, filename + ext)}')
+
+
+def create_targetdir(pathname, targetdir=None):
     """Create directory.
 
     Parameters
@@ -818,6 +893,9 @@ def compute_blur(pathname):
     """
     # method
     img = cv2.imread(pathname)
+    if img is None:
+        return 0
+
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     # compute the Laplacian of the image and then return the focus measure, which is simply the variance of the Laplacian
     fm_score = cv2.Laplacian(gray, cv2.CV_64F).var()
