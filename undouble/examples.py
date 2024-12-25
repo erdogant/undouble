@@ -4,9 +4,69 @@ from undouble import Undouble
 # print(undouble.__version__)
 
 # %%
+from undouble import Undouble
+
+# Init with default settings
+model = Undouble(grayscale=False,
+                 ext=['png', 'tiff', 'jpg', 'heic', 'jpeg'],
+                 method='phash',
+                 hash_size=8,
+                 )
+
+# Import example data
+model.import_data(r'D://temp//photos//')
+# model.import_data(r'C:\Users\beeld\.conda\envs\env_undouble\Lib\site-packages\datazets\data')
+
+
+# Import flowers example
+# X = model.import_example(data='scenes')
+# Importing the files files from disk, cleaning and pre-processing
+# model.import_data(X)
+
+# Compute image-hash
+model.compute_hash()
+
+# Find images with image-hash <= threshold
+model.group(threshold=10)
+
+# Plot the images
+model.plot()
+
+# Move the images
+model.move(gui=True)
+
+
+# %%
+from tkinter import Tk
+from undouble.gui import Gui
+
+image_groups = model.results['select_pathnames']
+
+# Create the root Tkinter window
+root = Tk()
+# Initialize the ImageMoverApp
+app = Gui(root, image_groups)
+# Run the Tkinter mainloop
+root.mainloop()
+
+
+# %%
+# image_groups = {
+#     1: [r"D:\temp\photos\Various\undouble\IMG_3231_KEPT.jpeg", r"D:\temp\photos\Various\undouble\IMG_3232_MOVED.jpeg"],
+#     2: [r"D:\temp\photos\Various\undouble\IMG_4925_KEPT.jpeg", r"D:\temp\photos\Various\undouble\IMG_4926_MOVED..jpeg"]
+# }
+
+# # Create the root Tkinter window
+# root = Tk()
+# # Initialize the ImageMoverApp
+# app = ImageMoverApp(root, image_groups, targetdir="undouble")
+# # Run the Tkinter mainloop
+# root.mainloop()
 
 
 # %% issue #9 homogenious part
+from undouble import Undouble
+
 model = Undouble(method='phash')
 # Import flowers example
 X = model.import_example(data='flowers')
@@ -23,7 +83,9 @@ model = Undouble(method=combination[0], grayscale=combination[1], hash_size=comb
 model.import_data(X, return_results=False)
 # Compute Hash
 model.compute_hash(return_dict=True)
-    
+
+
+
 # %%
 # Import library
 from undouble import Undouble
