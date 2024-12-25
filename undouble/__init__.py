@@ -1,16 +1,19 @@
 from datazets import get as import_example
+from undouble.gui import Gui
 
 from undouble.undouble import Undouble
 
 from undouble.undouble import (
     compute_blur,
     seperate_path,
+    move_to_dir,
+    move_to_dir_gui,
 )
 
 
 __author__ = 'Erdogan Tasksen'
 __email__ = 'erdogant@gmail.com'
-__version__ = '1.2.11'
+__version__ = '1.3.0'
 
 # module level doc-string
 __doc__ = """
