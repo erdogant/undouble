@@ -30,7 +30,7 @@ model.compute_hash()
 model.group(threshold=10)
 
 # Plot the images
-model.plot()
+# model.plot()
 
 # Move the images
 model.move(gui=True)

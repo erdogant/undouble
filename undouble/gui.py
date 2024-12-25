@@ -1,6 +1,6 @@
 import os
 import tkinter as tk
-from PIL import Image, ImageTk
+from PIL import Image, ImageTk, ImageDraw, ImageFont
 from tkinter import messagebox
 import undouble
 
@@ -15,7 +15,7 @@ class Gui:
         self.image_buttons = []  # Buttons to show images
         self.figsize = figsize
 
-        self.root.title("Image Selector")
+        self.root.title("Image Selector to Undouble")
         self.create_widgets()
         self.display_group()
         if len(self.image_groups)==0:
@@ -62,32 +62,53 @@ class Gui:
         # Clear the previous images
         for widget in self.image_frame.winfo_children():
             widget.destroy()
-    
+
         # Update the list so that the files can be shown and are not yet moved
         self.image_groups = [[path for path in group if os.path.isfile(path)] for group in self.image_groups]
-    
+
         # Get the current group
         if self.current_group_idx < len(self.image_groups):
             current_group = self.image_groups[self.current_group_idx]
             self.image_buttons = []
-    
+
             for idx, img_path in enumerate(current_group):
-                # Get the filename
+                # Get the filename and filesize
                 filename = os.path.basename(img_path)
-    
+                filesize = os.path.getsize(img_path) # Get file size in bytes
+                filesize_mb = round(filesize / (1024 * 1024), 2)
+                if filesize_mb < 1:
+                    filesize_kb = round(filesize / 1024, 2)
+                    file_info = f"{os.path.split(img_path)[0]}\n{filename}\n{filesize_kb} KB"
+                else:
+                    file_info = f"{os.path.split(img_path)[0]}\n{filename}\n{filesize_mb} MB"
+
                 # Load and resize the image
                 pil_image = Image.open(img_path)
                 pil_image = pil_image.resize(self.figsize)  # Resize for display
                 tk_image = ImageTk.PhotoImage(pil_image)
-    
+
                 # Create a grayed-out version of the image
                 gray_pil_image = pil_image.convert("L")  # Convert to grayscale
                 tk_gray_image = ImageTk.PhotoImage(gray_pil_image)
-    
-                # Create a label for the filename above the image
-                filename_label = tk.Label(self.image_frame, text=filename)
-                filename_label.grid(row=idx // 3, column=idx % 3, padx=10, pady=(0, 5))
-    
+
+                # Add text (filename and filesize) to the center of the image
+                draw = ImageDraw.Draw(pil_image)
+                try:
+                    # font = ImageFont.load_default()  # Use default font; you can change this if needed
+                    font = ImageFont.truetype("arial.ttf", size=int(pil_image.height // 20))  # Scaled based on image size
+                except IOError:
+                    font = ImageFont.load_default()
+
+                # Calculate text size using textbbox (returns the bounding box)
+                bbox = draw.textbbox((0, 0), file_info, font=font)
+                text_width, text_height = bbox[2] - bbox[0], bbox[3] - bbox[1]
+
+                text_position = ((pil_image.width - text_width) // 2, (pil_image.height - text_height) // 2)
+                draw.text(text_position, file_info, fill="white", font=font)
+
+                # Update the Tk image with the new image (with text drawn)
+                tk_image = ImageTk.PhotoImage(pil_image)  # Create a new PhotoImage object after drawing text
+
                 # Create a button for each image
                 img_button = tk.Button(
                     self.image_frame,
@@ -99,18 +120,19 @@ class Gui:
                 img_button.image = tk_image  # Keep reference to the normal image
                 img_button.gray_image = tk_gray_image  # Keep reference to the grayed-out image
                 img_button.grid(row=(idx // 3) + 1, column=idx % 3, padx=10, pady=10)
-    
+
                 # Check if the image is already selected
                 if img_path not in self.selected_images:
                     img_button.config(image=img_button.gray_image)  # Default to grayed-out
-    
+
                 self.image_buttons.append(img_button)
+
 
     def toggle_selection(self, idx):
         """Toggle the selection of an image."""
         current_group = self.image_groups[self.current_group_idx]
         selected_image = current_group[idx]
-    
+
         if selected_image in self.selected_images:
             # Unselect the image
             self.selected_images.remove(selected_image)
