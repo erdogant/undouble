@@ -14,7 +14,7 @@ The following core functionalities allows to group images on image-hash, and sys
 
 
 Moving Images
-======================
+***********************
 
 Processing the images is performed with the same function, independent of the input-type.
 
@@ -39,7 +39,7 @@ Processing the images is performed with the same function, independent of the in
 
 
 Import with restriction
-===============================
+***********************
 
 In the following example we will read only images with the extension png, tiff, jpg and jfif. Images are not transformed into grayscale, and are reduced in dimension to 128x128.
 
