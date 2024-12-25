@@ -340,8 +340,13 @@ class Undouble():
                 root = Tk()
                 # Initialize the ImageMoverApp
                 app = Gui(root, [pathnames])
-                # Run the Tkinter mainloop
-                root.mainloop()
+                # print(app.image_groups)
+                # print(len(app.image_groups[0]))
+                if len(app.image_groups[0]) > 1:
+                    # Run the Tkinter mainloop
+                    root.mainloop()
+                else:
+                    root.destroy()
             # Return
             return
         else:
