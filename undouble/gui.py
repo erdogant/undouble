@@ -18,7 +18,7 @@ class Gui:
         self.root.title("Image Selector")
         self.create_widgets()
         self.display_group()
-        if len(self.image_groups)>0:
+        if len(self.image_groups)==0:
             print('Nothing to show.')
             return
 
