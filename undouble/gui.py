@@ -158,9 +158,8 @@ class Gui:
         # print('--------------------------------')
         undouble.move_to_dir_gui(unselected_files, targetdir=None)
 
-        messagebox.showinfo(
-            "Undouble Operation Completed", f"{len(unselected_files)} files are moved to directory: [{self.targetdir}]"
-        )
+        # Show message box after pressing hte button
+        # messagebox.showinfo("Undouble Operation Completed", f"{len(unselected_files)} files are moved to directory: [{self.targetdir}]")
 
 # To run the application
 if __name__ == "__main__":
