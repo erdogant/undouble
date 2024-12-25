@@ -89,7 +89,7 @@ class Undouble():
     >>> model.plot()
     >>>
     >>> # Move the images
-    >>> model.move()
+    >>> model.move(filters='location')
 
     References
     ----------
@@ -100,7 +100,7 @@ class Undouble():
 
     """
 
-    def __init__(self, method='phash', targetdir='', grayscale=False, dim=(128, 128), hash_size=8, ext=['png', 'tiff', 'jpg', 'jfif', 'jpeg'], verbose=20):
+    def __init__(self, method='phash', targetdir='', grayscale=False, dim=(128, 128), hash_size=8, ext=['png', 'tiff', 'jpg', 'jfif', 'jpeg', 'heic'], verbose=20):
         """Initialize undouble with user-defined parameters."""
         if isinstance(ext, str): ext = [ext]
         # Clean readily fitted models to ensure correct results
@@ -134,7 +134,7 @@ class Undouble():
         >>> list_of_filepaths = model.import_example(data='flowers')
         >>> #
         >>> # Read from file names
-        >>> model.import_data(input_list_of_files)
+        >>> model.import_data(list_of_filepaths)
         >>> #
         >>> #
         >>> # Read from directory
@@ -192,6 +192,10 @@ class Undouble():
         None.
 
         """
+        if len(self.results['img'])==0:
+            logger.warning('No images')
+            return
+
         # Set parameters
         if method is not None:
             self.params['method'] = method
@@ -240,6 +244,9 @@ class Undouble():
         None.
 
         """
+        if len(self.results['img'])==0:
+            logger.warning('No images')
+            return None
         if self.results['img_hash_bin'] is None:
             logger.warning('Can not group similar images because no features are present. Tip: Use the compute_hash() function first.')
             return None
