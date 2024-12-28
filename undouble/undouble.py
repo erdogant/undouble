@@ -387,7 +387,7 @@ class Undouble():
                         answer = str.lower(answer)
                         if answer == 'q':
                             return
-    
+
                 # Check file exists
                 pathnames = np.array(pathnames)
                 pathnames = pathnames[list(map(os.path.isfile, pathnames))]
@@ -693,7 +693,7 @@ class Undouble():
 def move_to_dir(pathnames, targetdir, make_moved_filename_consistent=False):
     """Move to target directory.
 
-    The first pathname is copied, the other are moved.
+    All files that are marked as being "double" are moved. The first image in the array is untouched.
 
     Parameters
     ----------
@@ -704,26 +704,30 @@ def move_to_dir(pathnames, targetdir, make_moved_filename_consistent=False):
     # Create targetdir
     movedir, dirname, filename, ext = create_targetdir(pathnames[0], targetdir)
     # 1. Copy first file to targetdir and add "_COPY"
-    shutil.copy(pathnames[0], os.path.join(movedir, filename + '_KEPT' + ext))
+    # shutil.copy(pathnames[0], os.path.join(movedir, filename + ext))
 
-    # 2. Move all others
+    # Move all others
     for i, file in enumerate(pathnames[1:]):
-        logger.info(f'Moving> {file}')
-        if make_moved_filename_consistent:
-            ext = os.path.split(file)[1][-4:].lower()
-            shutil.move(file, os.path.join(movedir, filename + '_MOVED_' + str(i) + '.' + ext))
+        if os.path.isfile(file):
+            logger.info(f'Move> {file} -> {movedir}')
+            if make_moved_filename_consistent:
+                ext = os.path.split(file)[1][-4:].lower()
+                shutil.move(file, os.path.join(movedir, filename + str(i) + '.' + ext))
+            else:
+                # Original filename
+                # shutil.move(file, os.path.join(movedir, os.path.split(file)[1]))
+                _, filename1, ext1 = seperate_path(os.path.split(file)[1])
+                shutil.move(file, os.path.join(movedir, filename1 + ext1))
         else:
-            # Original filename
-            # shutil.move(file, os.path.join(movedir, os.path.split(file)[1]))
-            _, filename1, ext1 = seperate_path(os.path.split(file)[1])
-            shutil.move(file, os.path.join(movedir, filename1 + '_MOVED' + ext1))
+            logger.info(f'File not found> {file}')
+
 
 
 # %%
-def move_to_dir_gui(pathnames, targetdir):
+def move_to_target_dir(pathnames, targetdir):
     """Move to target directory.
 
-    The first pathname is copied, the other are moved.
+    Move all pathnames to the target directory
 
     Parameters
     ----------
@@ -731,8 +735,7 @@ def move_to_dir_gui(pathnames, targetdir):
     targetdir : target directory to copy and move the files
 
     """
-
-    # 2. Move all others
+    # Move all pathnames to the target directory
     for filepath in pathnames:
         # logger.info(f'Moving> {filepath} -> ')
         if os.path.isfile(filepath):
@@ -740,7 +743,9 @@ def move_to_dir_gui(pathnames, targetdir):
             movedir, _, filename, ext = create_targetdir(filepath, targetdir)
             # Original filename
             shutil.move(filepath, os.path.join(movedir, filename + ext))
-            logger.info(f'Moving> {filepath} -> {os.path.join(movedir, filename + ext)}')
+            logger.info(f'Moving {filepath} -> {os.path.join(movedir, filename + ext)}')
+        else:
+            logger.info(f'File not found> {filepath}')
 
 
 def create_targetdir(pathname, targetdir=None):

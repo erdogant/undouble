@@ -7,7 +7,7 @@ from undouble.undouble import (
     compute_blur,
     seperate_path,
     move_to_dir,
-    move_to_dir_gui,
+    move_to_target_dir,
 )
 
 
