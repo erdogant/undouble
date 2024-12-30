@@ -178,7 +178,7 @@ class Gui:
         # Move to dir
         # print(unselected_files)
         # print('--------------------------------')
-        undouble.move_to_dir_gui(unselected_files, targetdir=None)
+        undouble.move_to_target_dir(unselected_files, targetdir=None)
 
         # Show message box after pressing hte button
         # messagebox.showinfo("Undouble Operation Completed", f"{len(unselected_files)} files are moved to directory: [{self.targetdir}]")
