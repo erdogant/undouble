@@ -542,7 +542,7 @@ class Undouble():
             ax[1].get_yaxis().set_ticks([])
         return fig, ax
 
-    def plot(self, cmap=None, figsize=(15, 10)):
+    def plot(self, cmap=None, figsize=(15, 10), invert_colors=False):
         """Plot the results.
 
         Parameters
@@ -592,7 +592,7 @@ class Undouble():
                     _, ncol = self.clustimage._get_rows_cols(len(imgs), ncols=ncols)
                     labels = list(map(lambda x, y, z: 'score: ' + str(int(x)) + ' and blur: ' + str(int(y)) + '\nresolution: ' + str(int(z)), imgscores['hash_scores'], imgscores['blur'], imgscores['resolution']))
                     # Make subplots
-                    self.clustimage._make_subplots(imgs, ncol, cmap, figsize, title=("[%s] groups with similar image-hash" %(len(imgscores['pathnames']))), labels=labels)
+                    self.clustimage._make_subplots(imgs, ncol, cmap, figsize, title=("[%s] groups with similar image-hash" %(len(imgscores['pathnames']))), labels=labels, invert_colors=invert_colors)
 
                 # Restore verbose status
                 # set_logger(verbose=verbose)
