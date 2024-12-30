@@ -164,8 +164,17 @@ Thresholds have diffent effect on the grouping:
     # Plot the images
     model.plot()
     
-    # Move the images
+    # Select the images to move
     model.move(gui=True)
+
+
+.. |imggui01| image:: ../figs/imggui01.png
+.. table:: Graphic User Interface to select images
+   :align: center
+
+   +------------------+
+   | |imggui01|       |
+   +------------------+
 
 
 Plot
