@@ -46,7 +46,7 @@ class Undouble():
         Directory to read the images.
     hash_size : integer (default: 8)
         The hash_size will be used to scale down the image and create a hash-image of length: hash_size*hash_size.
-    ext : list, (default: ['png','tiff','jpg'])
+    ext : list, (default: ['png','tiff','tif', 'jpg', 'jpeg', 'heic'])
         Images with the file extentions are used.
     grayscale : Bool, (default: True)
         Colorscaling the image to gray.
@@ -100,7 +100,7 @@ class Undouble():
 
     """
 
-    def __init__(self, method='phash', targetdir='', grayscale=False, dim=(128, 128), hash_size=8, ext=['png', 'tiff', 'jpg', 'jfif', 'jpeg', 'heic'], verbose=20):
+    def __init__(self, method='phash', targetdir='', grayscale=False, dim=(128, 128), hash_size=8, ext=['png','tiff','tif', 'jpg', 'jpeg', 'heic'], verbose=20):
         """Initialize undouble with user-defined parameters."""
         if isinstance(ext, str): ext = [ext]
         # Clean readily fitted models to ensure correct results
@@ -339,9 +339,7 @@ class Undouble():
                 # filterOK = filter_checks(pathnames, filters)
                 root = Tk()
                 # Initialize the ImageMoverApp
-                app = Gui(root, [pathnames])
-                # print(app.image_groups)
-                # print(len(app.image_groups[0]))
+                app = Gui(root, [pathnames], logger=logger)
                 if len(app.image_groups[0]) > 1:
                     # Run the Tkinter mainloop
                     root.mainloop()
