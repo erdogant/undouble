@@ -3,6 +3,32 @@ from undouble import Undouble
 # print(dir(undouble))
 # print(undouble.__version__)
 
+# %% issue
+from undouble import Undouble
+
+# Init with default settings
+model = Undouble()
+
+# Importing the files files from disk, cleaning and pre-processing
+url_to_images = ['https://erdogant.github.io/datasets/images/flower_images/flower_orange.png',
+                 'https://erdogant.github.io/datasets/images/flower_images/flower_white_1.png',
+                 'https://erdogant.github.io/datasets/images/flower_images/flower_white_2.png',
+                 'https://erdogant.github.io/datasets/images/flower_images/flower_yellow_1.png',
+                 'https://erdogant.github.io/datasets/images/flower_images/flower_yellow_2.png']
+
+# Import into model
+model.import_data(url_to_images)
+
+# Compute image-hash
+model.compute_hash(method='phash', hash_size=16)
+
+# Find images with image-hash <= threshold
+model.group(threshold=0)
+
+# Plot the images
+model.plot()
+
+
 # %%
 from undouble import Undouble
 
@@ -13,7 +39,10 @@ model = Undouble(grayscale=False,
                  )
 
 # Import example data
+# input_list_of_files = model.import_example(data='flowers')
 # model.import_data(r'C:\Users\beeld\.conda\envs\env_undouble\Lib\site-packages\datazets\data')
+# model.import_data(r'D://temp//photos//')
+model.import_data(r'\\NAS_SYNOLOGY\Photo\2023\vluchten')
 
 
 # Import flowers example
