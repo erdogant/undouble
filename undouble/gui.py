@@ -27,17 +27,17 @@ class Gui:
         self.nav_frame = tk.Frame(self.root)
         self.nav_frame.pack(side="bottom", fill="x")
 
-        # Back Button
-        self.back_button = tk.Button(
-            self.nav_frame, text="Back", command=self.previous_group
-        )
-        self.back_button.pack(side="left", padx=10, pady=10)
+        # # Back Button
+        # self.back_button = tk.Button(
+        #     self.nav_frame, text="Back", command=self.previous_group
+        # )
+        # self.back_button.pack(side="left", padx=10, pady=10)
 
-        # Next Button
-        self.next_button = tk.Button(
-            self.nav_frame, text="Next", command=self.next_group
-        )
-        self.next_button.pack(side="left", padx=10, pady=10)
+        # # Next Button
+        # self.next_button = tk.Button(
+        #     self.nav_frame, text="Next", command=self.next_group
+        # )
+        # self.next_button.pack(side="left", padx=10, pady=10)
 
         # Keep Selected Image Button
         self.mark_unselected_button = tk.Button(
