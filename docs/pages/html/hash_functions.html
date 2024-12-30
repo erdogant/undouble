@@ -1,22 +1,22 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Average hash &mdash; undouble undouble documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=e0179649" />
+
   
-        <script src="_static/jquery.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=a2f83fcd"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -35,9 +35,6 @@
           <a href="index.html" class="icon icon-home">
             undouble
           </a>
-              <div class="version">
-                1.2.10
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -67,6 +64,8 @@
 <p class="caption" role="heading"><span class="caption-text">Core functionalities</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="core_functions.html">Core functionalities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_functions.html#moving-images">Moving Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_functions.html#import-with-restriction">Import with restriction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="core_functions.html#compute-hash">Compute_hash</a></li>
 <li class="toctree-l1"><a class="reference internal" href="core_functions.html#grouping-images">Grouping images</a></li>
 <li class="toctree-l1"><a class="reference internal" href="core_functions.html#id1">Moving images</a></li>
@@ -132,7 +131,7 @@
            <div itemprop="articleBody">
              
   <section id="average-hash">
-<h1>Average hash<a class="headerlink" href="#average-hash" title="Permalink to this heading"></a></h1>
+<h1>Average hash<a class="headerlink" href="#average-hash" title="Link to this heading"></a></h1>
 <p>After the decolorizing and scaling step, each pixel block is compared to the average (as the name suggests) of all pixel values of the image. In the example below, we will generate a 64-bit hash, which means that the image is scaled to 8×8 pixels. If the value in the pixel block is larger than the average, it gets value 1 (white) and otherwise a 0 (black). The final image hash is followed by flattening the array into a vector.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initialize with hash</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">Undouble</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;ahash&#39;</span><span class="p">)</span>
@@ -158,7 +157,7 @@
 </pre></div>
 </div>
 <table class="docutils align-center" id="id1">
-<caption><span class="caption-text">Average hash</span><a class="headerlink" href="#id1" title="Permalink to this table"></a></caption>
+<caption><span class="caption-text">Average hash</span><a class="headerlink" href="#id1" title="Link to this table"></a></caption>
 <tbody>
 <tr class="row-odd"><td><p><img alt="ahash" src="_images/ahash.png" /></p></td>
 </tr>
@@ -166,7 +165,7 @@
 </table>
 </section>
 <section id="perceptual-hash">
-<h1>Perceptual hash<a class="headerlink" href="#perceptual-hash" title="Permalink to this heading"></a></h1>
+<h1>Perceptual hash<a class="headerlink" href="#perceptual-hash" title="Link to this heading"></a></h1>
 <p>After the first step of decolorizing, a Discrete Cosine Transform (DCT) is applied; first per row and afterward per column. The pixels with high frequencies are cropped to 8 x 8 pixels. Each pixel block is then compared to the median of all gray values of the image. If the value in the pixel block is larger than the median, it gets value 1 and otherwise a 0. The final image hash is followed by flattening the array into a vector.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initialize with hash</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">Undouble</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;phash&#39;</span><span class="p">)</span>
@@ -192,7 +191,7 @@
 </pre></div>
 </div>
 <table class="docutils align-center" id="id2">
-<caption><span class="caption-text">Perceptual hash</span><a class="headerlink" href="#id2" title="Permalink to this table"></a></caption>
+<caption><span class="caption-text">Perceptual hash</span><a class="headerlink" href="#id2" title="Link to this table"></a></caption>
 <tbody>
 <tr class="row-odd"><td><p><img alt="phash" src="_images/phash.png" /></p></td>
 </tr>
@@ -200,7 +199,7 @@
 </table>
 </section>
 <section id="differential-hash">
-<h1>Differential hash<a class="headerlink" href="#differential-hash" title="Permalink to this heading"></a></h1>
+<h1>Differential hash<a class="headerlink" href="#differential-hash" title="Link to this heading"></a></h1>
 <p>After the first step of decolorizing and scaling, the pixels are serially (from left to right per row) compared to their neighbor to the right. If the byte at position x is less than the byte at position (x+1), it gets value 1 and otherwise a 0. The final image hash is followed by flattening the array into a vector.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initialize with hash</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">Undouble</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;dhash&#39;</span><span class="p">)</span>
@@ -226,7 +225,7 @@
 </pre></div>
 </div>
 <table class="docutils align-center" id="id3">
-<caption><span class="caption-text">Differential hash</span><a class="headerlink" href="#id3" title="Permalink to this table"></a></caption>
+<caption><span class="caption-text">Differential hash</span><a class="headerlink" href="#id3" title="Link to this table"></a></caption>
 <tbody>
 <tr class="row-odd"><td><p><img alt="dhash" src="_images/dhash.png" /></p></td>
 </tr>
@@ -234,7 +233,7 @@
 </table>
 </section>
 <section id="haar-wavelet-hash">
-<h1>Haar wavelet hash<a class="headerlink" href="#haar-wavelet-hash" title="Permalink to this heading"></a></h1>
+<h1>Haar wavelet hash<a class="headerlink" href="#haar-wavelet-hash" title="Link to this heading"></a></h1>
 <p>After the first step of decolorizing and scaling, a two-dimensional wavelet transform is applied to the image. Each pixel block is then compared to the median of all gray values of the image. If the value in the pixel block is larger than the median, it gets value 1 and otherwise a 0. The final image hash is followed by flattening the array into a vector.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initialize with hash</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">Undouble</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;whash-haar&#39;</span><span class="p">)</span>
@@ -260,7 +259,7 @@
 </pre></div>
 </div>
 <table class="docutils align-center" id="id4">
-<caption><span class="caption-text">Haar wavelet hash</span><a class="headerlink" href="#id4" title="Permalink to this table"></a></caption>
+<caption><span class="caption-text">Haar wavelet hash</span><a class="headerlink" href="#id4" title="Link to this table"></a></caption>
 <tbody>
 <tr class="row-odd"><td><p><img alt="whash" src="_images/whash.png" /></p></td>
 </tr>
@@ -268,7 +267,7 @@
 </table>
 </section>
 <section id="crop-resistant-hash">
-<h1>Crop-resistant hash<a class="headerlink" href="#crop-resistant-hash" title="Permalink to this heading"></a></h1>
+<h1>Crop-resistant hash<a class="headerlink" href="#crop-resistant-hash" title="Link to this heading"></a></h1>
 <p>The Crop resistant hash is implemented as described in the paper “Efficient Cropping-Resistant Robust Image Hashing”. DOI 10.1109/ARES.2014.85. This algorithm partitions the image into bright and dark segments, using a watershed-like algorithm, and then does an image hash on each segment. This makes the image much more resistant to cropping than other algorithms, with the paper claiming resistance to up to 50% cropping, while most other algorithms stop at about 5% cropping.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import library</span>
 <span class="kn">from</span> <span class="nn">undouble</span> <span class="kn">import</span> <span class="n">Undouble</span>
@@ -305,7 +304,7 @@
 </div>
 </section>
 <section id="plot-image-hash">
-<h1>Plot image hash<a class="headerlink" href="#plot-image-hash" title="Permalink to this heading"></a></h1>
+<h1>Plot image hash<a class="headerlink" href="#plot-image-hash" title="Link to this heading"></a></h1>
 <p>All examples are created using the underneath code:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># pip install imagesc</span>
 

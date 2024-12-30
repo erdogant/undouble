@@ -1,22 +1,22 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Core functionalities &mdash; undouble undouble documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=e0179649" />
+
   
-        <script src="_static/jquery.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=a2f83fcd"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -35,9 +35,6 @@
           <a href="index.html" class="icon icon-home">
             undouble
           </a>
-              <div class="version">
-                1.2.10
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -66,18 +63,22 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Core functionalities</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Core functionalities</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#moving-images">Moving Images</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#import-with-restriction">Import with restriction</a></li>
-</ul>
-</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Core functionalities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#moving-images">Moving Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#import-with-restriction">Import with restriction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#compute-hash">Compute_hash</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#grouping-images">Grouping images</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#id1">Moving images</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#plot">Plot</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#plot-hash">Plot hash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#plot-hash">Plot hash</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#preprocessing">Preprocessing</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="#scaling">scaling</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#resizing">Resizing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#resizing">Resizing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#generic-functionalities">Generic functionalities</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="#compute-blur">compute_blur</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#wget">wget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#unzip">unzip</a></li>
@@ -136,7 +137,7 @@
            <div itemprop="articleBody">
              
   <section id="core-functionalities">
-<h1>Core functionalities<a class="headerlink" href="#core-functionalities" title="Permalink to this heading"></a></h1>
+<h1>Core functionalities<a class="headerlink" href="#core-functionalities" title="Link to this heading"></a></h1>
 <p>The following core functionalities allows to group images on image-hash, and systematically move the images.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">.</span><span class="n">import_data</span><span class="p">()</span>
 <span class="o">.</span><span class="n">compute_hash</span><span class="p">()</span>
@@ -146,8 +147,9 @@
 <span class="o">.</span><span class="n">move</span><span class="p">()</span>
 </pre></div>
 </div>
+</section>
 <section id="moving-images">
-<h2>Moving Images<a class="headerlink" href="#moving-images" title="Permalink to this heading"></a></h2>
+<h1>Moving Images<a class="headerlink" href="#moving-images" title="Link to this heading"></a></h1>
 <p>Processing the images is performed with the same function, independent of the input-type.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Importing the files files from disk, cleaning and pre-processing</span>
 <span class="n">model</span><span class="o">.</span><span class="n">import_data</span><span class="p">(</span><span class="n">input_list_of_files</span><span class="p">)</span>
@@ -169,7 +171,7 @@
 </div>
 </section>
 <section id="import-with-restriction">
-<h2>Import with restriction<a class="headerlink" href="#import-with-restriction" title="Permalink to this heading"></a></h2>
+<h1>Import with restriction<a class="headerlink" href="#import-with-restriction" title="Link to this heading"></a></h1>
 <p>In the following example we will read only images with the extension png, tiff, jpg and jfif. Images are not transformed into grayscale, and are reduced in dimension to 128x128.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">undouble</span> <span class="kn">import</span> <span class="n">Undouble</span>
 <span class="c1"># Initialize</span>
@@ -184,9 +186,8 @@
 </pre></div>
 </div>
 </section>
-</section>
 <section id="compute-hash">
-<h1>Compute_hash<a class="headerlink" href="#compute-hash" title="Permalink to this heading"></a></h1>
+<h1>Compute_hash<a class="headerlink" href="#compute-hash" title="Link to this heading"></a></h1>
 <p>The <em>compute_hash</em> function, <a class="reference internal" href="undouble.undouble.html#undouble.undouble.Undouble.compute_hash" title="undouble.undouble.Undouble.compute_hash"><code class="xref py py-func docutils literal notranslate"><span class="pre">undouble.undouble.Undouble.compute_hash()</span></code></a>, computes the hash for each image, and returns the adjacency matrix containing image-hash distances between the images.
 The image-hash is computed using one of the following functions:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>*<span class="w"> </span><span class="s1">&#39;ahash&#39;</span><span class="w">           </span>Average<span class="w"> </span><span class="nb">hash</span>
@@ -226,7 +227,7 @@ The image-hash is computed using one of the following functions:</p>
 </div>
 </section>
 <section id="grouping-images">
-<h1>Grouping images<a class="headerlink" href="#grouping-images" title="Permalink to this heading"></a></h1>
+<h1>Grouping images<a class="headerlink" href="#grouping-images" title="Link to this heading"></a></h1>
 <p>At this point image-hashes are computed and we can start grouping images with function <a class="reference internal" href="undouble.undouble.html#undouble.undouble.Undouble.group" title="undouble.undouble.Undouble.group"><code class="xref py py-func docutils literal notranslate"><span class="pre">undouble.undouble.Undouble.group()</span></code></a>.
 The threshold can now be used to either group images with identical hash or images with near-identical hash.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Group images with image-hash &lt;= threshold</span>
@@ -247,19 +248,59 @@ The threshold can now be used to either group images with identical hash or imag
 </div>
 </section>
 <section id="id1">
-<h1>Moving images<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h1>
+<h1>Moving images<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
 <p>The move function <a class="reference internal" href="undouble.undouble.html#undouble.undouble.Undouble.move" title="undouble.undouble.Undouble.move"><code class="xref py py-func docutils literal notranslate"><span class="pre">undouble.undouble.Undouble.move()</span></code></a> is created to systematically move the images that are grouped.
-A threshold of 0 will group images with an identical image hash. However, the threshold of 10 showed the best results when undoubling my personal photo deck because photos, such as from bursts, were also grouped.
 Before moving any of the images, the resolution and blurness of all images that are part of a group are checked.
 The image in the group with the highest resolution will be copied, and all other images are moved to the <strong>undouble</strong> subdirectory.</p>
+<p>Thresholds have diffent effect on the grouping:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>threshold=0 will group images with an identical image hash.</p></li>
+<li><p>threshold=10 has the best results when undoubling my personal photo deck because photos with small variations, such as from bursts, were also grouped.</p></li>
+</ul>
+</div></blockquote>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">undouble</span> <span class="kn">import</span> <span class="n">Undouble</span>
+
+<span class="c1"># Init with default settings</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Undouble</span><span class="p">(</span><span class="n">grayscale</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="n">method</span><span class="o">=</span><span class="s1">&#39;phash&#39;</span><span class="p">,</span>
+                 <span class="n">hash_size</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+                 <span class="p">)</span>
+
+<span class="c1"># Import example data</span>
+<span class="n">pathnames</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">import_example</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="s1">&#39;flowers&#39;</span><span class="p">)</span>
+
+<span class="c1"># Importing the files files from disk, cleaning and pre-processing</span>
+<span class="n">model</span><span class="o">.</span><span class="n">import_data</span><span class="p">(</span><span class="n">pathnames</span><span class="p">)</span>
+
+<span class="c1"># Compute image-hash</span>
+<span class="n">model</span><span class="o">.</span><span class="n">compute_hash</span><span class="p">()</span>
+
+<span class="c1"># Find images with image-hash &lt;= threshold</span>
+<span class="n">model</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># Plot the images</span>
+<span class="n">model</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+
+<span class="c1"># Select the images to move</span>
+<span class="n">model</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">gui</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils align-center" id="id2">
+<caption><span class="caption-text">Graphic User Interface to select images</span><a class="headerlink" href="#id2" title="Link to this table"></a></caption>
+<tbody>
+<tr class="row-odd"><td><p><img alt="imggui01" src="_images/imggui01.png" /></p></td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="plot">
-<h1>Plot<a class="headerlink" href="#plot" title="Permalink to this heading"></a></h1>
+<h1>Plot<a class="headerlink" href="#plot" title="Link to this heading"></a></h1>
 <p>Plot all images that could be combined into a group with identical image-hash or &lt;= threshold.
 The function can be found here: <a class="reference internal" href="undouble.undouble.html#undouble.undouble.Undouble.plot" title="undouble.undouble.Undouble.plot"><code class="xref py py-func docutils literal notranslate"><span class="pre">undouble.undouble.Undouble.plot()</span></code></a></p>
 </section>
 <section id="plot-hash">
-<h1>Plot hash<a class="headerlink" href="#plot-hash" title="Permalink to this heading"></a></h1>
+<h1>Plot hash<a class="headerlink" href="#plot-hash" title="Link to this heading"></a></h1>
 <p>This functionality is practical if you need to investigate the grouping of images based on the hashes that are generated: <a class="reference internal" href="undouble.undouble.html#undouble.undouble.Undouble.plot_hash" title="undouble.undouble.Undouble.plot_hash"><code class="xref py py-func docutils literal notranslate"><span class="pre">undouble.undouble.Undouble.plot_hash()</span></code></a></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import library</span>
 <span class="kn">from</span> <span class="nn">undouble</span> <span class="kn">import</span> <span class="n">Undouble</span>
@@ -285,13 +326,15 @@ The function can be found here: <a class="reference internal" href="undouble.und
 <span class="n">model</span><span class="o">.</span><span class="n">plot_hash</span><span class="p">(</span><span class="n">filenames</span><span class="o">=</span><span class="n">filenames</span><span class="p">)</span>
 </pre></div>
 </div>
-<table class="docutils align-center" id="id2">
-<caption><span class="caption-text">Plot image hash</span><a class="headerlink" href="#id2" title="Permalink to this table"></a></caption>
+<table class="docutils align-center" id="id3">
+<caption><span class="caption-text">Plot image hash</span><a class="headerlink" href="#id3" title="Link to this table"></a></caption>
 <tbody>
 <tr class="row-odd"><td><p><img alt="imghash01" src="_images/imghash01.png" /></p></td>
 </tr>
 </tbody>
 </table>
+<section id="preprocessing">
+<h2>Preprocessing<a class="headerlink" href="#preprocessing" title="Link to this heading"></a></h2>
 <p>Before we can determine the image-hash from an image, we need to decolorize the image, normalize the pixel values, and scale the image.
 The reasoning for decolorizing is that most information we need to “recognize” an image is readily present in the grayscale channel.
 In addition, the reduction from 24 bits per pixel for RGB to 8 bits per pixel is computationally more attractive; time-wise and memory-wise.
@@ -319,8 +362,9 @@ which simply means that the image is downsampled to 8 x 8 pixels. If <code class
 </dd>
 </dl>
 </section>
+</section>
 <section id="scaling">
-<h1>scaling<a class="headerlink" href="#scaling" title="Permalink to this heading"></a></h1>
+<h1>scaling<a class="headerlink" href="#scaling" title="Link to this heading"></a></h1>
 <p>Scaling of images is only applicable for 2D-arrays (images).
 Scaling data is an import pre-processing step to make sure all data is ranged between the minimum and maximum range.</p>
 <p>The images are scaled between [0-255] by the following equation:</p>
@@ -329,13 +373,16 @@ Scaling data is an import pre-processing step to make sure all data is ranged be
 </div></blockquote>
 </section>
 <section id="resizing">
-<h1>Resizing<a class="headerlink" href="#resizing" title="Permalink to this heading"></a></h1>
+<h1>Resizing<a class="headerlink" href="#resizing" title="Link to this heading"></a></h1>
 <p>Images can be resized, for which 128x128 pixels is the default.
 The function depends on the functionality of <code class="docutils literal notranslate"><span class="pre">python-opencv</span></code> with the interpolation: <code class="docutils literal notranslate"><span class="pre">interpolation=cv2.INTER_AREA</span></code>.</p>
+<section id="generic-functionalities">
+<h2>Generic functionalities<a class="headerlink" href="#generic-functionalities" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">undouble</span></code> contains various generic functionalities that are internally used but may be usefull too in other applications.</p>
 </section>
+</section>
 <section id="compute-blur">
-<h1>compute_blur<a class="headerlink" href="#compute-blur" title="Permalink to this heading"></a></h1>
+<h1>compute_blur<a class="headerlink" href="#compute-blur" title="Link to this heading"></a></h1>
 <p>load the image, convert it to grayscale, and compute the focus measure of the image using the Variance of Laplacian method.The returned scores &lt;100 are generally more blurry.
 Examples can be found here: <a class="reference internal" href="undouble.undouble.html#undouble.undouble.compute_blur" title="undouble.undouble.compute_blur"><code class="xref py py-func docutils literal notranslate"><span class="pre">undouble.undouble.compute_blur()</span></code></a></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import library</span>
@@ -346,7 +393,7 @@ Examples can be found here: <a class="reference internal" href="undouble.undoubl
 </div>
 </section>
 <section id="wget">
-<h1>wget<a class="headerlink" href="#wget" title="Permalink to this heading"></a></h1>
+<h1>wget<a class="headerlink" href="#wget" title="Link to this heading"></a></h1>
 <p>Download files from the internet and store on disk.
 Examples can be found here: <code class="xref py py-func docutils literal notranslate"><span class="pre">undouble.undouble.wget()</span></code></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import library</span>
@@ -357,7 +404,7 @@ Examples can be found here: <code class="xref py py-func docutils literal notran
 </div>
 </section>
 <section id="unzip">
-<h1>unzip<a class="headerlink" href="#unzip" title="Permalink to this heading"></a></h1>
+<h1>unzip<a class="headerlink" href="#unzip" title="Link to this heading"></a></h1>
 <p>Unzip files into a destination directory.
 Examples can be found here: <code class="xref py py-func docutils literal notranslate"><span class="pre">undouble.undouble.unzip()</span></code></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import library</span>
@@ -368,7 +415,7 @@ Examples can be found here: <code class="xref py py-func docutils literal notran
 </div>
 </section>
 <section id="set-logger">
-<h1>set_logger<a class="headerlink" href="#set-logger" title="Permalink to this heading"></a></h1>
+<h1>set_logger<a class="headerlink" href="#set-logger" title="Link to this heading"></a></h1>
 <p>Change status of the logger.
 Examples can be found here: <a class="reference internal" href="undouble.undouble.html#undouble.undouble.set_logger" title="undouble.undouble.set_logger"><code class="xref py py-func docutils literal notranslate"><span class="pre">undouble.undouble.set_logger()</span></code></a></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Change to verbosity message of warnings and higher</span>

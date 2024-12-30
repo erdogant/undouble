@@ -14,7 +14,7 @@ The following core functionalities allows to group images on image-hash, and sys
 
 
 Moving Images
-======================
+***********************
 
 Processing the images is performed with the same function, independent of the input-type.
 
@@ -39,7 +39,7 @@ Processing the images is performed with the same function, independent of the in
 
 
 Import with restriction
-===============================
+***********************
 
 In the following example we will read only images with the extension png, tiff, jpg and jfif. Images are not transformed into grayscale, and are reduced in dimension to 128x128.
 
@@ -130,9 +130,51 @@ Moving images
 ************************
 
 The move function :func:`undouble.undouble.Undouble.move` is created to systematically move the images that are grouped.
-A threshold of 0 will group images with an identical image hash. However, the threshold of 10 showed the best results when undoubling my personal photo deck because photos, such as from bursts, were also grouped.
 Before moving any of the images, the resolution and blurness of all images that are part of a group are checked.
 The image in the group with the highest resolution will be copied, and all other images are moved to the **undouble** subdirectory.
+
+Thresholds have diffent effect on the grouping:
+
+    * threshold=0 will group images with an identical image hash.
+    * threshold=10 has the best results when undoubling my personal photo deck because photos with small variations, such as from bursts, were also grouped.
+
+
+.. code:: python
+
+    from undouble import Undouble
+    
+    # Init with default settings
+    model = Undouble(grayscale=False,
+                     method='phash',
+                     hash_size=8,
+                     )
+    
+    # Import example data
+    pathnames = model.import_example(data='flowers')
+
+    # Importing the files files from disk, cleaning and pre-processing
+    model.import_data(pathnames)
+    
+    # Compute image-hash
+    model.compute_hash()
+    
+    # Find images with image-hash <= threshold
+    model.group(threshold=10)
+    
+    # Plot the images
+    model.plot()
+    
+    # Select the images to move
+    model.move(gui=True)
+
+
+.. |imggui01| image:: ../figs/imggui01.png
+.. table:: Graphic User Interface to select images
+   :align: center
+
+   +------------------+
+   | |imggui01|       |
+   +------------------+
 
 
 Plot

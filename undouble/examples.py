@@ -8,13 +8,11 @@ from undouble import Undouble
 
 # Init with default settings
 model = Undouble(grayscale=False,
-                 ext=['png', 'tiff', 'jpg', 'heic', 'jpeg'],
                  method='phash',
                  hash_size=8,
                  )
 
 # Import example data
-model.import_data(r'D://temp//photos//')
 # model.import_data(r'C:\Users\beeld\.conda\envs\env_undouble\Lib\site-packages\datazets\data')
 
 
@@ -30,7 +28,7 @@ model.compute_hash()
 model.group(threshold=10)
 
 # Plot the images
-# model.plot()
+model.plot()
 
 # Move the images
 model.move(gui=True)

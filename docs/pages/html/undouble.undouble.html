@@ -1,22 +1,22 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>API References &mdash; undouble undouble documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=e0179649" />
+
   
-        <script src="_static/jquery.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=a2f83fcd"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -34,9 +34,6 @@
           <a href="index.html" class="icon icon-home">
             undouble
           </a>
-              <div class="version">
-                1.2.10
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -66,6 +63,8 @@
 <p class="caption" role="heading"><span class="caption-text">Core functionalities</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="core_functions.html">Core functionalities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_functions.html#moving-images">Moving Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_functions.html#import-with-restriction">Import with restriction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="core_functions.html#compute-hash">Compute_hash</a></li>
 <li class="toctree-l1"><a class="reference internal" href="core_functions.html#grouping-images">Grouping images</a></li>
 <li class="toctree-l1"><a class="reference internal" href="core_functions.html#id1">Moving images</a></li>
@@ -121,6 +120,8 @@
 <li class="toctree-l2"><a class="reference internal" href="#undouble.undouble.disable_tqdm"><code class="docutils literal notranslate"><span class="pre">disable_tqdm()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#undouble.undouble.filter_checks"><code class="docutils literal notranslate"><span class="pre">filter_checks()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#undouble.undouble.get_existing_pathnames"><code class="docutils literal notranslate"><span class="pre">get_existing_pathnames()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#undouble.undouble.move_to_dir"><code class="docutils literal notranslate"><span class="pre">move_to_dir()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#undouble.undouble.move_to_target_dir"><code class="docutils literal notranslate"><span class="pre">move_to_target_dir()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#undouble.undouble.seperate_path"><code class="docutils literal notranslate"><span class="pre">seperate_path()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#undouble.undouble.set_logger"><code class="docutils literal notranslate"><span class="pre">set_logger()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#undouble.undouble.sort_images"><code class="docutils literal notranslate"><span class="pre">sort_images()</span></code></a></li>
@@ -155,11 +156,11 @@
            <div itemprop="articleBody">
              
   <section id="module-undouble.undouble">
-<span id="api-references"></span><h1>API References<a class="headerlink" href="#module-undouble.undouble" title="Permalink to this heading"></a></h1>
+<span id="api-references"></span><h1>API References<a class="headerlink" href="#module-undouble.undouble" title="Link to this heading"></a></h1>
 <p>Python package undouble is to detect (near-)identical images.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="undouble.undouble.Undouble">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">undouble.undouble.</span></span><span class="sig-name descname"><span class="pre">Undouble</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'phash'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">targetdir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grayscale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(128,</span> <span class="pre">128)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hash_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ext</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['png',</span> <span class="pre">'tiff',</span> <span class="pre">'jpg',</span> <span class="pre">'jfif',</span> <span class="pre">'jpeg']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.Undouble" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">undouble.undouble.</span></span><span class="sig-name descname"><span class="pre">Undouble</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'phash'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">targetdir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grayscale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(128,</span> <span class="pre">128)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hash_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ext</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['png',</span> <span class="pre">'tiff',</span> <span class="pre">'tif',</span> <span class="pre">'jpg',</span> <span class="pre">'jpeg',</span> <span class="pre">'heic']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.Undouble" title="Link to this definition"></a></dt>
 <dd><p>Detect duplicate images.</p>
 <p>Python package undouble is to detect (near-)identical images based on image hashes.</p>
 <dl class="simple">
@@ -182,7 +183,7 @@
 * ‘crop-resistant-hash’: Crop resistant hash</p></li>
 <li><p><strong>targetdir</strong> (<em>str</em><em>, </em><em>(</em><em>default: None</em><em>)</em>) – Directory to read the images.</p></li>
 <li><p><strong>hash_size</strong> (<em>integer</em><em> (</em><em>default: 8</em><em>)</em>) – The hash_size will be used to scale down the image and create a hash-image of length: hash_size*hash_size.</p></li>
-<li><p><strong>ext</strong> (<em>list</em><em>, </em><em>(</em><em>default:</em><em> [</em><em>'png'</em><em>,</em><em>'tiff'</em><em>,</em><em>'jpg'</em><em>]</em><em>)</em>) – Images with the file extentions are used.</p></li>
+<li><p><strong>ext</strong> (<em>list</em><em>, </em><em>(</em><em>default:</em><em> [</em><em>'png'</em><em>,</em><em>'tiff'</em><em>,</em><em>'tif'</em><em>, </em><em>'jpg'</em><em>, </em><em>'jpeg'</em><em>, </em><em>'heic'</em><em>]</em><em>)</em>) – Images with the file extentions are used.</p></li>
 <li><p><strong>grayscale</strong> (<em>Bool</em><em>, </em><em>(</em><em>default: True</em><em>)</em>) – Colorscaling the image to gray.</p></li>
 <li><p><strong>dim</strong> (<em>tuple</em><em>, </em><em>(</em><em>default:</em><em> (</em><em>128</em><em>,</em><em>128</em><em>)</em><em>)</em>) – Rescale images. This is required because the feature-space need to be the same across samples.</p></li>
 <li><p><strong>verbose</strong> (<em>int</em><em>, </em><em>(</em><em>default: 20</em><em>)</em>) – Print progress to screen. The default is 20.
@@ -227,7 +228,7 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># Move the images</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">move</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">filters</span><span class="o">=</span><span class="s1">&#39;location&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p class="rubric">References</p>
@@ -239,7 +240,7 @@
 </ul>
 <dl class="py method">
 <dt class="sig sig-object py" id="undouble.undouble.Undouble.bin2hex">
-<span class="sig-name descname"><span class="pre">bin2hex</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.Undouble.bin2hex" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">bin2hex</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.Undouble.bin2hex" title="Link to this definition"></a></dt>
 <dd><p>Binary to hex.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -253,19 +254,19 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="undouble.undouble.Undouble.clean_files">
-<span class="sig-name descname"><span class="pre">clean_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">clean_tempdir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.Undouble.clean_files" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">clean_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">clean_tempdir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.Undouble.clean_files" title="Link to this definition"></a></dt>
 <dd><p>Remove the entire temp directory with all its contents.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="undouble.undouble.Undouble.clean_init">
-<span class="sig-name descname"><span class="pre">clean_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">results</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.Undouble.clean_init" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">clean_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">results</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.Undouble.clean_init" title="Link to this definition"></a></dt>
 <dd><p>Clean or removing previous results and models to ensure correct working.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="undouble.undouble.Undouble.compute_hash">
-<span class="sig-name descname"><span class="pre">compute_hash</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hash_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.Undouble.compute_hash" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">compute_hash</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hash_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.Undouble.compute_hash" title="Link to this definition"></a></dt>
 <dd><p>Compute the hash for each image.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -287,7 +288,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="undouble.undouble.Undouble.compute_imghash">
-<span class="sig-name descname"><span class="pre">compute_imghash</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hash_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_array</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.Undouble.compute_imghash" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">compute_imghash</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hash_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_array</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.Undouble.compute_imghash" title="Link to this definition"></a></dt>
 <dd><p>Compute image hash per image.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -341,7 +342,7 @@ False: Return the hash-image vector.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="undouble.undouble.Undouble.group">
-<span class="sig-name descname"><span class="pre">group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.Undouble.group" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.Undouble.group" title="Link to this definition"></a></dt>
 <dd><p>Find similar images using the hash signatures.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -355,7 +356,7 @@ False: Return the hash-image vector.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="undouble.undouble.Undouble.import_data">
-<span class="sig-name descname"><span class="pre">import_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">targetdir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">black_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['undouble']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_results</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.Undouble.import_data" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">import_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">targetdir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">black_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['undouble']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_results</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.Undouble.import_data" title="Link to this definition"></a></dt>
 <dd><p>Preprocessing.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -374,7 +375,7 @@ False: Return the hash-image vector.</p></li>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">list_of_filepaths</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">import_example</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="s1">&#39;flowers&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1">#</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># Read from file names</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">import_data</span><span class="p">(</span><span class="n">input_list_of_files</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">import_data</span><span class="p">(</span><span class="n">list_of_filepaths</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1">#</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1">#</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># Read from directory</span>
@@ -404,9 +405,9 @@ False: Return the hash-image vector.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="undouble.undouble.Undouble.import_example">
-<span class="sig-name descname"><span class="pre">import_example</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'flowers'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">','</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.Undouble.import_example" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">import_example</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'flowers'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">','</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.Undouble.import_example" title="Link to this definition"></a></dt>
 <dd><p>Import example dataset from github source.</p>
-<p>Import one of the few datasets from github source or specify your own download url link.</p>
+<p>Import one of the datasets from github source or specify your own download url link.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -416,7 +417,7 @@ False: Return the hash-image vector.</p></li>
 <li><p>’mnist’</p></li>
 </ul>
 </dd>
-<dt>Files:</dt><dd><ul>
+<dt>Files with images:</dt><dd><ul>
 <li><p>’southern_nebula’</p></li>
 <li><p>’flowers’</p></li>
 <li><p>’scenes’</p></li>
@@ -429,10 +430,10 @@ False: Return the hash-image vector.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>images</p>
+<dd class="field-even"><p><strong>list</strong></p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>pd.DataFrame()</p>
+<dd class="field-odd"><p>images</p>
 </dd>
 </dl>
 <p class="rubric">References</p>
@@ -443,7 +444,7 @@ False: Return the hash-image vector.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="undouble.undouble.Undouble.move">
-<span class="sig-name descname"><span class="pre">move</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">targetdir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.Undouble.move" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">move</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">targetdir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gui</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">make_moved_filename_consistent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.Undouble.move" title="Link to this definition"></a></dt>
 <dd><p>Move images.</p>
 <p>Files are moved that are listed by the group() functionality.</p>
 <dl class="field-list simple">
@@ -462,7 +463,7 @@ None: A subdir, named “undouble” is created within each directory.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="undouble.undouble.Undouble.plot">
-<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(15,</span> <span class="pre">10)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.Undouble.plot" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(15,</span> <span class="pre">10)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">invert_colors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.Undouble.plot" title="Link to this definition"></a></dt>
 <dd><p>Plot the results.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -483,7 +484,7 @@ None: A subdir, named “undouble” is created within each directory.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="undouble.undouble.Undouble.plot_hash">
-<span class="sig-name descname"><span class="pre">plot_hash</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filenames</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.Undouble.plot_hash" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">plot_hash</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filenames</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.Undouble.plot_hash" title="Link to this definition"></a></dt>
 <dd><p>Plot the image-hash.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -535,7 +536,7 @@ None: A subdir, named “undouble” is created within each directory.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="undouble.undouble.compute_blur">
-<span class="sig-prename descclassname"><span class="pre">undouble.undouble.</span></span><span class="sig-name descname"><span class="pre">compute_blur</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pathname</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.compute_blur" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">undouble.undouble.</span></span><span class="sig-name descname"><span class="pre">compute_blur</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pathname</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.compute_blur" title="Link to this definition"></a></dt>
 <dd><p>Compute amount of blur in image.</p>
 <p>load the image, convert it to grayscale, and compute the focus measure of
 the image using the Variance of Laplacian method. The returned scores &lt;100
@@ -555,7 +556,7 @@ are generally more blurry.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="undouble.undouble.create_targetdir">
-<span class="sig-prename descclassname"><span class="pre">undouble.undouble.</span></span><span class="sig-name descname"><span class="pre">create_targetdir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pathname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">targetdir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.create_targetdir" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">undouble.undouble.</span></span><span class="sig-name descname"><span class="pre">create_targetdir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pathname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">targetdir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.create_targetdir" title="Link to this definition"></a></dt>
 <dd><p>Create directory.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -578,13 +579,13 @@ are generally more blurry.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="undouble.undouble.disable_tqdm">
-<span class="sig-prename descclassname"><span class="pre">undouble.undouble.</span></span><span class="sig-name descname"><span class="pre">disable_tqdm</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.disable_tqdm" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">undouble.undouble.</span></span><span class="sig-name descname"><span class="pre">disable_tqdm</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.disable_tqdm" title="Link to this definition"></a></dt>
 <dd><p>Set the logger for verbosity messages.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="undouble.undouble.filter_checks">
-<span class="sig-prename descclassname"><span class="pre">undouble.undouble.</span></span><span class="sig-name descname"><span class="pre">filter_checks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pathnames</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filters</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.filter_checks" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">undouble.undouble.</span></span><span class="sig-name descname"><span class="pre">filter_checks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pathnames</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filters</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.filter_checks" title="Link to this definition"></a></dt>
 <dd><p>Filter checks.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -604,7 +605,7 @@ are generally more blurry.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="undouble.undouble.get_existing_pathnames">
-<span class="sig-prename descclassname"><span class="pre">undouble.undouble.</span></span><span class="sig-name descname"><span class="pre">get_existing_pathnames</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pathnames</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.get_existing_pathnames" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">undouble.undouble.</span></span><span class="sig-name descname"><span class="pre">get_existing_pathnames</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pathnames</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.get_existing_pathnames" title="Link to this definition"></a></dt>
 <dd><p>Get existing pathnames.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -614,8 +615,38 @@ are generally more blurry.</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="undouble.undouble.move_to_dir">
+<span class="sig-prename descclassname"><span class="pre">undouble.undouble.</span></span><span class="sig-name descname"><span class="pre">move_to_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pathnames</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">targetdir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">make_moved_filename_consistent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.move_to_dir" title="Link to this definition"></a></dt>
+<dd><p>Move to target directory.</p>
+<p>All files that are marked as being “double” are moved. The first image in the array is untouched.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pathnames</strong> (<em>list</em><em> of </em><em>str</em>)</p></li>
+<li><p><strong>targetdir</strong> (<em>target directory to copy and move the files</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="undouble.undouble.move_to_target_dir">
+<span class="sig-prename descclassname"><span class="pre">undouble.undouble.</span></span><span class="sig-name descname"><span class="pre">move_to_target_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pathnames</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">targetdir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.move_to_target_dir" title="Link to this definition"></a></dt>
+<dd><p>Move to target directory.</p>
+<p>Move all pathnames to the target directory</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pathnames</strong> (<em>list</em><em> of </em><em>str</em>)</p></li>
+<li><p><strong>targetdir</strong> (<em>target directory to copy and move the files</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="undouble.undouble.seperate_path">
-<span class="sig-prename descclassname"><span class="pre">undouble.undouble.</span></span><span class="sig-name descname"><span class="pre">seperate_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pathname</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.seperate_path" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">undouble.undouble.</span></span><span class="sig-name descname"><span class="pre">seperate_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pathname</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.seperate_path" title="Link to this definition"></a></dt>
 <dd><p>Seperate path.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -634,13 +665,13 @@ are generally more blurry.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="undouble.undouble.set_logger">
-<span class="sig-prename descclassname"><span class="pre">undouble.undouble.</span></span><span class="sig-name descname"><span class="pre">set_logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.set_logger" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">undouble.undouble.</span></span><span class="sig-name descname"><span class="pre">set_logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.set_logger" title="Link to this definition"></a></dt>
 <dd><p>Set the logger for verbosity messages.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="undouble.undouble.sort_images">
-<span class="sig-prename descclassname"><span class="pre">undouble.undouble.</span></span><span class="sig-name descname"><span class="pre">sort_images</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pathnames</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hash_scores</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_first_img</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.sort_images" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">undouble.undouble.</span></span><span class="sig-name descname"><span class="pre">sort_images</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pathnames</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hash_scores</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_first_img</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#undouble.undouble.sort_images" title="Link to this definition"></a></dt>
 <dd><p>Sort images.</p>
 <dl class="simple">
 <dt>Sort images on the following conditions:</dt><dd><ol class="arabic simple">
