@@ -5,7 +5,7 @@ from tkinter import messagebox
 import undouble
 
 class Gui:
-    def __init__(self, root, image_groups, targetdir="undouble", figsize=(400, 300)):
+    def __init__(self, root, image_groups, targetdir="undouble", figsize=(400, 300), logger=None):
         # Function to filter out non-existent files
         self.root = root
         self.image_groups = [[path for path in group if os.path.isfile(path)] for group in image_groups]
@@ -19,7 +19,7 @@ class Gui:
         self.create_widgets()
         self.display_group()
         if len(self.image_groups)==0:
-            print('Nothing to show.')
+            logger.info('Nothing to show.')
             return
 
     def create_widgets(self):
@@ -81,6 +81,9 @@ class Gui:
                     file_info = f"{os.path.split(img_path)[0]}\n{filename}\n{filesize_kb} KB"
                 else:
                     file_info = f"{os.path.split(img_path)[0]}\n{filename}\n{filesize_mb} MB"
+
+                # Split the file_info text into lines
+                # file_info = file_info.split("\n")
 
                 # Load and resize the image
                 pil_image = Image.open(img_path)
