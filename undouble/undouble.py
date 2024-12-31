@@ -559,6 +559,9 @@ class Undouble():
             Plots are created for clusters with > min_clust samples
         figsize : tuple, (default: (15, 10).
             Size of the figure (height,width).
+        invert_colors: Invert colors for the plot.
+            True: RGB-> BGR
+            False: Keep as is
 
         Returns
         -------
