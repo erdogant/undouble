@@ -8,12 +8,13 @@ from undouble.undouble import (
     seperate_path,
     move_to_dir,
     move_to_target_dir,
+    sort_images,
 )
 
 
 __author__ = 'Erdogan Tasksen'
 __email__ = 'erdogant@gmail.com'
-__version__ = '1.3.0'
+__version__ = '1.3.1'
 
 # module level doc-string
 __doc__ = """
