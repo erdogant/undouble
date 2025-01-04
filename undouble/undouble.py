@@ -298,7 +298,7 @@ class Undouble():
         if return_dict:
             return self.results
 
-    def move(self, filters=None, targetdir=None, gui=True, make_moved_filename_consistent=False):
+    def move(self, filters=None, targetdir=None, gui=True, make_moved_filename_consistent=False, action='move'):
         """Move images.
 
         Files are moved that are listed by the group() functionality.
@@ -310,6 +310,9 @@ class Undouble():
         targetdir : str (default: None)
             Moving similar files to this directory.
             None: A subdir, named "undouble" is created within each directory.
+        action : str, 'copy' default
+            * 'copy': copy files
+            * 'move': move files
 
         Returns
         -------
@@ -398,7 +401,7 @@ class Undouble():
                     # Sort images on resolution and least amount of blur (best first)
                     pathnames = sort_images(pathnames)['pathnames']
                     # Move to dir
-                    move_to_dir(pathnames, targetdir, make_moved_filename_consistent=make_moved_filename_consistent)
+                    move_to_dir(pathnames, targetdir, make_moved_filename_consistent=make_moved_filename_consistent, action=action)
 
 
     def clean_init(self, params=True, results=True):
@@ -691,7 +694,7 @@ class Undouble():
 
 
 # %%
-def move_to_dir(pathnames, targetdir, make_moved_filename_consistent=False):
+def move_to_dir(pathnames, targetdir, make_moved_filename_consistent=False, action='move'):
     """Move to target directory.
 
     All files that are marked as being "double" are moved. The first image in the array is untouched.
@@ -701,11 +704,16 @@ def move_to_dir(pathnames, targetdir, make_moved_filename_consistent=False):
     pathnames : list of str
     targetdir : target directory to copy and move the files
 
+    action : str, 'copy' default
+        * 'copy': copy files
+        * 'move': move files
+
     """
+    # Store function
+    shutil_action = shutil.move if action == 'move' else shutil.copy
+
     # Create targetdir
     movedir, dirname, filename, ext = create_targetdir(pathnames[0], targetdir)
-    # 1. Copy first file to targetdir and add "_COPY"
-    # shutil.copy(pathnames[0], os.path.join(movedir, filename + ext))
 
     # Move all others
     for i, file in enumerate(pathnames[1:]):
@@ -713,19 +721,18 @@ def move_to_dir(pathnames, targetdir, make_moved_filename_consistent=False):
             logger.info(f'Move> {file} -> {movedir}')
             if make_moved_filename_consistent:
                 ext = os.path.split(file)[1][-4:].lower()
-                shutil.move(file, os.path.join(movedir, filename + str(i) + '.' + ext))
+                shutil_action(file, os.path.join(movedir, filename + str(i) + '.' + ext))
             else:
                 # Original filename
-                # shutil.move(file, os.path.join(movedir, os.path.split(file)[1]))
                 _, filename1, ext1 = seperate_path(os.path.split(file)[1])
-                shutil.move(file, os.path.join(movedir, filename1 + ext1))
+                shutil_action(file, os.path.join(movedir, filename1 + ext1))
         else:
             logger.info(f'File not found> {file}')
 
 
 
 # %%
-def move_to_target_dir(pathnames, targetdir):
+def move_to_target_dir(pathnames, targetdir, action='move'):
     """Move to target directory.
 
     Move all pathnames to the target directory
@@ -735,7 +742,14 @@ def move_to_target_dir(pathnames, targetdir):
     pathnames : list of str
     targetdir : target directory to copy and move the files
 
+    action : str, 'copy' default
+        * 'copy': copy files
+        * 'move': move files
+
     """
+    # Store function
+    shutil_action = shutil.move if action == 'move' else shutil.copy
+
     # Move all pathnames to the target directory
     for filepath in pathnames:
         # logger.info(f'Moving> {filepath} -> ')
@@ -743,8 +757,11 @@ def move_to_target_dir(pathnames, targetdir):
             # Create targetdir
             movedir, _, filename, ext = create_targetdir(filepath, targetdir)
             # Original filename
-            shutil.move(filepath, os.path.join(movedir, filename + ext))
-            logger.info(f'Moving {filepath} -> {os.path.join(movedir, filename + ext)}')
+            try:
+                shutil_action(filepath, os.path.join(movedir, filename + ext))
+            except:
+                logger.error(f'Error moving file: {filepath}')
+            logger.info(f'{action} {filepath} -> {os.path.join(movedir, filename + ext)}')
         else:
             logger.info(f'File not found> {filepath}')
 
