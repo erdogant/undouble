@@ -710,7 +710,7 @@ def move_to_dir(pathnames, targetdir, make_moved_filename_consistent=False, acti
 
     """
     # Store function
-    shutil_action = shutil.move if action == 'move' else shutil.copy
+    shutil_action = shutil.move if action.lower() == 'move' else shutil.copy
 
     # Create targetdir
     movedir, dirname, filename, ext = create_targetdir(pathnames[0], targetdir)
@@ -748,7 +748,7 @@ def move_to_target_dir(pathnames, targetdir, action='move'):
 
     """
     # Store function
-    shutil_action = shutil.move if action == 'move' else shutil.copy
+    shutil_action = shutil.move if action.lower() == 'move' else shutil.copy
 
     # Move all pathnames to the target directory
     for filepath in pathnames:
