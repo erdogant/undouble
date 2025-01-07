@@ -12,7 +12,7 @@ from undouble.undouble import (
 
 __author__ = 'Erdogan Tasksen'
 __email__ = 'erdogant@gmail.com'
-__version__ = '1.3.1'
+__version__ = '1.4.0'
 
 # module level doc-string
 __doc__ = """
@@ -58,7 +58,7 @@ Example
 >>> model.plot()
 >>>
 >>> # Move the images
->>> model.move()
+>>> model.move_to_dir(gui=True)
 
 References
 ----------

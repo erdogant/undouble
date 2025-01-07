@@ -89,7 +89,7 @@ class Undouble():
     >>> model.plot()
     >>>
     >>> # Move the images
-    >>> model.move(filters='location')
+    >>> model.move_to_dir(filters='location')
 
     References
     ----------

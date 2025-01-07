@@ -298,7 +298,7 @@ model.group(threshold=5)
 model.plot()
 
 # Move the images
-# model.move()
+# model.move_to_dir()
 
 # %%
 model.plot_hash()
