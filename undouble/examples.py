@@ -36,13 +36,14 @@ from undouble import Undouble
 model = Undouble(grayscale=False,
                  method='phash',
                  hash_size=8,
+                 verbose=10,
                  )
 
 # Import example data
 # input_list_of_files = model.import_example(data='flowers')
 # model.import_data(r'C:\Users\beeld\.conda\envs\env_undouble\Lib\site-packages\datazets\data')
-# model.import_data(r'D://temp//photos//')
-model.import_data(r'\\NAS_SYNOLOGY\Photo\2023\vluchten')
+model.import_data(r'D://temp//photos//')
+# model.import_data(r'\\NAS_SYNOLOGY\Photo\2023\vluchten')
 
 
 # Import flowers example
@@ -60,7 +61,8 @@ model.group(threshold=10)
 model.plot()
 
 # Move the images
-model.move(gui=True)
+model.move_to_dir(gui=True, action='move', overwrite=False)
+# model.move_to_dir(savedir=None, action='move', overwrite=False, gui=True, filter_on=None)
 
 
 # %%

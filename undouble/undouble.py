@@ -349,7 +349,7 @@ class Undouble():
                 # filterOK = filter_checks(pathnames, filter_on)
                 root = Tk()
                 # Initialize the ImageMoverApp
-                app = Gui(root, [pathnames], logger=logger)
+                app = Gui(root, [pathnames], savedir=savedir, action=action, overwrite=overwrite, logger=logger)
                 if len(app.image_groups[0]) > 1:
                     # Run the Tkinter mainloop
                     root.mainloop()

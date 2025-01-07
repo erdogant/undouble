@@ -2,14 +2,17 @@ import os
 import tkinter as tk
 from PIL import Image, ImageTk, ImageDraw, ImageFont
 from tkinter import messagebox
-import undouble
+# import undouble
+import clustimage
 
 class Gui:
-    def __init__(self, root, image_groups, targetdir="undouble", figsize=(400, 300), logger=None):
+    def __init__(self, root, image_groups, savedir=None, figsize=(400, 300), action='move', overwrite=False, logger=None):
         # Function to filter out non-existent files
         self.root = root
         self.image_groups = [[path for path in group if os.path.isfile(path)] for group in image_groups]
-        self.targetdir = targetdir
+        self.savedir = savedir
+        self.action = action
+        self.overwrite = overwrite
         self.current_group_idx = 0
         self.selected_images = []  # Store selected images
         self.image_buttons = []  # Buttons to show images
@@ -181,10 +184,15 @@ class Gui:
         # Move to dir
         # print(unselected_files)
         # print('--------------------------------')
-        undouble.move_to_target_dir(unselected_files, targetdir=None)
+        if self.savedir is None:
+            savedir = os.path.join(os.path.dirname(unselected_files[0]), 'duplicates')
+        else:
+            savedir = self.savedir
 
+        # Action
+        out = clustimage.move_files(unselected_files, savedir=savedir, action=self.action, overwrite=self.overwrite)
         # Show message box after pressing hte button
-        # messagebox.showinfo("Undouble Operation Completed", f"{len(unselected_files)} files are moved to directory: [{self.targetdir}]")
+        # messagebox.showinfo("Undouble Operation Completed", f"{len(unselected_files)} files are moved to directory: [{self.savedir}]")
 
 # To run the application
 if __name__ == "__main__":
