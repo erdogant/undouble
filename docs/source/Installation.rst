@@ -75,7 +75,7 @@ A quick example how to learn a model on a given dataset.
     model.plot()
 
     # Move the images
-    model.move()
+    model.move_to_dir()
 
 
 

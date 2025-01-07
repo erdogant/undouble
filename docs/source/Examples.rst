@@ -80,14 +80,14 @@ Get identical images
 Move files
 ***********************
 
-The move function :func:`undouble.undouble.Undouble.move` will systematically move the images.
+The move function :func:`undouble.undouble.Undouble.move_to_dir` will systematically move the images.
 A threshold of 0 will group images with an identical image hash. However, the threshold of 10 showed the best results when undoubling my personal photo deck because photos, such as from bursts, were also grouped.
 Before moving any of the images, the resolution and blurness of all images that are part of a group are checked.
 The image in the group with the highest resolution will be copied, and all other images are moved to the **undouble** subdirectory.
 
 .. code:: python
 
-    model.move()
+    model.move_to_dir()
     
     # >Wait! Before you continue, you are at the point of physically moving files!
     # >[7] similar images are detected over [3] groups.
@@ -182,7 +182,7 @@ Note that this dataset does not contain ground truth labels with identical image
     model.plot()
     
     # Move the files
-    model.move()
+    model.move_to_dir()
     
 
 Average hash results

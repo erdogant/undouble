@@ -10,13 +10,13 @@ The following core functionalities allows to group images on image-hash, and sys
     .group()
     .plot()
     .plot_hash()
-    .move()
+    .move_to_dir()
 
 
 Moving Images
 ***********************
 
-Processing the images is performed with the same function, independent of the input-type.
+Moving images can easily be performed using the ```move_to_dir``` functionality.
 
 .. code:: python
 
@@ -34,8 +34,8 @@ Processing the images is performed with the same function, independent of the in
     # Plot the images
     model.plot()
     
-    # Move the images
-    # model.move()
+    # Move the images. By not providing a save directory, a subdirectory "duplicates" will be automatically created in the directory of the file.
+    model.move_to_dir(savedir=None, gui=True, action='move', overwrite=False)
 
 
 Import with restriction
@@ -129,7 +129,7 @@ The threshold can now be used to either group images with identical hash or imag
 Moving images
 ************************
 
-The move function :func:`undouble.undouble.Undouble.move` is created to systematically move the images that are grouped.
+The move function :func:`undouble.undouble.Undouble.move_to_dir` is created to systematically move the images that are grouped.
 Before moving any of the images, the resolution and blurness of all images that are part of a group are checked.
 The image in the group with the highest resolution will be copied, and all other images are moved to the **undouble** subdirectory.
 
@@ -165,7 +165,7 @@ Thresholds have diffent effect on the grouping:
     model.plot()
     
     # Select the images to move
-    model.move(gui=True)
+    model.move_to_dir(gui=True)
 
 
 .. |imggui01| image:: ../figs/imggui01.png
