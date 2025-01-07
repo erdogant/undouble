@@ -6,8 +6,6 @@ from undouble.undouble import Undouble
 from undouble.undouble import (
     compute_blur,
     seperate_path,
-    move_to_dir,
-    move_to_target_dir,
     sort_images,
 )
 
