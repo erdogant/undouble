@@ -298,21 +298,28 @@ class Undouble():
         if return_dict:
             return self.results
 
-    def move(self, filters=None, targetdir=None, gui=True, make_moved_filename_consistent=False, action='move'):
+    def move_to_dir(self, savedir=None, action='move', overwrite=False, gui=True, filter_on=None):
         """Move images.
 
         Files are moved that are listed by the group() functionality.
 
         Parameters
         ----------
-        filters : list, (Default: ['location'])
-            'location' : Only move images that are seen in the same directory.
-        targetdir : str (default: None)
-            Moving similar files to this directory.
-            None: A subdir, named "undouble" is created within each directory.
+        savedir : str, optional
+            The base directory where the images will be moved. If None, the images will be moved
+            * 'c:/temp/'
+            * None: to the parent directory of their current location.
         action : str, 'copy' default
             * 'copy': copy files
             * 'move': move files
+        overwrite : Bool, False default
+            * True: Overwrite files
+            * False: Do not overwrite files
+        gui : Bool, True default
+            * True: Show GUI for user decision
+            * False: No GUI
+        filter_on : list, (Default: ['location'])
+            'location' : Only move images that are seen in the same directory.
 
         Returns
         -------
@@ -321,8 +328,8 @@ class Undouble():
         """
         # Do some checks and set defaults
         self._check_status()
-        if targetdir is not None:
-            if not os.path.isdir(targetdir): raise Exception(logger.error(''))
+        if savedir is not None:
+            if not os.path.isdir(savedir): raise Exception(logger.error(''))
         # logger.info('Detected images: [%d] across of [%d] groups.' %(totfiles, totgroup))
 
         if gui:
@@ -339,7 +346,7 @@ class Undouble():
             for pathnames in self.results['select_pathnames']:
                 # print(pathnames)
                 # Check whether move is allowed
-                # filterOK = filter_checks(pathnames, filters)
+                # filterOK = filter_checks(pathnames, filter_on)
                 root = Tk()
                 # Initialize the ImageMoverApp
                 app = Gui(root, [pathnames], logger=logger)
@@ -353,7 +360,7 @@ class Undouble():
         else:
             totfiles = np.sum(list(map(len, self.results['select_pathnames'])))
             totgroup = len(self.results['select_pathnames'])
-            tdir = 'undouble' if targetdir is None else targetdir
+            tdir = 'undouble' if savedir is None else savedir
             # answer = input('\n-------------------------------------------------\n>You are at the point of physically moving files.\n-------------------------------------------------\n>[%d] similar images are detected over [%d] groups.\n>[%d] images will be moved to the [%s] subdirectory.\n>[%d] images will be copied to the [%s] subdirectory.\n\n>[C]ontinue moving all files.\n>[W]ait in each directory.\n>[Q]uit\n>Answer: ' %(totfiles, totgroup, totfiles - totgroup, tdir, totgroup, tdir))
             answer = input(
                 '\n--------------------------------------------------------------------\n'
@@ -372,7 +379,7 @@ class Undouble():
             answer = str.lower(answer)
             if answer == 'q':
                 return
-    
+
             # For each group, check the resolution and location.
             pathmem = ''
             for pathnames in self.results['select_pathnames']:
@@ -392,16 +399,16 @@ class Undouble():
                 # Check file exists
                 pathnames = np.array(pathnames)
                 pathnames = pathnames[list(map(os.path.isfile, pathnames))]
-    
+
                 # Check whether move is allowed
-                filterOK = filter_checks(pathnames, filters)
-    
-                # Move to targetdir
+                filterOK = filter_checks(pathnames, filter_on)
+
+                # Move to savedir
                 if filterOK:
                     # Sort images on resolution and least amount of blur (best first)
                     pathnames = sort_images(pathnames)['pathnames']
                     # Move to dir
-                    move_to_dir(pathnames, targetdir, make_moved_filename_consistent=make_moved_filename_consistent, action=action)
+                    filepaths_status = cl.move_files(pathnames, savedir, action=action, overwrite=overwrite)
 
 
     def clean_init(self, params=True, results=True):
@@ -495,7 +502,7 @@ class Undouble():
         >>> model = Undouble()
         >>>
         >>> # Import example data
-        >>> targetdir = model.import_example(data='flowers')
+        >>> savedir = model.import_example(data='flowers')
         >>>
         >>> # Importing the files files from disk, cleaning and pre-processing
         >>> model.import_data(r'./undouble/data/flower_images/')
@@ -694,112 +701,112 @@ class Undouble():
 
 
 # %%
-def move_to_dir(pathnames, targetdir, make_moved_filename_consistent=False, action='move'):
-    """Move to target directory.
+# def move_to_dir(pathnames, savedir, make_moved_filename_consistent=False, action='move'):
+#     """Move to target directory.
 
-    All files that are marked as being "double" are moved. The first image in the array is untouched.
+#     All files that are marked as being "double" are moved. The first image in the array is untouched.
 
-    Parameters
-    ----------
-    pathnames : list of str
-    targetdir : target directory to copy and move the files
+#     Parameters
+#     ----------
+#     pathnames : list of str
+#     savedir : target directory to copy and move the files
 
-    action : str, 'copy' default
-        * 'copy': copy files
-        * 'move': move files
+#     action : str, 'copy' default
+#         * 'copy': copy files
+#         * 'move': move files
 
-    """
-    # Store function
-    shutil_action = shutil.move if action.lower() == 'move' else shutil.copy
+#     """
+#     # Store function
+#     shutil_action = shutil.move if action.lower() == 'move' else shutil.copy
 
-    # Create targetdir
-    movedir, dirname, filename, ext = create_targetdir(pathnames[0], targetdir)
+#     # Create savedir
+#     movedir, dirname, filename, ext = create_savedir(pathnames[0], savedir)
 
-    # Move all others
-    for i, file in enumerate(pathnames[1:]):
-        if os.path.isfile(file):
-            logger.info(f'Move> {file} -> {movedir}')
-            if make_moved_filename_consistent:
-                ext = os.path.split(file)[1][-4:].lower()
-                shutil_action(file, os.path.join(movedir, filename + str(i) + '.' + ext))
-            else:
-                # Original filename
-                _, filename1, ext1 = seperate_path(os.path.split(file)[1])
-                shutil_action(file, os.path.join(movedir, filename1 + ext1))
-        else:
-            logger.info(f'File not found> {file}')
+#     # Move all others
+#     for i, file in enumerate(pathnames[1:]):
+#         if os.path.isfile(file):
+#             logger.info(f'Move> {file} -> {movedir}')
+#             if make_moved_filename_consistent:
+#                 ext = os.path.split(file)[1][-4:].lower()
+#                 shutil_action(file, os.path.join(movedir, filename + str(i) + '.' + ext))
+#             else:
+#                 # Original filename
+#                 _, filename1, ext1 = seperate_path(os.path.split(file)[1])
+#                 shutil_action(file, os.path.join(movedir, filename1 + ext1))
+#         else:
+#             logger.info(f'File not found> {file}')
 
 
 
 # %%
-def move_to_target_dir(pathnames, targetdir, action='move'):
-    """Move to target directory.
+# def move_to_target_dir(pathnames, savedir, action='move'):
+#     """Move to target directory.
 
-    Move all pathnames to the target directory
+#     Move all pathnames to the target directory
 
-    Parameters
-    ----------
-    pathnames : list of str
-    targetdir : target directory to copy and move the files
+#     Parameters
+#     ----------
+#     pathnames : list of str
+#     savedir : target directory to copy and move the files
 
-    action : str, 'copy' default
-        * 'copy': copy files
-        * 'move': move files
+#     action : str, 'copy' default
+#         * 'copy': copy files
+#         * 'move': move files
 
-    """
-    # Store function
-    shutil_action = shutil.move if action.lower() == 'move' else shutil.copy
+#     """
+#     # Store function
+#     shutil_action = shutil.move if action.lower() == 'move' else shutil.copy
 
-    # Move all pathnames to the target directory
-    for filepath in pathnames:
-        # logger.info(f'Moving> {filepath} -> ')
-        if os.path.isfile(filepath):
-            # Create targetdir
-            movedir, _, filename, ext = create_targetdir(filepath, targetdir)
-            # Original filename
-            try:
-                shutil_action(filepath, os.path.join(movedir, filename + ext))
-            except:
-                logger.error(f'Error moving file: {filepath}')
-            logger.info(f'{action} {filepath} -> {os.path.join(movedir, filename + ext)}')
-        else:
-            logger.info(f'File not found> {filepath}')
+#     # Move all pathnames to the target directory
+#     for filepath in pathnames:
+#         # logger.info(f'Moving> {filepath} -> ')
+#         if os.path.isfile(filepath):
+#             # Create savedir
+#             movedir, _, filename, ext = create_savedir(filepath, savedir)
+#             # Original filename
+#             try:
+#                 shutil_action(filepath, os.path.join(movedir, filename + ext))
+#             except:
+#                 logger.error(f'Error moving file: {filepath}')
+#             logger.info(f'{action} {filepath} -> {os.path.join(movedir, filename + ext)}')
+#         else:
+#             logger.info(f'File not found> {filepath}')
 
 
-def create_targetdir(pathname, targetdir=None):
-    """Create directory.
+# def create_savedir(pathname, savedir=None):
+#     """Create directory.
 
-    Parameters
-    ----------
-    pathname : str
-        Absolute path location of the image of interest.
-    targetdir : str
-        Target directory.
+#     Parameters
+#     ----------
+#     pathname : str
+#         Absolute path location of the image of interest.
+#     savedir : str
+#         Target directory.
 
-    Returns
-    -------
-    movedir : str
-        Absolute path to directory.
-    dirname : str
-        Absolute path to directory.
-    filename : str
-        Name of the file.
-    ext : str
-        Extension.
+#     Returns
+#     -------
+#     movedir : str
+#         Absolute path to directory.
+#     dirname : str
+#         Absolute path to directory.
+#     filename : str
+#         Name of the file.
+#     ext : str
+#         Extension.
 
-    """
-    dirname, filename, ext = seperate_path(pathname)
-    # Set the targetdir
-    if targetdir is None:
-        movedir = os.path.join(dirname, 'undouble')
-    else:
-        movedir = targetdir
+#     """
+#     dirname, filename, ext = seperate_path(pathname)
+#     # Set the savedir
+#     if savedir is None:
+#         movedir = os.path.join(dirname, 'undouble')
+#     else:
+#         movedir = savedir
 
-    if not os.path.isdir(movedir):
-        logger.debug('Create dir: <%s>' %(movedir))
-        os.makedirs(movedir, exist_ok=True)
-    # Return
-    return movedir, dirname, filename, ext
+#     if not os.path.isdir(movedir):
+#         logger.debug('Create dir: <%s>' %(movedir))
+#         os.makedirs(movedir, exist_ok=True)
+#     # Return
+#     return movedir, dirname, filename, ext
 
 
 # %%
