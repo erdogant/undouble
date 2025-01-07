@@ -42,7 +42,7 @@ class Undouble():
         * 'dhash': Difference hash
         * 'whash-haar': Haar wavelet hash
         * 'crop-resistant-hash': Crop resistant hash
-    targetdir : str, (default: None)
+    savedir : str, (default: None)
         Directory to read the images.
     hash_size : integer (default: 8)
         The hash_size will be used to scale down the image and create a hash-image of length: hash_size*hash_size.
@@ -74,10 +74,10 @@ class Undouble():
     >>> model = Undouble(method='phash', hash_size=8)
     >>>
     >>> # Import example data
-    >>> targetdir = model.import_example(data='flowers')
+    >>> savedir = model.import_example(data='flowers')
     >>>
     >>> # Importing the files files from disk, cleaning and pre-processing
-    >>> model.import_data(targetdir)
+    >>> model.import_data(savedir)
     >>>
     >>> # Compute image-hash
     >>> model.compute_hash()
