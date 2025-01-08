@@ -298,7 +298,7 @@ class Undouble():
         if return_dict:
             return self.results
 
-    def move_to_dir(self, savedir=None, action='move', overwrite=False, gui=True, filter_on=None):
+    def move_to_dir(self, savedir=None, action='move', overwrite=False, gui=False, filter_on=None):
         """Move images.
 
         Files are moved that are listed by the group() functionality.
