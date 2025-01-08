@@ -334,29 +334,32 @@ class Undouble():
 
         if gui:
             # Libraries
-            from tkinter import Tk
-            from undouble.gui import Gui
-            # Create the root Tkinter window
-            # root = Tk()
-            # # Initialize the ImageMoverApp
-            # app = Gui(root, self.results['select_pathnames'])
-            # # Run the Tkinter mainloop
-            # root.mainloop()
+            try:
+                from tkinter import Tk
+                from undouble.gui import Gui
+                # Create the root Tkinter window
+                # root = Tk()
+                # # Initialize the ImageMoverApp
+                # app = Gui(root, self.results['select_pathnames'])
+                # # Run the Tkinter mainloop
+                # root.mainloop()
 
-            for pathnames in self.results['select_pathnames']:
-                # print(pathnames)
-                # Check whether move is allowed
-                # filterOK = filter_checks(pathnames, filter_on)
-                root = Tk()
-                # Initialize the ImageMoverApp
-                app = Gui(root, [pathnames], savedir=savedir, action=action, overwrite=overwrite, logger=logger)
-                if len(app.image_groups[0]) > 1:
-                    # Run the Tkinter mainloop
-                    root.mainloop()
-                else:
-                    root.destroy()
-            # Return
-            return
+                for pathnames in self.results['select_pathnames']:
+                    # print(pathnames)
+                    # Check whether move is allowed
+                    # filterOK = filter_checks(pathnames, filter_on)
+                    root = Tk()
+                    # Initialize the ImageMoverApp
+                    app = Gui(root, [pathnames], savedir=savedir, action=action, overwrite=overwrite, logger=logger)
+                    if len(app.image_groups[0]) > 1:
+                        # Run the Tkinter mainloop
+                        root.mainloop()
+                    else:
+                        root.destroy()
+                # Return
+                return
+            except ImportError:
+                raise ImportError("Tkinter is not available in this environment.")
         else:
             totfiles = np.sum(list(map(len, self.results['select_pathnames'])))
             totgroup = len(self.results['select_pathnames'])
