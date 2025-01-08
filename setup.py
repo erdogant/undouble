@@ -13,7 +13,14 @@ else:
 with open("README.md", "r", encoding="utf8") as fh:
     long_description = fh.read()
 setuptools.setup(
-     install_requires=['matplotlib','numpy','tqdm', 'clustimage>=1.6.5','ismember','datazets>=1.0.0'],
+     install_requires=['matplotlib',
+                       'numpy',
+                       'tqdm',
+                       'clustimage>=1.6.5',
+                       'ismember',
+                       'datazets>=1.0.0',
+                       'opencv-python-headless',
+                       ],
      python_requires='>=3',
      name='undouble',
      version=new_version,

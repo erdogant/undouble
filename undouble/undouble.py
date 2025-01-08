@@ -8,10 +8,17 @@ from clustimage import Clustimage
 import datazets as dz
 import clustimage.clustimage as cl
 import shutil
-import cv2
 import copy
 from ismember import ismember
 import matplotlib.pyplot as plt
+
+try:
+    import cv2
+except ImportError:
+    raise ImportError(
+        "The 'opencv-python' library is not installed. Please install it using the following command:\n"
+        ">pip install opencv-python or the lightweight version: >pip install opencv-python-headless")
+
 
 logger = logging.getLogger('')
 [logger.removeHandler(handler) for handler in logger.handlers[:]]
@@ -333,33 +340,12 @@ class Undouble():
         # logger.info('Detected images: [%d] across of [%d] groups.' %(totfiles, totgroup))
 
         if gui:
-            # Libraries
             try:
-                from tkinter import Tk
-                from undouble.gui import Gui
-                # Create the root Tkinter window
-                # root = Tk()
-                # # Initialize the ImageMoverApp
-                # app = Gui(root, self.results['select_pathnames'])
-                # # Run the Tkinter mainloop
-                # root.mainloop()
-
-                for pathnames in self.results['select_pathnames']:
-                    # print(pathnames)
-                    # Check whether move is allowed
-                    # filterOK = filter_checks(pathnames, filter_on)
-                    root = Tk()
-                    # Initialize the ImageMoverApp
-                    app = Gui(root, [pathnames], savedir=savedir, action=action, overwrite=overwrite, logger=logger)
-                    if len(app.image_groups[0]) > 1:
-                        # Run the Tkinter mainloop
-                        root.mainloop()
-                    else:
-                        root.destroy()
-                # Return
-                return
+                import undouble_gui
+                # Run model
+                undouble_gui.open_window(self.results['select_pathnames'], savedir, action, overwrite, logger=logger)
             except ImportError:
-                raise ImportError("Tkinter is not available in this environment.")
+                raise ImportError("GUI is not available in this environment. <pip install undouble_gui> first.")
         else:
             totfiles = np.sum(list(map(len, self.results['select_pathnames'])))
             totgroup = len(self.results['select_pathnames'])

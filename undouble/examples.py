@@ -65,34 +65,6 @@ model.move_to_dir(gui=True, action='move', overwrite=False)
 # model.move_to_dir(savedir=None, action='move', overwrite=False, gui=True, filter_on=None)
 
 
-# %%
-from tkinter import Tk
-from undouble.gui import Gui
-
-image_groups = model.results['select_pathnames']
-
-# Create the root Tkinter window
-root = Tk()
-# Initialize the ImageMoverApp
-app = Gui(root, image_groups)
-# Run the Tkinter mainloop
-root.mainloop()
-
-
-# %%
-# image_groups = {
-#     1: [r"D:\temp\photos\Various\undouble\IMG_3231_KEPT.jpeg", r"D:\temp\photos\Various\undouble\IMG_3232_MOVED.jpeg"],
-#     2: [r"D:\temp\photos\Various\undouble\IMG_4925_KEPT.jpeg", r"D:\temp\photos\Various\undouble\IMG_4926_MOVED..jpeg"]
-# }
-
-# # Create the root Tkinter window
-# root = Tk()
-# # Initialize the ImageMoverApp
-# app = ImageMoverApp(root, image_groups, targetdir="undouble")
-# # Run the Tkinter mainloop
-# root.mainloop()
-
-
 # %% issue #9 homogenious part
 from undouble import Undouble
 
