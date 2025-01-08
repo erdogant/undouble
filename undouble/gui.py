@@ -1,9 +1,13 @@
 import os
-import tkinter as tk
-from PIL import Image, ImageTk, ImageDraw, ImageFont
-from tkinter import messagebox
 # import undouble
 import clustimage
+
+try:
+    import tkinter as tk
+    from PIL import Image, ImageTk, ImageDraw, ImageFont
+    from tkinter import messagebox
+except ImportError:
+    raise ImportError("Tkinter is not available in this environment.")
 
 class Gui:
     def __init__(self, root, image_groups, savedir=None, figsize=(400, 300), action='move', overwrite=False, logger=None):
