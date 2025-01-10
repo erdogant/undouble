@@ -16,7 +16,7 @@ setuptools.setup(
      install_requires=['matplotlib',
                        'numpy',
                        'tqdm',
-                       'clustimage>=1.6.5',
+                       'clustimage>=1.6.6',
                        'ismember',
                        'datazets>=1.0.0',
                        'opencv-python-headless',
