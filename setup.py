@@ -19,7 +19,7 @@ setuptools.setup(
                        'clustimage>=1.6.6',
                        'ismember',
                        'datazets>=1.0.0',
-                       'opencv-python-headless',
+                       #'opencv-python-headless',
                        ],
      python_requires='>=3',
      name='undouble',
