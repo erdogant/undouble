@@ -120,13 +120,17 @@ class Undouble():
         # Set the logger
         set_logger(verbose=verbose)
 
-    def import_data(self, targetdir, black_list=['undouble'], return_results=False):
+    def import_data(self, targetdir, black_list=['undouble'], return_results=False, use_thumbnail_cache=False):
         """Preprocessing.
 
         Parameters
         ----------
         black_list : list, (default: ['undouble'])
             Exclude directory with all subdirectories from processing.
+        use_thumbnail_cache : bool (Default: True)
+            Note that using smaller image sizes can affect the final results.
+            True: To speed up the proces of image plotting and comparison, thumbnails are stored in the temp directory and used when available.
+            False: Original images are used.
 
         Example
         -------
@@ -171,7 +175,7 @@ class Undouble():
         self.params['targetdir'] = targetdir
         # logger.info("Retrieving files from: [%s]" %(self.params['targetdir']))
         # Preprocessing the images the get them in the right scale and size etc
-        self.results = self.clustimage.import_data(self.params['targetdir'], black_list=black_list, store_to_disk=False)
+        self.results = self.clustimage.import_data(self.params['targetdir'], black_list=black_list, use_thumbnail_cache=use_thumbnail_cache)
         # Remove keys that are not used.
         if 'labels' in self.results: self.results.pop('labels')
         if 'xycoord' in self.results: self.results.pop('xycoord')
