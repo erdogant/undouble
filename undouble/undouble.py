@@ -171,7 +171,7 @@ class Undouble():
         self.params['targetdir'] = targetdir
         # logger.info("Retrieving files from: [%s]" %(self.params['targetdir']))
         # Preprocessing the images the get them in the right scale and size etc
-        self.results = self.clustimage.import_data(self.params['targetdir'], black_list=black_list)
+        self.results = self.clustimage.import_data(self.params['targetdir'], black_list=black_list, store_to_disk=False)
         # Remove keys that are not used.
         if 'labels' in self.results: self.results.pop('labels')
         if 'xycoord' in self.results: self.results.pop('xycoord')
