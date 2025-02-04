@@ -51,14 +51,17 @@ class Undouble():
         * 'crop-resistant-hash': Crop resistant hash
     savedir : str, (default: None)
         Directory to read the images.
-    hash_size : integer (default: 8)
-        The hash_size will be used to scale down the image and create a hash-image of length: hash_size*hash_size.
-    ext : list, (default: ['png','tiff','tif', 'jpg', 'jpeg', 'heic'])
-        Images with the file extentions are used.
-    grayscale : Bool, (default: True)
-        Colorscaling the image to gray.
     dim : tuple, (default: (128,128))
         Rescale images. This is required because the feature-space need to be the same across samples.
+    hash_size : integer (default: 8)
+        The hash_size will be used to scale down the image and create a hash-image of length: hash_size*hash_size.
+    grayscale : Bool, (default: True)
+        Colorscaling the image to gray.
+    use_thumbnail_cache : bool (Default: True)
+        True: To speed up the proces of image plotting and comparison, thumbnails are stored in the temp directory and used when available.
+        False: Original images are used.
+    ext : list, (default: ['png','tiff','tif', 'jpg', 'jpeg', 'heic'])
+        Images with the file extentions are used.
     verbose : int, (default: 20)
         Print progress to screen. The default is 20.
         10:Debug, 20:Info, 30:Warn 40:Error, 60:None
@@ -107,20 +110,29 @@ class Undouble():
 
     """
 
-    def __init__(self, method='phash', targetdir='', grayscale=False, dim=(128, 128), hash_size=8, ext=['png','tiff','tif', 'jpg', 'jpeg', 'heic'], verbose=20):
+    def __init__(self,
+                 method='phash',
+                 targetdir='',
+                 grayscale=False,
+                 dim=(128, 128),
+                 hash_size=8,
+                 use_thumbnail_cache=True,
+                 ext=['png','tiff','tif', 'jpg', 'jpeg', 'heic'],
+                 verbose=20,
+                 ):
         """Initialize undouble with user-defined parameters."""
         if isinstance(ext, str): ext = [ext]
         # Clean readily fitted models to ensure correct results
         self.clean_init()
         if verbose<=0: verbose=60
         # Store user setting in params
-        self.params = {'method': method, 'grayscale': grayscale, 'dim': dim, 'ext': ext, 'hash_size': hash_size, 'verbose': verbose}
+        self.params = {'method': method, 'grayscale': grayscale, 'dim': dim, 'ext': ext, 'hash_size': hash_size, 'use_thumbnail_cache': use_thumbnail_cache, 'verbose': verbose}
         # Initialize the clustimage library
-        self.clustimage = Clustimage(method=self.params['method'], grayscale=self.params['grayscale'], ext=self.params['ext'], dim=self.params['dim'], params_hash={'hash_size': hash_size}, verbose=self.params['verbose'])
+        self.clustimage = Clustimage(method=self.params['method'], grayscale=self.params['grayscale'], ext=self.params['ext'], dim=self.params['dim'], use_thumbnail_cache=use_thumbnail_cache, params_hash={'hash_size': hash_size}, verbose=self.params['verbose'])
         # Set the logger
         set_logger(verbose=verbose)
 
-    def import_data(self, targetdir, black_list=['undouble'], return_results=False, use_thumbnail_cache=False):
+    def import_data(self, targetdir, black_list=['undouble'], return_results=False, use_thumbnail_cache=True):
         """Preprocessing.
 
         Parameters
@@ -692,116 +704,6 @@ class Undouble():
         else:
             logger.warning('Results missing! Hint: try to first use compute_hash()')
 
-
-# %%
-# def move_to_dir(pathnames, savedir, make_moved_filename_consistent=False, action='move'):
-#     """Move to target directory.
-
-#     All files that are marked as being "double" are moved. The first image in the array is untouched.
-
-#     Parameters
-#     ----------
-#     pathnames : list of str
-#     savedir : target directory to copy and move the files
-
-#     action : str, 'copy' default
-#         * 'copy': copy files
-#         * 'move': move files
-
-#     """
-#     # Store function
-#     shutil_action = shutil.move if action.lower() == 'move' else shutil.copy
-
-#     # Create savedir
-#     movedir, dirname, filename, ext = create_savedir(pathnames[0], savedir)
-
-#     # Move all others
-#     for i, file in enumerate(pathnames[1:]):
-#         if os.path.isfile(file):
-#             logger.info(f'Move> {file} -> {movedir}')
-#             if make_moved_filename_consistent:
-#                 ext = os.path.split(file)[1][-4:].lower()
-#                 shutil_action(file, os.path.join(movedir, filename + str(i) + '.' + ext))
-#             else:
-#                 # Original filename
-#                 _, filename1, ext1 = seperate_path(os.path.split(file)[1])
-#                 shutil_action(file, os.path.join(movedir, filename1 + ext1))
-#         else:
-#             logger.info(f'File not found> {file}')
-
-
-
-# %%
-# def move_to_target_dir(pathnames, savedir, action='move'):
-#     """Move to target directory.
-
-#     Move all pathnames to the target directory
-
-#     Parameters
-#     ----------
-#     pathnames : list of str
-#     savedir : target directory to copy and move the files
-
-#     action : str, 'copy' default
-#         * 'copy': copy files
-#         * 'move': move files
-
-#     """
-#     # Store function
-#     shutil_action = shutil.move if action.lower() == 'move' else shutil.copy
-
-#     # Move all pathnames to the target directory
-#     for filepath in pathnames:
-#         # logger.info(f'Moving> {filepath} -> ')
-#         if os.path.isfile(filepath):
-#             # Create savedir
-#             movedir, _, filename, ext = create_savedir(filepath, savedir)
-#             # Original filename
-#             try:
-#                 shutil_action(filepath, os.path.join(movedir, filename + ext))
-#             except:
-#                 logger.error(f'Error moving file: {filepath}')
-#             logger.info(f'{action} {filepath} -> {os.path.join(movedir, filename + ext)}')
-#         else:
-#             logger.info(f'File not found> {filepath}')
-
-
-# def create_savedir(pathname, savedir=None):
-#     """Create directory.
-
-#     Parameters
-#     ----------
-#     pathname : str
-#         Absolute path location of the image of interest.
-#     savedir : str
-#         Target directory.
-
-#     Returns
-#     -------
-#     movedir : str
-#         Absolute path to directory.
-#     dirname : str
-#         Absolute path to directory.
-#     filename : str
-#         Name of the file.
-#     ext : str
-#         Extension.
-
-#     """
-#     dirname, filename, ext = seperate_path(pathname)
-#     # Set the savedir
-#     if savedir is None:
-#         movedir = os.path.join(dirname, 'undouble')
-#     else:
-#         movedir = savedir
-
-#     if not os.path.isdir(movedir):
-#         logger.debug('Create dir: <%s>' %(movedir))
-#         os.makedirs(movedir, exist_ok=True)
-#     # Return
-#     return movedir, dirname, filename, ext
-
-
 # %%
 def _compute_rank(scores, higher_is_better=True):
     rankscore = np.argsort(scores)[::-1]
@@ -986,8 +888,6 @@ def seperate_path(pathname):
     dirname, filename = os.path.split(pathname)
     filename, ext = os.path.splitext(filename)
     return dirname, filename, ext.lower()
-
-# %%
 
 # %% Main
 # if __name__ == "__main__":
