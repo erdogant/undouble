@@ -615,7 +615,7 @@ class Undouble():
                 # Restore verbose status
                 # set_logger(verbose=verbose)
         else:
-            logger.warning('Selection on threshold does not exits yet. You firt need to group images with image-hash <= threshold using the function: model.group(threshold=0)')
+            logger.warning('Selection on threshold does not exits. Group images first with image-hash <= threshold using the function: model.group(threshold=0)')
 
     def _check_status(self):
         if not hasattr(self, 'results'):
