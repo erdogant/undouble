@@ -1,17 +1,12 @@
 from datazets import get as import_example
+
 from undouble.undouble import Undouble
+
 from undouble.undouble import (
     compute_blur,
     seperate_path,
     sort_images,
 )
-
-try:
-    import cv2
-except ImportError:
-    raise ImportError(
-        "The 'opencv-python' library is not installed. Please install it manually using the following command:\n"
-        ">pip install opencv-python or the lightweight version without GUI: >pip install opencv-python-headless")
 
 __author__ = 'Erdogan Tasksen'
 __email__ = 'erdogant@gmail.com'
