@@ -12,21 +12,20 @@ import copy
 from ismember import ismember
 import matplotlib.pyplot as plt
 
-try:
-    import cv2
-except ImportError:
-    raise ImportError(
-        "The 'opencv-python' library is not installed. Please install it manually using the following command:\n"
-        ">pip install opencv-python or the lightweight version without GUI: >pip install opencv-python-headless")
-
+# try:
+#     import cv2
+# except ImportError:
+#     raise ImportError(
+#         "The 'opencv-python' library is not installed. Please install it manually using the following command:\n"
+#         ">pip install opencv-python or the lightweight version without GUI: >pip install opencv-python-headless")
 
 logger = logging.getLogger('')
 [logger.removeHandler(handler) for handler in logger.handlers[:]]
-console = logging.StreamHandler()
-formatter = logging.Formatter('[undouble] >%(levelname)s> %(message)s')
-console.setFormatter(formatter)
-logger.addHandler(console)
-logger = logging.getLogger()
+logging.basicConfig(
+    format="%(asctime)s [%(name)-12s] >%(levelname)-8s %(message)s",
+    datefmt="%d-%m-%y %H:%M:%S",
+    level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 class Undouble():
@@ -124,13 +123,19 @@ class Undouble():
         if isinstance(ext, str): ext = [ext]
         # Clean readily fitted models to ensure correct results
         self.clean_init()
-        if verbose<=0: verbose=60
+        # Set the logger
+        set_logger(verbose=verbose)
         # Store user setting in params
         self.params = {'method': method, 'grayscale': grayscale, 'dim': dim, 'ext': ext, 'hash_size': hash_size, 'use_thumbnail_cache': use_thumbnail_cache, 'verbose': verbose}
         # Initialize the clustimage library
         self.clustimage = Clustimage(method=self.params['method'], grayscale=self.params['grayscale'], ext=self.params['ext'], dim=self.params['dim'], use_thumbnail_cache=use_thumbnail_cache, params_hash={'hash_size': hash_size}, verbose=self.params['verbose'])
-        # Set the logger
-        set_logger(verbose=verbose)
+
+    def check_verbosity(self):
+        """Check the verbosity."""
+        logger.debug('DEBUG')
+        logger.info('INFO')
+        logger.warning('WARNING')
+        logger.critical('CRITICAL')
 
     def import_data(self, targetdir, black_list=['undouble'], return_results=False, use_thumbnail_cache=True):
         """Preprocessing.
@@ -853,12 +858,60 @@ def get_existing_pathnames(pathnames):
     Iloc = np.array(list(map(os.path.isfile, pathnames)))
     return pathnames[Iloc], np.array(Iloc)
 
+# %%
+def get_logger():
+    """Return logger status."""
+    return logger.getEffectiveLevel()
 
 # %%
-def set_logger(verbose=20):
-    """Set the logger for verbosity messages."""
-    logger.setLevel(verbose)
+# def set_logger(verbose=20):
+#     """Set the logger for verbosity messages."""
+#     logger.setLevel(verbose)
 
+# %%
+def set_logger(verbose: [str, int] = 'info'):
+    """Set the logger for verbosity messages.
+
+    Parameters
+    ----------
+    verbose : [str, int], default is 'info' or 20
+        Set the verbose messages using string or integer values.
+        * [0, 60, None, 'silent', 'off', 'no']: No message.
+        * [10, 'debug']: Messages from debug level and higher.
+        * [20, 'info']: Messages from info level and higher.
+        * [30, 'warning']: Messages from warning level and higher.
+        * [50, 'critical']: Messages from critical level and higher.
+
+    Returns
+    -------
+    None.
+
+    > # Set the logger to warning
+    > set_logger(verbose='warning')
+    > # Test with different messages
+    > logger.debug("Hello debug")
+    > logger.info("Hello info")
+    > logger.warning("Hello warning")
+    > logger.critical("Hello critical")
+
+    """
+    # Set 0 and None as no messages.
+    if (verbose==0) or (verbose is None):
+        verbose=60
+    # Convert str to levels
+    if isinstance(verbose, str):
+        levels = {'silent': 60,
+                  'off': 60,
+                  'no': 60,
+                  'debug': 10,
+                  'info': 20,
+                  'warning': 30,
+                  'error': 50,
+                  'critical': 50}
+        verbose = levels[verbose]
+
+    # Show examples
+    logger.setLevel(verbose)
 
 # %%
 def disable_tqdm():
