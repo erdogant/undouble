@@ -12,7 +12,7 @@ from undouble.undouble import (
 
 __author__ = 'Erdogan Tasksen'
 __email__ = 'erdogant@gmail.com'
-__version__ = '1.4.8'
+__version__ = '1.4.9'
 
 # Setup root logger
 _logger = logging.getLogger('undouble')
@@ -20,7 +20,6 @@ _log_handler = logging.StreamHandler()
 _fmt = '[{asctime}] [{name}] {msg}'
 _formatter = logging.Formatter(fmt=_fmt, style='{', datefmt='%d-%m-%Y %H:%M:%S')
 _log_handler.setFormatter(_formatter)
-_log_handler.setLevel(logging.INFO)
 _logger.addHandler(_log_handler)
 _logger.propagate = False
 
