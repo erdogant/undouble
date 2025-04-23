@@ -20,6 +20,7 @@ _log_handler = logging.StreamHandler()
 _fmt = '[{asctime}] [{name}] {msg}'
 _formatter = logging.Formatter(fmt=_fmt, style='{', datefmt='%d-%m-%Y %H:%M:%S')
 _log_handler.setFormatter(_formatter)
+_log_handler.setLevel(logging.DEBUG)
 _logger.addHandler(_log_handler)
 _logger.propagate = False
 
