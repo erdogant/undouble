@@ -679,7 +679,7 @@ class Undouble():
 
         # Convert to image-hash
         if to_array:
-            hashes = np.array(list(map(lambda x: x.ravel().astype(int), hashes)))
+            hashes = np.array(list(map(lambda x: x.ravel().astype(np.uint8), hashes)))
             hashes = np.c_[hashes]
         else:
             hashes = list(map(lambda x: x.reshape(hash_size, hash_size), hashes))
