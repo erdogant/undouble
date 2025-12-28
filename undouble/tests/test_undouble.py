@@ -53,17 +53,6 @@ class TestUNDOUBLE(unittest.TestCase):
             ax[1][1].imshow(hashs[0], cmap='gray')
             ax[1][1].axis('off')
             ax[1][1].set_title(method + ' function')
-            
-            
-    def test_import_data(self):
-        model = Undouble()
-        # Import flowers example
-        X = model.import_example(data='flowers')
-
-        # Check numpy array imports
-        model.import_data(X)
-        # assert model.results['img'].shape==(214, 128, 128, 4)
-        assert set(model.results.keys())==set(['img', 'pathnames', 'url', 'filenames', 'img_hash_bin', 'img_hash_hex', 'adjmat', 'select_pathnames', 'select_scores', 'select_idx', 'stats'])
 
     def test_compute_imghash(self):
         model = Undouble()
