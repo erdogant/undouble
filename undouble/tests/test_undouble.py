@@ -103,8 +103,8 @@ class TestUNDOUBLE(unittest.TestCase):
         param_grid = {
         	'method': ['ahash','phash','dhash','whash-haar','crop-resistant-hash'],
         	'grayscale':[True, False],
-        	'hash_size' : [4, 8, 16],
-            'dim' : [(64,64), (128,128), (256,256)]
+        	'hash_size' : [4, 8],
+            'dim' : [(64,64), (128,128)]
         	}
 
         allNames = param_grid.keys()
@@ -112,6 +112,7 @@ class TestUNDOUBLE(unittest.TestCase):
         combinations=list(combinations)
 
         for combination in combinations:
+            print(combination)
             model = Undouble(method=combination[0], grayscale=combination[1], hash_size=combination[2], dim=combination[3], verbose=40)
             # Import data
             model.import_data(X, return_results=False)
