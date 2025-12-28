@@ -10,27 +10,30 @@
 [![Downloads](https://pepy.tech/badge/undouble/month)](https://pepy.tech/project/undouble)
 [![Downloads](https://pepy.tech/badge/undouble)](https://pepy.tech/project/undouble)
 [![Sphinx](https://img.shields.io/badge/Sphinx-Docs-Green)](https://erdogant.github.io/undouble/)
-<!---[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://erdogant.github.io/pca/pages/html/Documentation.html#colab-notebook)-->
-<!---[![BuyMeCoffee](https://img.shields.io/badge/buymea-coffee-yellow.svg)](https://www.buymeacoffee.com/erdogant)-->
-<!---[![Coffee](https://img.shields.io/badge/coffee-black-grey.svg)](https://erdogant.github.io/donate/?currency=USD&amount=5)-->
 
-The aim of ``undouble`` is to detect (near-)identical images. It works using a multi-step process of pre-processing the images (grayscaling, normalizing, and scaling), computing the image hash, and the grouping of images. A threshold of 0 will group images with an identical image hash. The results can easily be explored by the plotting
-functionality and images can be moved with the move functionality. When moving images, the image in the group with the largest resolution will be copied, and all other images are moved to the **undouble** subdirectory. In case you want to cluster your images, I would recommend reading the [blog](https://towardsdatascience.com/a-step-by-step-guide-for-clustering-images-4b45f9906128) and use the [clustimage library](https://erdogant.github.io/clustimage).
+<div>
+<a href="https://erdogant.github.io/undouble/"><img src="https://github.com/erdogant/undouble/blob/main/docs/figs/logo.png" width="75" align="left" /></a>
+undouble is a Python library to detect (near-)identical images. It works using a multi-step process of pre-processing the images (grayscaling, normalizing, and scaling), computing the image hash, and grouping images. A threshold of 0 will group images with an identical image hash. The results can easily be explored by the plotting functionality and images can be moved with the move functionality. When moving images, the image in the group with the largest resolution will be copied, and all other images are moved to the **undouble** subdirectory. ⭐️Star it if you like it⭐️
+</div>
+
+---
+
+<p align="center">
+  <img src="https://github.com/erdogant/undouble/blob/main/docs/figs/schematic_overview.png" width="1000" />
+</p>
+
+---
 
 The following steps are taken in the ``undouble`` library:
- * Read recursively all images from directory with the specified extensions.
+ * Read all images from the directory recursively with the specified extensions.
  * Compute image hash.
  * Group similar images.
- * Move if desired.
+ * Automatically organize the images in your folder if desired.
 
-
-# 
-**⭐️ Star this repo if you like it ⭐️**
-#
 
 ### Blogs
 
-* Read the blog to get a structured overview how to [detect duplicate images using image hash functions.](https://erdogant.medium.com/detection-of-duplicate-images-using-image-hash-functions-4d9c53f04a75")
+* Read the blog to get a structured overview of how to [detect duplicate images using image hash functions.](https://medium.com/data-science-collective/a-step-by-step-guide-for-clustering-images-82b4a83b36a9)
 
 # 
 
