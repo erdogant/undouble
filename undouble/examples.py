@@ -3,6 +3,67 @@
 # print(dir(undouble))
 # print(undouble.__version__)
 
+# 
+# %%
+
+import cv2
+from scipy.spatial import distance
+import numpy as np
+import matplotlib.pyplot as plt
+from undouble import Undouble
+
+methods = ['phash', 'ahash', 'dhash', 'whash-haar']
+
+for method in methods:
+    # Average Hash
+    model = Undouble(method=method, hash_size=8)
+    # Import example data
+    # targetdir = model.import_example(data='cat_and_dog')
+    targetdir = 'D://REPOS//erdogant.github.io//datasets//images//fake_vs_real//'
+
+    # Grayscaling and scaling
+    model.import_data(targetdir)
+
+    # Compute image for only the first image.
+    hash_1 = model.compute_imghash(model.results['img'][0], to_array=False)[0]
+    # Compute image for only the first image.
+    hash_2 = model.compute_imghash(model.results['img'][1], to_array=False)[0]
+    
+    print(f"{method } Hash. Number of differences: {np.sum(hash_2 != hash_1)}")
+    
+    
+    # for i, img in enumerate(model.results['img']):
+    #     # Compute image for only the first image.
+    #     hashs = model.compute_imghash(img, to_array=False)
+    #     # Compute the image-hash
+    #     image_hash = ''.join(hashs[0].astype(int).astype(str).ravel())
+    #     print(f'{method } Hash:')
+    #     print(f"Binary image hash: {image_hash}")
+    #     print(f"Hex image hash: {(hex(int(image_hash, 2)))}")
+    
+    #     # Import image for plotting purposes
+    #     img_g = cv2.imread(model.results['pathnames'][i], cv2.IMREAD_GRAYSCALE)
+    #     img_r = cv2.resize(img_g, (8, 8), interpolation=cv2.INTER_AREA)
+    
+    #     # Make the figure
+    #     fig, ax = plt.subplots(2, 2, figsize=(15, 10))
+    #     ax[0][0].imshow(img[..., ::-1])
+    #     ax[0][0].axis('off')
+    #     ax[0][0].set_title('Source image')
+    #     ax[0][1].imshow(img_g, cmap='gray')
+    #     ax[0][1].axis('off')
+    #     ax[0][1].set_title('grayscale image')
+    #     ax[1][0].imshow(img_r, cmap='gray')
+    #     ax[1][0].axis('off')
+    #     ax[1][0].set_title('grayscale image, size %.0dx%.0d' %(8, 8))
+    #     ax[1][1].imshow(hashs[0], cmap='gray')
+    #     ax[1][1].axis('off')
+    #     ax[1][1].set_title(method + ' function')
+    
+    
+# %%
+
+
 # Import library
 from clustimage import Clustimage
 import numpy as np
